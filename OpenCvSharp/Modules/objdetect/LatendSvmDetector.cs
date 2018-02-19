@@ -44,15 +44,20 @@ namespace OpenCvSharp
             public int ClassId { get; set; }
         }
 
+        /// <summary>
+        /// Track whether Dispose has been called
+        /// </summary>
+        private bool disposed;
+
         #region Init and Disposal
 
         /// <summary>
         /// Default constructor
         /// </summary>
         public LatentSvmDetector()
-        {
+	    {
             ptr = NativeMethods.objdetect_LatentSvmDetector_new();               
-        }
+	    }
 
         /// <summary>
         /// Creates the HOG descriptor and detector.
@@ -67,15 +72,44 @@ namespace OpenCvSharp
             Load(fileNames, classNames);
         }
 
+#if LANG_JP
         /// <summary>
-        /// Releases unmanaged resources
+        /// リソースの解放
         /// </summary>
-        protected override void DisposeUnmanaged()
+        /// <param name="disposing">
+        /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+        /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+        ///</param>
+#else
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            NativeMethods.objdetect_LatentSvmDetector_delete(ptr);
-            base.DisposeUnmanaged();
+            if (!disposed)
+            {
+                try
+                {
+                    if (disposing)
+                    {
+                    }
+                    if (IsEnabledDispose)
+                    {
+                        NativeMethods.objdetect_LatentSvmDetector_delete(ptr);
+                    }
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
-
         #endregion
 
         #region Methods
@@ -85,19 +119,18 @@ namespace OpenCvSharp
         /// </summary>
         public virtual void Clear()
         {
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException("LatentSvmDetector");
             NativeMethods.objdetect_LatentSvmDetector_clear(ptr);
-            GC.KeepAlive(this);
         }
         /// <summary>
         /// 
         /// </summary>
         public virtual bool Empty()
         {
-            ThrowIfDisposed();
-            var res = NativeMethods.objdetect_LatentSvmDetector_empty(ptr) != 0;
-            GC.KeepAlive(this);
-            return res;
+            if (disposed)
+                throw new ObjectDisposedException("LatentSvmDetector");
+            return NativeMethods.objdetect_LatentSvmDetector_empty(ptr) != 0;
         }
         /// <summary>
         /// 
@@ -108,7 +141,8 @@ namespace OpenCvSharp
         /// constructed from the name of file containing the model. E.g. the model stored in "/home/user/cat.xml" will get the name "cat".</param>
         public virtual bool Load(IEnumerable<string> fileNames, IEnumerable<string> classNames)
         {
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException("LatentSvmDetector");
             if (fileNames == null)
                 throw new ArgumentNullException(nameof(fileNames));
             if (classNames == null)
@@ -117,10 +151,8 @@ namespace OpenCvSharp
             using (var fn = new StringArrayAddress(fileNames))
             using (var cn = new StringArrayAddress(classNames))
             {
-                var res = NativeMethods.objdetect_LatentSvmDetector_load(
+                return NativeMethods.objdetect_LatentSvmDetector_load(
                     ptr, fn.Pointer, fn.Dim1Length, cn.Pointer, cn.Dim1Length) != 0;
-                GC.KeepAlive(this);
-                return res;
             }
         }
 
@@ -135,7 +167,8 @@ namespace OpenCvSharp
         public virtual ObjectDetection[] Detect(Mat image,
             float overlapThreshold = 0.5f, int numThreads = -1)
         {
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException("LatentSvmDetector");
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
             image.ThrowIfDisposed();
@@ -144,8 +177,6 @@ namespace OpenCvSharp
             {
                 NativeMethods.objdetect_LatentSvmDetector_detect(
                     ptr, image.CvPtr, odVec.CvPtr, overlapThreshold, numThreads);
-                GC.KeepAlive(this);
-                GC.KeepAlive(image);
 
                 return EnumerableEx.SelectToArray(odVec.ToArray(), v => 
                     new ObjectDetection
@@ -167,7 +198,6 @@ namespace OpenCvSharp
             using (var outVec = new VectorOfString())
             {
                 NativeMethods.objdetect_LatentSvmDetector_getClassNames(ptr, outVec.CvPtr);
-                GC.KeepAlive(this);
                 return outVec.ToArray();
             }
         }
@@ -178,12 +208,12 @@ namespace OpenCvSharp
         /// <returns></returns>
         public long GetClassCount()
         {
-            ThrowIfDisposed();
-            var res = NativeMethods.objdetect_LatentSvmDetector_getClassCount(ptr).ToInt64();
-            GC.KeepAlive(this);
-            return res;
+            if (disposed)
+                throw new ObjectDisposedException("LatentSvmDetector");
+            return NativeMethods.objdetect_LatentSvmDetector_getClassCount(ptr).ToInt64();
         }
 
         #endregion
     }
+
 }

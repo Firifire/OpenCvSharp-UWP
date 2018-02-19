@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace OpenCvSharp.Cuda
+namespace OpenCvSharp.Gpu
 {
     /// <summary>
     /// 
@@ -26,6 +26,11 @@ namespace OpenCvSharp.Cuda
 #endif
     public sealed class Stream : DisposableGpuObject
     {
+        /// <summary>
+        /// Track whether Dispose has been called
+        /// </summary>
+        private bool disposed;
+
         private StreamCallbackInternal callbackInternal;
         private GCHandle callbackHandle;
         private GCHandle userDataHandle;
@@ -70,7 +75,6 @@ namespace OpenCvSharp.Cuda
             if (m == null)
                 throw new ArgumentNullException(nameof(m));
             ptr = NativeMethods.cuda_Stream_new2(m.CvPtr);
-            GC.KeepAlive(m);
         }
 
 #if LANG_JP
@@ -84,20 +88,50 @@ namespace OpenCvSharp.Cuda
 #endif
         public void Release()
         {
-            Dispose();
+            Dispose(true);
         }
 
+#if LANG_JP
+    /// <summary>
+    /// リソースの解放
+    /// </summary>
+    /// <param name="disposing">
+    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+    ///</param>
+#else
         /// <summary>
-        /// Releases unmanaged resources
+        /// Clean up any resources being used.
         /// </summary>
-        protected override void DisposeUnmanaged()
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            NativeMethods.cuda_Stream_delete(ptr);
-            if (callbackHandle.IsAllocated)
-                callbackHandle.Free();
-            if (userDataHandle.IsAllocated)
-                userDataHandle.Free();
-            base.DisposeUnmanaged();
+            if (!disposed)
+            {
+                try
+                {
+                    if (disposing)
+                    {
+                    }
+                    if (IsEnabledDispose)
+                    {
+                        NativeMethods.cuda_Stream_delete(ptr);
+                        if (callbackHandle.IsAllocated)
+                            callbackHandle.Free();
+                        if (userDataHandle.IsAllocated)
+                            userDataHandle.Free();
+                    }
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
 
         #endregion
@@ -128,9 +162,7 @@ namespace OpenCvSharp.Cuda
         public static explicit operator bool(Stream self)
         {
             self.ThrowIfDisposed();
-            var res = NativeMethods.cuda_Stream_bool(self.ptr) != 0;
-            GC.KeepAlive(self);
-            return res;
+            return NativeMethods.cuda_Stream_bool(self.ptr) != 0;
         }
 
         /// <summary>
@@ -140,9 +172,7 @@ namespace OpenCvSharp.Cuda
         public bool QueryIfComplete()
         {
             ThrowIfDisposed();
-            var res = NativeMethods.cuda_Stream_queryIfComplete(ptr) != 0;
-            GC.KeepAlive(this);
-            return res;
+            return NativeMethods.cuda_Stream_queryIfComplete(ptr) != 0;
         }
 
         /// <summary>
@@ -152,7 +182,6 @@ namespace OpenCvSharp.Cuda
         {
             ThrowIfDisposed();
             NativeMethods.cuda_Stream_waitForCompletion(ptr);
-            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -172,9 +201,6 @@ namespace OpenCvSharp.Cuda
             dst.ThrowIfDisposed();
 
             NativeMethods.cuda_Stream_enqueueDownload_Mat(ptr, src.CvPtr, dst.CvPtr);
-            GC.KeepAlive(this);
-            GC.KeepAlive(src);
-            GC.KeepAlive(dst);
         }
 
         /// <summary>
@@ -194,9 +220,6 @@ namespace OpenCvSharp.Cuda
             dst.ThrowIfDisposed();
 
             NativeMethods.cuda_Stream_enqueueUpload_Mat(ptr, src.CvPtr, dst.CvPtr);
-            GC.KeepAlive(this);
-            GC.KeepAlive(src);
-            GC.KeepAlive(dst);
         }
 
         /// <summary>
@@ -215,9 +238,6 @@ namespace OpenCvSharp.Cuda
             dst.ThrowIfDisposed();
 
             NativeMethods.cuda_Stream_enqueueCopy(ptr, src.CvPtr, dst.CvPtr);
-            GC.KeepAlive(this);
-            GC.KeepAlive(src);
-            GC.KeepAlive(dst);
         }
 
         /// <summary>
@@ -233,8 +253,6 @@ namespace OpenCvSharp.Cuda
             src.ThrowIfDisposed();
 
             NativeMethods.cuda_Stream_enqueueMemSet(ptr, src.CvPtr, val);
-            GC.KeepAlive(this);
-            GC.KeepAlive(src);
         }
 
         /// <summary>
@@ -251,9 +269,6 @@ namespace OpenCvSharp.Cuda
             src.ThrowIfDisposed();
 
             NativeMethods.cuda_Stream_enqueueMemSet_WithMask(ptr, src.CvPtr, val, Cv2.ToPtr(mask));
-            GC.KeepAlive(this);
-            GC.KeepAlive(src);
-            GC.KeepAlive(mask);
         }
 
         /// <summary>
@@ -275,9 +290,6 @@ namespace OpenCvSharp.Cuda
             dst.ThrowIfDisposed();
 
             NativeMethods.cuda_Stream_enqueueConvert(ptr, src.CvPtr, dst.CvPtr, dtype, a, b);
-            GC.KeepAlive(this);
-            GC.KeepAlive(src);
-            GC.KeepAlive(dst);
         }
 
         /// <summary>
@@ -316,7 +328,6 @@ namespace OpenCvSharp.Cuda
 
             NativeMethods.cuda_Stream_enqueueHostCallback(
                 ptr, callbackPtr, userDataPtr);
-            GC.KeepAlive(this);
         }
     }
 }

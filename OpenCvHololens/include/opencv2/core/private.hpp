@@ -487,7 +487,7 @@ CV_EXPORTS InstrNode*   getCurrentNode();
 }
 }
 
-#ifdef _WIN32
+#ifdef false
 #define CV_INSTRUMENT_GET_RETURN_ADDRESS _ReturnAddress()
 #else
 #define CV_INSTRUMENT_GET_RETURN_ADDRESS __builtin_extract_return_addr(__builtin_return_address(0))

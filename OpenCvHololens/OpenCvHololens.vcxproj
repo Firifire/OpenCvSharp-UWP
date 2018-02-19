@@ -126,6 +126,9 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
+      <UndefinePreprocessorDefinitions>
+      </UndefinePreprocessorDefinitions>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,6 +140,9 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
+      <UndefinePreprocessorDefinitions>
+      </UndefinePreprocessorDefinitions>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -515,13 +521,81 @@
     <ClInclude Include="include\opencv\cxmisc.h" />
     <ClInclude Include="include\opencv\highgui.h" />
     <ClInclude Include="include\opencv\ml.h" />
-    <ClInclude Include="OpenCvHololens.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Source\bgsegm.h" />
+    <ClInclude Include="Source\calib3d.h" />
+    <ClInclude Include="Source\calib3d_StereoMatcher.h" />
+    <ClInclude Include="Source\core.h" />
+    <ClInclude Include="Source\core_Algorithm.h" />
+    <ClInclude Include="Source\core_FileStorage.h" />
+    <ClInclude Include="Source\core_InputArray.h" />
+    <ClInclude Include="Source\core_Mat.h" />
+    <ClInclude Include="Source\core_MatExpr.h" />
+    <ClInclude Include="Source\core_OutputArray.h" />
+    <ClInclude Include="Source\core_PCA.h" />
+    <ClInclude Include="Source\core_RNG.h" />
+    <ClInclude Include="Source\core_SparseMat.h" />
+    <ClInclude Include="Source\core_SVD.h" />
+    <ClInclude Include="Source\cuda.h" />
+    <ClInclude Include="Source\cuda_GpuMat.h" />
+    <ClInclude Include="Source\face.h" />
+    <ClInclude Include="Source\features2d.h" />
+    <ClInclude Include="Source\features2d_AgastFeatureDetector.h" />
+    <ClInclude Include="Source\features2d_AKAZE.h" />
+    <ClInclude Include="Source\features2d_BOW.h" />
+    <ClInclude Include="Source\features2d_BRISK.h" />
+    <ClInclude Include="Source\features2d_DescriptorMatcher.h" />
+    <ClInclude Include="Source\features2d_FastFeatureDetector.h" />
+    <ClInclude Include="Source\features2d_FeatureDetector.h" />
+    <ClInclude Include="Source\features2d_GFTTDetector.h" />
+    <ClInclude Include="Source\features2d_KAZE.h" />
+    <ClInclude Include="Source\features2d_KeyPointsFilter.h" />
+    <ClInclude Include="Source\features2d_MSER.h" />
+    <ClInclude Include="Source\features2d_ORB.h" />
+    <ClInclude Include="Source\features2d_SimpleBlobDetector.h" />
+    <ClInclude Include="Source\flann.h" />
+    <ClInclude Include="Source\highgui.h" />
+    <ClInclude Include="Source\imgcodecs.h" />
+    <ClInclude Include="Source\imgproc.h" />
+    <ClInclude Include="Source\imgproc_CLAHE.h" />
+    <ClInclude Include="Source\imgproc_GeneralizedHough.h" />
+    <ClInclude Include="Source\imgproc_LineIterator.h" />
+    <ClInclude Include="Source\imgproc_LineSegmentDetector.h" />
+    <ClInclude Include="Source\imgproc_Subdiv2D.h" />
+    <ClInclude Include="Source\include_opencv.h" />
+    <ClInclude Include="Source\ml.h" />
+    <ClInclude Include="Source\ml_ANN_MLP.h" />
+    <ClInclude Include="Source\ml_Boost.h" />
+    <ClInclude Include="Source\ml_DTree.h" />
+    <ClInclude Include="Source\ml_EM.h" />
+    <ClInclude Include="Source\ml_KNearest.h" />
+    <ClInclude Include="Source\ml_LogisticRegressionh.h" />
+    <ClInclude Include="Source\ml_NormalBayesClassifier.h" />
+    <ClInclude Include="Source\ml_RTrees.h" />
+    <ClInclude Include="Source\ml_StatModel.h" />
+    <ClInclude Include="Source\ml_SVM.h" />
+    <ClInclude Include="Source\my_functions.h" />
+    <ClInclude Include="Source\my_types.h" />
+    <ClInclude Include="Source\objdetect.h" />
+    <ClInclude Include="Source\objdetect_HOGDescriptor.h" />
+    <ClInclude Include="Source\optflow.h" />
+    <ClInclude Include="Source\optflow_motempl.h" />
+    <ClInclude Include="Source\photo.h" />
+    <ClInclude Include="Source\photo_HDR.h" />
+    <ClInclude Include="Source\shape_ShapeDistanceExtractor.h" />
+    <ClInclude Include="Source\std_vector.h" />
+    <ClInclude Include="Source\stitching.h" />
+    <ClInclude Include="Source\stitching_detail_Matchers.h" />
+    <ClInclude Include="Source\superres.h" />
+    <ClInclude Include="Source\video.h" />
+    <ClInclude Include="Source\videoio.h" />
+    <ClInclude Include="Source\video_background_segm.h" />
+    <ClInclude Include="Source\video_tracking.h" />
+    <ClInclude Include="Source\xfeatures2d.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="OpenCvHololens.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -530,6 +604,26 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Source\bgsegm.cpp" />
+    <ClCompile Include="Source\calib3d.cpp" />
+    <ClCompile Include="Source\core.cpp" />
+    <ClCompile Include="Source\cuda.cpp" />
+    <ClCompile Include="Source\face.cpp" />
+    <ClCompile Include="Source\features2d.cpp" />
+    <ClCompile Include="Source\flann.cpp" />
+    <ClCompile Include="Source\highgui.cpp" />
+    <ClCompile Include="Source\imgcodecs.cpp" />
+    <ClCompile Include="Source\imgproc.cpp" />
+    <ClCompile Include="Source\ml.cpp" />
+    <ClCompile Include="Source\objdetect.cpp" />
+    <ClCompile Include="Source\optflow.cpp" />
+    <ClCompile Include="Source\photo.cpp" />
+    <ClCompile Include="Source\shape.cpp" />
+    <ClCompile Include="Source\std_vector.cpp" />
+    <ClCompile Include="Source\stitching.cpp" />
+    <ClCompile Include="Source\video.cpp" />
+    <ClCompile Include="Source\videoio.cpp" />
+    <ClCompile Include="Source\xfeatures2d.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

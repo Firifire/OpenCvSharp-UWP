@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvSharp.Cuda;
+using OpenCvSharp.Gpu;
 
 namespace OpenCvSharp
 {
@@ -9,6 +9,7 @@ namespace OpenCvSharp
     /// </summary>
     public class OutputArray : DisposableCvObject
     {
+        private bool disposed;
         private readonly object obj;
 
         #region Init & Disposal
@@ -21,7 +22,6 @@ namespace OpenCvSharp
             if (mat == null)
                 throw new ArgumentNullException(nameof(mat));
             ptr = NativeMethods.core_OutputArray_new_byMat(mat.CvPtr);
-            GC.KeepAlive(mat);
             obj = mat;
         }
 
@@ -34,7 +34,6 @@ namespace OpenCvSharp
             if (mat == null)
                 throw new ArgumentNullException(nameof(mat));
             ptr = NativeMethods.core_OutputArray_new_byGpuMat(mat.CvPtr);
-            GC.KeepAlive(mat);
             obj = mat;
         }
 
@@ -54,14 +53,31 @@ namespace OpenCvSharp
         }
 
         /// <summary>
-        /// Releases unmanaged resources
+        /// 
         /// </summary>
-        protected override void DisposeUnmanaged()
+        /// <param name="disposing"></param>
+        protected override void Dispose(bool disposing)
         {
-            NativeMethods.core_OutputArray_delete(ptr);
-            base.DisposeUnmanaged();
+            if (!disposed)
+            {
+                try
+                {
+                    if (disposing)
+                    {
+                    }
+                    if (ptr != IntPtr.Zero)
+                    {
+                        NativeMethods.core_OutputArray_delete(ptr);
+                        ptr = IntPtr.Zero;
+                    }
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
-
         #endregion
 
         #region Cast
@@ -195,7 +211,7 @@ namespace OpenCvSharp
         {
             return
                 ptr != IntPtr.Zero &&
-                !IsDisposed &&
+                !disposed &&
                 obj != null &&
                 (IsMat() || IsGpuMat());
         }

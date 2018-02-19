@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenCvSharp.Cuda
+namespace OpenCvSharp.Gpu
 {
     /// <summary>
     /// Gives information about the given GPU
     /// </summary>
     public sealed class DeviceInfo : DisposableGpuObject
     {
+        private bool disposed;
+
         /// <summary>
         /// Creates DeviceInfo object for the current GPU
         /// </summary>
         public DeviceInfo()
         {
-            Cv2.ThrowIfGpuNotAvailable();
+            Cv2Gpu.ThrowIfGpuNotAvailable();
             ptr = NativeMethods.cuda_DeviceInfo_new1();
         }
 
@@ -24,18 +26,31 @@ namespace OpenCvSharp.Cuda
         /// <param name="deviceId"></param>
         public DeviceInfo(int deviceId)
         {
-            Cv2.ThrowIfGpuNotAvailable();
+            Cv2Gpu.ThrowIfGpuNotAvailable();
             ptr = NativeMethods.cuda_DeviceInfo_new2(deviceId);
         }
 
         /// <summary>
-        /// Releases unmanaged resources
+        /// Releases the resources
         /// </summary>
-        protected override void DisposeUnmanaged()
+        /// <param name="disposing"></param>
+        protected override void Dispose(bool disposing)
         {
-            NativeMethods.cuda_DeviceInfo_delete(ptr);
-            base.DisposeUnmanaged();
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                }
+                if(ptr != IntPtr.Zero)
+                    NativeMethods.cuda_DeviceInfo_delete(ptr);
+
+                ptr = IntPtr.Zero;
+                disposed = true;
+            }
+
+            base.Dispose(disposing);
         }
+
 
         /// <summary>
         /// 
@@ -44,9 +59,7 @@ namespace OpenCvSharp.Cuda
         {
             get
             {
-                var res = NativeMethods.cuda_DeviceInfo_deviceID(ptr);
-                GC.KeepAlive(this);
-                return res;
+                return NativeMethods.cuda_DeviceInfo_deviceID(ptr);
             }
         }
 
@@ -59,7 +72,6 @@ namespace OpenCvSharp.Cuda
             {
                 var buf = new StringBuilder(1 << 16);
                 NativeMethods.cuda_DeviceInfo_name(ptr, buf, buf.Capacity);
-                GC.KeepAlive(this);
                 return buf.ToString();
             }
         }
@@ -71,9 +83,7 @@ namespace OpenCvSharp.Cuda
         {
             get
             {
-                var res = NativeMethods.cuda_DeviceInfo_majorVersion(ptr);
-                GC.KeepAlive(this);
-                return res;
+                return NativeMethods.cuda_DeviceInfo_majorVersion(ptr);
             }
         }
 
@@ -84,9 +94,7 @@ namespace OpenCvSharp.Cuda
         {
             get
             {
-                var res = NativeMethods.cuda_DeviceInfo_minorVersion(ptr);
-                GC.KeepAlive(this);
-                return res;
+                return NativeMethods.cuda_DeviceInfo_minorVersion(ptr);
             }
         }
 
@@ -97,9 +105,7 @@ namespace OpenCvSharp.Cuda
         {
             get
             {
-                var res = NativeMethods.cuda_DeviceInfo_multiProcessorCount(ptr);
-                GC.KeepAlive(this);
-                return res;
+                return NativeMethods.cuda_DeviceInfo_multiProcessorCount(ptr);
             }
         }
 
@@ -110,9 +116,7 @@ namespace OpenCvSharp.Cuda
         {
             get
             {
-                var res = (long)NativeMethods.cuda_DeviceInfo_sharedMemPerBlock(ptr);
-                GC.KeepAlive(this);
-                return res;
+                return (long)NativeMethods.cuda_DeviceInfo_sharedMemPerBlock(ptr);
             }
         }
 
@@ -123,7 +127,6 @@ namespace OpenCvSharp.Cuda
         {
             ulong t, f;
             NativeMethods.cuda_DeviceInfo_queryMemory(ptr, out t, out f);
-            GC.KeepAlive(this);
             totalMemory = (long)t;
             freeMemory = (long)f;
         }
@@ -135,9 +138,7 @@ namespace OpenCvSharp.Cuda
         {
             get
             {
-                var res = (long)NativeMethods.cuda_DeviceInfo_freeMemory(ptr);
-                GC.KeepAlive(this);
-                return res;
+                return (long)NativeMethods.cuda_DeviceInfo_freeMemory(ptr);
             }
         }
 
@@ -148,9 +149,7 @@ namespace OpenCvSharp.Cuda
         {
             get
             {
-                var res = (long)NativeMethods.cuda_DeviceInfo_totalMemory(ptr);
-                GC.KeepAlive(this);
-                return res;
+                return (long)NativeMethods.cuda_DeviceInfo_totalMemory(ptr);
             }
         }
 
@@ -161,9 +160,7 @@ namespace OpenCvSharp.Cuda
         /// <returns></returns>
         public bool Supports(FeatureSet featureSet)
         {
-            var res = NativeMethods.cuda_DeviceInfo_supports(ptr, (int)featureSet) != 0;
-            GC.KeepAlive(this);
-            return res;
+            return NativeMethods.cuda_DeviceInfo_supports(ptr, (int)featureSet) != 0;
         }
 
         /// <summary>
@@ -174,9 +171,7 @@ namespace OpenCvSharp.Cuda
         {
             get
             {
-                var res = NativeMethods.cuda_DeviceInfo_isCompatible(ptr) != 0;
-                GC.KeepAlive(this);
-                return res;
+                return NativeMethods.cuda_DeviceInfo_isCompatible(ptr) != 0;
             }
         }
 
@@ -188,9 +183,7 @@ namespace OpenCvSharp.Cuda
         {
             get
             {
-                var res =  NativeMethods.cuda_DeviceInfo_canMapHostMemory(ptr) != 0;
-                GC.KeepAlive(this);
-                return res;
+                return NativeMethods.cuda_DeviceInfo_canMapHostMemory(ptr) != 0;
             }
         }
     }

@@ -8,8 +8,15 @@ namespace OpenCvSharp
     /// <summary>
     /// 
     /// </summary>
-    public class VectorOfVec4f : DisposableCvObject, IStdVector<Vec4f>
+    internal class VectorOfVec4f : DisposableCvObject, IStdVector<Vec4f>
     {
+        /// <summary>
+        /// Track whether Dispose has been called
+        /// </summary>
+        private bool disposed = false;
+
+        #region Init and Dispose
+
         /// <summary>
         /// 
         /// </summary>
@@ -51,25 +58,41 @@ namespace OpenCvSharp
         }
 
         /// <summary>
-        /// Releases unmanaged resources
+        /// Clean up any resources being used.
         /// </summary>
-        protected override void DisposeUnmanaged()
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+        protected override void Dispose(bool disposing)
         {
-            NativeMethods.vector_Vec4f_delete(ptr);
-            base.DisposeUnmanaged();
+            if (!disposed)
+            {
+                try
+                {
+                    if (IsEnabledDispose)
+                    {
+                        NativeMethods.vector_Vec4f_delete(ptr);
+                    }
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// vector.size()
         /// </summary>
         public int Size
         {
-            get
-            {
-                var res = NativeMethods.vector_Vec4f_getSize(ptr).ToInt32();
-                GC.KeepAlive(this);
-                return res;
-            }
+            get { return NativeMethods.vector_Vec4f_getSize(ptr).ToInt32(); }
         }
 
         /// <summary>
@@ -77,13 +100,12 @@ namespace OpenCvSharp
         /// </summary>
         public IntPtr ElemPtr
         {
-            get
-            {
-                var res = NativeMethods.vector_Vec4f_getPointer(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
+            get { return NativeMethods.vector_Vec4f_getPointer(ptr); }
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Converts std::vector to managed array
@@ -101,7 +123,7 @@ namespace OpenCvSharp
         /// <returns></returns>
         public T[] ToArray<T>() where T : struct
         {
-            int typeSize = MarshalHelper.SizeOf<T>();
+            int typeSize = Marshal.SizeOf(typeof (T));
             if (typeSize != sizeof (float)*4)
             {
                 throw new OpenCvSharpException();
@@ -113,13 +135,13 @@ namespace OpenCvSharp
                 return new T[0];
             }
             T[] dst = new T[arySize];
-            using (var dstPtr = new ArrayAddress1<T>(dst))
+            using (ArrayAddress1<T> dstPtr = new ArrayAddress1<T>(dst))
             {
-                MemoryHelper.CopyMemory(dstPtr, ElemPtr, typeSize*dst.Length);
+                Util.Utility.CopyMemory(dstPtr, ElemPtr, typeSize*dst.Length);
             }
-            GC.KeepAlive(this); // ElemPtr is IntPtr to memory held by this object, so
-                                // make sure we are not disposed until finished with copy.
             return dst;
         }
+
+        #endregion
     }
 }

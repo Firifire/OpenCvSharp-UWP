@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvSharp.Cuda;
 
-namespace OpenCvSharp
+namespace OpenCvSharp.Gpu
 {
     /// <summary>
     /// Functions of OpenCV GPU module
     /// </summary>
-    static partial class Cv2
+    public static class Cv2Gpu
     {
         #region Hardware
 
@@ -114,7 +113,6 @@ namespace OpenCvSharp
             if (m == null)
                 throw new ArgumentNullException(nameof(m));
             NativeMethods.cuda_registerPageLocked(m.CvPtr);
-            GC.KeepAlive(m);
         }
 
         /// <summary>
@@ -127,7 +125,6 @@ namespace OpenCvSharp
             if (m == null)
                 throw new ArgumentNullException(nameof(m));
             NativeMethods.cuda_unregisterPageLocked(m.CvPtr);
-            GC.KeepAlive(m);
         }
 
         #endregion
@@ -147,7 +144,6 @@ namespace OpenCvSharp
             if (m == null)
                 throw new ArgumentNullException(nameof(m));
             NativeMethods.cuda_createContinuous1(rows, cols, type, m.CvPtr);
-            GC.KeepAlive(m);
         }
 
         /// <summary>
@@ -202,7 +198,6 @@ namespace OpenCvSharp
             if (m == null)
                 throw new ArgumentNullException(nameof(m));
             NativeMethods.cuda_ensureSizeIsEnough(rows, cols, type, m.CvPtr);
-            GC.KeepAlive(m);
         }
 
         /// <summary>

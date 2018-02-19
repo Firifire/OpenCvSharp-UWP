@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenCvSharp
 {
@@ -13,12 +16,12 @@ namespace OpenCvSharp
     /// Maximal Stable Extremal Regions class
     /// </summary>
 #endif
-    // ReSharper disable once InconsistentNaming
     public class MSER : Feature2D
     {
-        private Ptr ptrObj;
+        private bool disposed;
+        private Ptr<MSER> ptrObj;
 
-        //internal override IntPtr PtrObj => ptrObj.CvPtr;
+        internal override IntPtr PtrObj => ptrObj.CvPtr;
 
         #region Init & Disposal
 
@@ -27,7 +30,7 @@ namespace OpenCvSharp
         /// </summary>
         protected MSER(IntPtr p)
         {
-            ptrObj = new Ptr(p);
+            ptrObj = new Ptr<MSER>(p);
             ptr = ptrObj.Get();
         }
 
@@ -74,16 +77,48 @@ namespace OpenCvSharp
             return new MSER(ptr);
         }
 
+#if LANG_JP
+    /// <summary>
+    /// リソースの解放
+    /// </summary>
+    /// <param name="disposing">
+    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+    ///</param>
+#else
         /// <summary>
-        /// Releases managed resources
+        /// Releases the resources
         /// </summary>
-        protected override void DisposeManaged()
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            ptrObj?.Dispose();
-            ptrObj = null;
-            base.DisposeManaged();
-        }
+            if (!disposed)
+            {
+                try
+                {
+                    // releases managed resources
+                    if (disposing)
+                    {
+                        if (ptrObj != null)
+                        {
+                            ptrObj.Dispose();
+                            ptrObj = null;
+                        }
+                    }
+                    // releases unmanaged resources
 
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
+        }
         #endregion
 
         #region Properties
@@ -95,16 +130,15 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.features2d_MSER_getDelta(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.features2d_MSER_getDelta(ptr);
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.features2d_MSER_setDelta(ptr, value);
-                GC.KeepAlive(this);
             }
         }
 
@@ -115,16 +149,15 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.features2d_MSER_getMinArea(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.features2d_MSER_getMinArea(ptr);
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.features2d_MSER_setMinArea(ptr, value);
-                GC.KeepAlive(this);
             }
         }
 
@@ -135,16 +168,15 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.features2d_MSER_getMaxArea(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.features2d_MSER_getMaxArea(ptr);
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.features2d_MSER_setMaxArea(ptr, value);
-                GC.KeepAlive(this);
             }
         }
 
@@ -155,16 +187,15 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.features2d_MSER_getPass2Only(ptr) != 0;
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.features2d_MSER_getPass2Only(ptr) != 0;
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.features2d_MSER_setDelta(ptr, value ? 1 : 0);
-                GC.KeepAlive(this);
             }
         }
 
@@ -181,7 +212,8 @@ namespace OpenCvSharp
         public virtual void DetectRegions(
             InputArray image, out Point[][] msers, out Rect[] bboxes)
         {
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException(GetType().Name);
             if (image == null) 
                 throw new ArgumentNullException(nameof(image));
             image.ThrowIfDisposed();
@@ -191,7 +223,6 @@ namespace OpenCvSharp
             {
                 NativeMethods.features2d_MSER_detectRegions(
                     ptr, image.CvPtr, msersVec.CvPtr, bboxesVec.CvPtr);
-                GC.KeepAlive(this);
                 msers = msersVec.ToArray();
                 bboxes = bboxesVec.ToArray();
             }
@@ -200,25 +231,5 @@ namespace OpenCvSharp
         }
 
         #endregion
-
-        internal new class Ptr : OpenCvSharp.Ptr
-        {
-            public Ptr(IntPtr ptr) : base(ptr)
-            {
-            }
-
-            public override IntPtr Get()
-            {
-                var res = NativeMethods.features2d_Ptr_MSER_get(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-
-            protected override void DisposeUnmanaged()
-            {
-                NativeMethods.features2d_Ptr_MSER_delete(ptr);
-                base.DisposeUnmanaged();
-            }
-        }
     }
 }

@@ -20,7 +20,6 @@ namespace OpenCvSharp
             if (descriptors == null)
                 throw new ArgumentNullException(nameof(descriptors));
             NativeMethods.features2d_BOWTrainer_add(ptr, descriptors.CvPtr);
-            GC.KeepAlive(this);
             GC.KeepAlive(descriptors);
         }
 
@@ -33,7 +32,6 @@ namespace OpenCvSharp
             using (var descriptors = new VectorOfMat())
             {
                 NativeMethods.features2d_BOWTrainer_getDescriptors(ptr, descriptors.CvPtr);
-                GC.KeepAlive(this);
                 return descriptors.ToArray();
             }
         }
@@ -44,9 +42,7 @@ namespace OpenCvSharp
         /// <returns></returns>
         public int DescriptorsCount()
         {
-            var res = NativeMethods.features2d_BOWTrainer_descriptorsCount(ptr);
-            GC.KeepAlive(this);
-            return res;
+            return NativeMethods.features2d_BOWTrainer_descriptorsCount(ptr);
         }
 
         /// <summary>
@@ -55,7 +51,6 @@ namespace OpenCvSharp
         public virtual void Clear()
         {
             NativeMethods.features2d_BOWTrainer_clear(ptr);
-            GC.KeepAlive(this);
         }
 
         /// <summary>
