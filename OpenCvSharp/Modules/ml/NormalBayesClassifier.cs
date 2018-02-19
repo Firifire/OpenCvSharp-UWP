@@ -7,13 +7,17 @@ namespace OpenCvSharp.ML
     /// 正規分布データに対するベイズ分類器クラス
     /// </summary>
 #else
-    /// <summary>
+	/// <summary>
     /// Bayes classifier for normally distributed data
     /// </summary>
 #endif
     public class NormalBayesClassifier : StatModel
     {
-        private Ptr ptrObj;
+        /// <summary>
+        /// Track whether Dispose has been called
+        /// </summary>
+        private bool disposed;
+        private Ptr<NormalBayesClassifier> ptrObj;
 
         #region Init and Disposal
 
@@ -22,7 +26,7 @@ namespace OpenCvSharp.ML
         /// </summary>
         protected NormalBayesClassifier(IntPtr p)
         {
-            ptrObj = new Ptr(p);
+            ptrObj = new Ptr<NormalBayesClassifier>(p);
             ptr = ptrObj.Get();
         }
 
@@ -32,47 +36,51 @@ namespace OpenCvSharp.ML
         /// </summary>
         /// <returns></returns>
         public static NormalBayesClassifier Create()
-        {
+	    {
             IntPtr ptr = NativeMethods.ml_NormalBayesClassifier_create();
             return new NormalBayesClassifier(ptr);
-        }
+	    }
 
+#if LANG_JP
         /// <summary>
-        /// Loads and creates a serialized model from a file.
+        /// リソースの解放
         /// </summary>
-        /// <param name="filePath"></param>
-        /// <returns></returns>
-        public static NormalBayesClassifier Load(string filePath)
-        {
-            if (filePath == null)
-                throw new ArgumentNullException(nameof(filePath));
-            IntPtr ptr = NativeMethods.ml_NormalBayesClassifier_load(filePath);
-            return new NormalBayesClassifier(ptr);
-        }
-
+        /// <param name="disposing">
+        /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+        /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+        ///</param>
+#else
         /// <summary>
-        /// Loads algorithm from a String.
+        /// Clean up any resources being used.
         /// </summary>
-        /// <param name="strModel">he string variable containing the model you want to load.</param>
-        /// <returns></returns>
-        public static NormalBayesClassifier LoadFromString(string strModel)
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            if (strModel == null)
-                throw new ArgumentNullException(nameof(strModel));
-            IntPtr ptr = NativeMethods.ml_NormalBayesClassifier_loadFromString(strModel);
-            return new NormalBayesClassifier(ptr);
+            if (!disposed)
+            {
+                try
+                {
+                    if (disposing)
+                    {
+                        if (ptrObj != null)
+                        {
+                            ptrObj.Dispose();
+                            ptrObj = null;
+                        }
+                    }
+                    ptr = IntPtr.Zero;
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
-
-        /// <summary>
-        /// Releases managed resources
-        /// </summary>
-        protected override void DisposeManaged()
-        {
-            ptrObj?.Dispose();
-            ptrObj = null;
-            base.DisposeManaged();
-        }
-
         #endregion
 
         #region Properties
@@ -94,11 +102,12 @@ namespace OpenCvSharp.ML
         /// output vector outputs. The predicted class for a single input vector is returned by the method. 
         /// The vector outputProbs contains the output probabilities corresponding to each element of result.
         /// </remarks>
-        public float PredictProb(InputArray inputs, OutputArray outputs,
-            OutputArray outputProbs, int flags = 0)
+	    public float PredictProb(InputArray inputs, OutputArray outputs,
+	        OutputArray outputProbs, int flags = 0)
         {
-            ThrowIfDisposed();
-            if (inputs == null)
+            if (disposed)
+                throw new ObjectDisposedException(GetType().Name);
+            if (inputs == null) 
                 throw new ArgumentNullException(nameof(inputs));
             if (outputs == null)
                 throw new ArgumentNullException(nameof(outputs));
@@ -113,33 +122,10 @@ namespace OpenCvSharp.ML
                 ptr, inputs.CvPtr, outputs.CvPtr, outputProbs.CvPtr, flags);
             outputs.Fix();
             outputProbs.Fix();
-            GC.KeepAlive(this);
             GC.KeepAlive(inputs);
-            GC.KeepAlive(outputs);
-            GC.KeepAlive(outputProbs);
             return result;
         }
 
-        #endregion
-
-        internal class Ptr : OpenCvSharp.Ptr
-        {
-            public Ptr(IntPtr ptr) : base(ptr)
-            {
-            }
-
-            public override IntPtr Get()
-            {
-                var res = NativeMethods.ml_Ptr_NormalBayesClassifier_get(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-
-            protected override void DisposeUnmanaged()
-            {
-                NativeMethods.ml_Ptr_NormalBayesClassifier_delete(ptr);
-                base.DisposeUnmanaged();
-            }
-        }
+	    #endregion
     }
 }

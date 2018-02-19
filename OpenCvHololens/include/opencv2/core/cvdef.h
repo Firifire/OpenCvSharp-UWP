@@ -213,7 +213,7 @@ enum CpuFeatures {
 #  endif
 #endif
 
-#if (defined WIN32 || defined _WIN32) && defined(_M_ARM)
+#if (defined WIN32 || defined false) && defined(_M_ARM)
 # include <Intrin.h>
 # include <arm_neon.h>
 # define CV_NEON 1
@@ -353,7 +353,7 @@ Cv64suf;
 #  define DISABLE_OPENCV_24_COMPATIBILITY
 #endif
 
-#if (defined WIN32 || defined _WIN32 || defined WINCE || defined __CYGWIN__) && defined CVAPI_EXPORTS
+#if (defined WIN32 || defined false || defined WINCE || defined __CYGWIN__) && defined CVAPI_EXPORTS
 #  define CV_EXPORTS __declspec(dllexport)
 #elif defined __GNUC__ && __GNUC__ >= 4
 #  define CV_EXPORTS __attribute__ ((visibility ("default")))

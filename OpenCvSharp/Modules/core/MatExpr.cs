@@ -10,8 +10,9 @@ namespace OpenCvSharp
     /// </summary>
     public sealed partial class MatExpr : DisposableCvObject
     {
-        #region Init & Disposal
+        private bool disposed;
 
+        #region Init & Disposal
         /// <summary>
         /// 
         /// </summary>
@@ -20,7 +21,6 @@ namespace OpenCvSharp
         {
             this.ptr = ptr;
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -29,22 +29,38 @@ namespace OpenCvSharp
         {
             if(mat == null)
                 throw new ArgumentNullException(nameof(mat));
-            ptr = NativeMethods.core_MatExpr_new2(mat.CvPtr);
+            ptr = NativeMethods.core_MatExpr_new(mat.CvPtr);
         }
 
         /// <summary>
-        /// Releases unmanaged resources
+        /// 
         /// </summary>
-        protected override void DisposeUnmanaged()
+        /// <param name="disposing"></param>
+        protected override void Dispose(bool disposing)
         {
-            NativeMethods.core_MatExpr_delete(ptr);
-            base.DisposeUnmanaged();
+            if (!disposed)
+            {
+                try
+                {
+                    if (disposing)
+                    {
+                    }
+                    //Console.WriteLine("MatExpr disposed");
+                    if (ptr != IntPtr.Zero)
+                    {
+                        NativeMethods.core_MatExpr_delete(ptr);
+                    }
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
-
         #endregion
 
         #region Cast
-
         /// <summary>
         /// 
         /// </summary>
@@ -55,7 +71,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_MatExpr_toMat(self.ptr);
-                GC.KeepAlive(self);
                 Mat retVal = new Mat(retPtr);
                 return retVal;
             }
@@ -64,7 +79,6 @@ namespace OpenCvSharp
                 throw PInvokeHelper.CreateException(ex);
             }
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -73,7 +87,6 @@ namespace OpenCvSharp
         {
             return (Mat)this;
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -83,7 +96,6 @@ namespace OpenCvSharp
         {
             return new MatExpr(mat);
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -93,7 +105,6 @@ namespace OpenCvSharp
         {
             return new MatExpr(mat);
         }
-
         #endregion
 
         #region Operators
@@ -121,7 +132,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorUnaryMinus_MatExpr(e.CvPtr);
-                GC.KeepAlive(e);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -143,7 +153,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorUnaryNot_MatExpr(e.CvPtr);
-                GC.KeepAlive(e);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -170,8 +179,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorAdd_MatExprMat(e.CvPtr, m.CvPtr);
-                GC.KeepAlive(e);
-                GC.KeepAlive(m);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -196,8 +203,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorAdd_MatMatExpr(m.CvPtr, e.CvPtr);
-                GC.KeepAlive(m);
-                GC.KeepAlive(e);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -219,7 +224,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorAdd_MatExprScalar(e.CvPtr, s);
-                GC.KeepAlive(e);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -241,7 +245,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorAdd_ScalarMatExpr(s, e.CvPtr);
-                GC.KeepAlive(e);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -266,8 +269,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorAdd_MatExprMatExpr(e1.CvPtr, e2.CvPtr);
-                GC.KeepAlive(e1);
-                GC.KeepAlive(e2);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -294,8 +295,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorSubtract_MatExprMat(e.CvPtr, m.CvPtr);
-                GC.KeepAlive(e);
-                GC.KeepAlive(m);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -320,8 +319,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorSubtract_MatMatExpr(m.CvPtr, e.CvPtr);
-                GC.KeepAlive(m);
-                GC.KeepAlive(e);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -343,7 +340,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorSubtract_MatExprScalar(e.CvPtr, s);
-                GC.KeepAlive(e);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -365,7 +361,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorSubtract_ScalarMatExpr(s, e.CvPtr);
-                GC.KeepAlive(e);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -390,8 +385,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorSubtract_MatExprMatExpr(e1.CvPtr, e2.CvPtr);
-                GC.KeepAlive(e1);
-                GC.KeepAlive(e2);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -418,8 +411,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorMultiply_MatExprMat(e.CvPtr, m.CvPtr);
-                GC.KeepAlive(e);
-                GC.KeepAlive(m);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -444,8 +435,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorMultiply_MatMatExpr(m.CvPtr, e.CvPtr);
-                GC.KeepAlive(m);
-                GC.KeepAlive(e);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -467,7 +456,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorMultiply_MatExprDouble(e.CvPtr, s);
-                GC.KeepAlive(e);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -489,7 +477,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorMultiply_DoubleMatExpr(s, e.CvPtr);
-                GC.KeepAlive(e);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -514,8 +501,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorMultiply_MatExprMatExpr(e1.CvPtr, e2.CvPtr);
-                GC.KeepAlive(e1);
-                GC.KeepAlive(e2);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -542,8 +527,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorDivide_MatExprMat(e.CvPtr, m.CvPtr);
-                GC.KeepAlive(e);
-                GC.KeepAlive(m);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -568,8 +551,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorDivide_MatMatExpr(m.CvPtr, e.CvPtr);
-                GC.KeepAlive(m);
-                GC.KeepAlive(e);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -591,7 +572,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorDivide_MatExprDouble(e.CvPtr, s);
-                GC.KeepAlive(e);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -613,7 +593,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorDivide_DoubleMatExpr(s, e.CvPtr);
-                GC.KeepAlive(e);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -638,8 +617,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_operatorDivide_MatExprMatExpr(e1.CvPtr, e2.CvPtr);
-                GC.KeepAlive(e1);
-                GC.KeepAlive(e2);
                 return new MatExpr(retPtr);
             }
             catch (BadImageFormatException ex)
@@ -665,7 +642,6 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
                 return SubMat(rowStart, rowEnd, colStart, colEnd);
             }
         }
@@ -680,18 +656,14 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
                 return SubMat(rowRange, colRange);
             }
             set
             {
-                ThrowIfDisposed();
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 MatExpr subMatExpr = SubMat(rowRange, colRange);
                 NativeMethods.core_Mat_assignment_FromMatExpr(subMatExpr.CvPtr, value.CvPtr);
-                GC.KeepAlive(subMatExpr);
-                GC.KeepAlive(value);
             }
         }
 
@@ -704,18 +676,14 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
                 return SubMat(roi);
             }
             set
             {
-                ThrowIfDisposed();
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 MatExpr subMatExpr = SubMat(roi);
                 NativeMethods.core_Mat_assignment_FromMatExpr(subMatExpr.CvPtr, value.CvPtr);
-                GC.KeepAlive(subMatExpr);
-                GC.KeepAlive(value);
             }
         }
         #endregion
@@ -734,7 +702,6 @@ namespace OpenCvSharp
                 : base(parent)
             {
             }
-
             /// <summary>
             /// 
             /// </summary>
@@ -746,7 +713,6 @@ namespace OpenCvSharp
                 {
                     parent.ThrowIfDisposed();
                     IntPtr retPtr = NativeMethods.core_MatExpr_col(parent.CvPtr, x);
-                    GC.KeepAlive(this);
                     return new MatExpr(retPtr);
                 }
             }
@@ -778,8 +744,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_MatExpr_cross(ptr, m.CvPtr);
-                GC.KeepAlive(this);
-                GC.KeepAlive(m);
                 Mat retVal = new Mat(retPtr);
                 return retVal;
             }
@@ -800,8 +764,7 @@ namespace OpenCvSharp
             ThrowIfDisposed();
             try
             {
-                IntPtr retPtr = NativeMethods.core_MatExpr_diag2(ptr, d);
-                GC.KeepAlive(this);
+                IntPtr retPtr = NativeMethods.core_MatExpr_diag(ptr, d);
                 MatExpr retVal = new MatExpr(retPtr);
                 return retVal;
             }
@@ -823,10 +786,7 @@ namespace OpenCvSharp
             m.ThrowIfDisposed();
             try
             {
-                var res = NativeMethods.core_MatExpr_dot(ptr, m.CvPtr);
-                GC.KeepAlive(this);
-                GC.KeepAlive(m);
-                return res;
+                return NativeMethods.core_MatExpr_dot(ptr, m.CvPtr);
             }
             catch (BadImageFormatException ex)
             {
@@ -845,8 +805,7 @@ namespace OpenCvSharp
             ThrowIfDisposed();
             try
             {
-                IntPtr retPtr = NativeMethods.core_MatExpr_inv2(ptr, (int)method);
-                GC.KeepAlive(this);
+                IntPtr retPtr = NativeMethods.core_MatExpr_inv(ptr, (int)method);
                 MatExpr retVal = new MatExpr(retPtr);
                 return retVal;
             }
@@ -870,8 +829,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_MatExpr_mul_toMatExpr(ptr, e.CvPtr, scale);
-                GC.KeepAlive(this);
-                GC.KeepAlive(e);
                 MatExpr retVal = new MatExpr(retPtr);
                 return retVal;
             }
@@ -893,8 +850,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_MatExpr_mul_toMat(ptr, m.CvPtr, scale);
-                GC.KeepAlive(this);
-                GC.KeepAlive(m);
                 MatExpr retVal = new MatExpr(retPtr);
                 return retVal;
             }
@@ -929,7 +884,6 @@ namespace OpenCvSharp
                 {
                     parent.ThrowIfDisposed();
                     IntPtr retPtr = NativeMethods.core_MatExpr_row(parent.CvPtr, y);
-                    GC.KeepAlive(this);
                     return new MatExpr(retPtr);
                 }
             }
@@ -959,9 +913,7 @@ namespace OpenCvSharp
                 ThrowIfDisposed();
                 try
                 {
-                    var res = NativeMethods.core_MatExpr_size(ptr);
-                    GC.KeepAlive(this);
-                    return res;
+                    return NativeMethods.core_MatExpr_size(ptr);
                 }
                 catch (BadImageFormatException ex)
                 {
@@ -985,7 +937,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_MatExpr_submat(ptr, rowStart, rowEnd, colStart, colEnd);
-                GC.KeepAlive(this);
                 MatExpr retVal = new MatExpr(retPtr);
                 return retVal;
             }
@@ -1025,7 +976,6 @@ namespace OpenCvSharp
             try
             {
                 IntPtr retPtr = NativeMethods.core_MatExpr_t(ptr);
-                GC.KeepAlive(this);
                 MatExpr retVal = new MatExpr(retPtr);
                 return retVal;
             }
@@ -1046,9 +996,7 @@ namespace OpenCvSharp
                 ThrowIfDisposed();
                 try
                 {
-                    var res = (MatType)NativeMethods.core_MatExpr_type(ptr);
-                    GC.KeepAlive(this);
-                    return res;
+                    return (MatType)NativeMethods.core_MatExpr_type(ptr);
                 }
                 catch (BadImageFormatException ex)
                 {

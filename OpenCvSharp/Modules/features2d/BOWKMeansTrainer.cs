@@ -24,13 +24,45 @@ namespace OpenCvSharp
             ptr = NativeMethods.features2d_BOWKMeansTrainer_new(clusterCount, termCritValue, attempts, (int)flags);
         }
 
+#if LANG_JP
+    /// <summary>
+    /// リソースの解放
+    /// </summary>
+    /// <param name="disposing">
+    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+    ///</param>
+#else
         /// <summary>
-        /// Releases unmanaged resources
+        /// Releases the resources
         /// </summary>
-        protected override void DisposeUnmanaged()
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            NativeMethods.features2d_BOWKMeansTrainer_delete(ptr);
-            base.DisposeUnmanaged();
+            if (!IsDisposed)
+            {
+                try
+                {
+                    // releases managed resources
+                    if (disposing)
+                    {
+                    }
+                    else
+                    {
+                        if (ptr != IntPtr.Zero)
+                            NativeMethods.features2d_BOWKMeansTrainer_delete(ptr);
+                        ptr = IntPtr.Zero;
+                    }
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
 
         /// <summary>
@@ -39,9 +71,9 @@ namespace OpenCvSharp
         /// <returns></returns>
         public override Mat Cluster()
         {
-            ThrowIfDisposed();
+            if (IsDisposed)
+                throw new ObjectDisposedException(GetType().Name);
             IntPtr p = NativeMethods.features2d_BOWKMeansTrainer_cluster1(ptr);
-            GC.KeepAlive(this);
             return new Mat(p);
         }
 
@@ -54,10 +86,10 @@ namespace OpenCvSharp
         /// <returns></returns>
         public override Mat Cluster(Mat descriptors)
         {
-            ThrowIfDisposed();
+            if (IsDisposed)
+                throw new ObjectDisposedException(GetType().Name);
             descriptors.ThrowIfDisposed();
             IntPtr p = NativeMethods.features2d_BOWKMeansTrainer_cluster2(ptr, descriptors.CvPtr);
-            GC.KeepAlive(this);
             GC.KeepAlive(descriptors);
             return new Mat(p);
         }

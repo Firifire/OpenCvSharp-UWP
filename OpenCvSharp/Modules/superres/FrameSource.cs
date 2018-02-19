@@ -36,10 +36,8 @@ namespace OpenCvSharp
         {
             if (String.IsNullOrEmpty("fileName"))
                 throw new ArgumentNullException(nameof(fileName));
-#if !true
             if (!File.Exists(fileName))
                 throw new FileNotFoundException("", fileName);
-#endif
             IntPtr ptr = NativeMethods.superres_createFrameSource_Video(fileName);
             return FrameSourceImpl.FromPtr(ptr);
         }
@@ -53,10 +51,8 @@ namespace OpenCvSharp
         {
             if (String.IsNullOrEmpty("fileName"))
                 throw new ArgumentNullException(nameof(fileName));
-#if !true
             if (!File.Exists(fileName))
                 throw new FileNotFoundException("", fileName);
-#endif
             IntPtr ptr = NativeMethods.superres_createFrameSource_Video_CUDA(fileName);
             return FrameSourceImpl.FromPtr(ptr);
         }
@@ -72,9 +68,9 @@ namespace OpenCvSharp
             return FrameSourceImpl.FromPtr(ptr);
         }
 
-#endregion
+        #endregion
 
-#region Methods
+        #region Methods
 
         /// <summary>
         /// 
@@ -87,6 +83,6 @@ namespace OpenCvSharp
         /// </summary>
         public abstract void Reset();
 
-#endregion
+        #endregion
     }
 }

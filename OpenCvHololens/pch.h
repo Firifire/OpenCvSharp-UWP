@@ -9,5 +9,5 @@
 #include <windows.h>
 
 #ifndef CVAPI
-#define CVAPI extern "C" int __declspec(dllexport) __stdcall
+#define CVAPI(rettype) CV_EXTERN_C CV_EXPORTS rettype CV_CDECL
 #endif

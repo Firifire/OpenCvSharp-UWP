@@ -21,12 +21,11 @@ String _windowName = "Unity OpenCV Interop Sample";
 VideoCapture _capture;
 int _scale = 1;
 
-CVAPI  Init(int& outCameraWidth, int& outCameraHeight)
+CVAPI(int)  Init(int& outCameraWidth, int& outCameraHeight)
 {
 	// Load LBP face cascade.
 	if (!_faceCascade.load("lbpcascade_frontalface.xml"))
 		return -1;
-
 	// Open the stream.
 	_capture.open(0);
 	if (!_capture.isOpened())
@@ -38,17 +37,17 @@ CVAPI  Init(int& outCameraWidth, int& outCameraHeight)
 	return 0;
 }
 
-CVAPI Close()
+CVAPI(void) Close()
 {
 	_capture.release();
 }
 
-CVAPI SetScale(int scale)
+CVAPI(void) SetScale(int scale)
 {
 	_scale = scale;
 }
 
-CVAPI Detect(Circle* outFaces, int maxOutFacesCount, int& outDetectedFacesCount)
+CVAPI(void) Detect(Circle* outFaces, int maxOutFacesCount, int& outDetectedFacesCount)
 {
 	Mat frame;
 	_capture >> frame;

@@ -12,6 +12,13 @@ namespace OpenCvSharp
     internal class VectorOfDTreesSplit : DisposableCvObject, IStdVector<DTrees.Split>
     {
         /// <summary>
+        /// Track whether Dispose has been called
+        /// </summary>
+        private bool disposed = false;
+
+        #region Init and Dispose
+
+        /// <summary>
         /// 
         /// </summary>
         public VectorOfDTreesSplit()
@@ -52,25 +59,41 @@ namespace OpenCvSharp
         }
 
         /// <summary>
-        /// Releases unmanaged resources
+        /// Clean up any resources being used.
         /// </summary>
-        protected override void DisposeUnmanaged()
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+        protected override void Dispose(bool disposing)
         {
-            NativeMethods.vector_DTrees_Split_delete(ptr);
-            base.DisposeUnmanaged();
+            if (!disposed)
+            {
+                try
+                {
+                    if (IsEnabledDispose)
+                    {
+                        NativeMethods.vector_DTrees_Split_delete(ptr);
+                    }
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// vector.size()
         /// </summary>
         public int Size
         {
-            get
-            {
-                var res = NativeMethods.vector_DTrees_Split_getSize(ptr).ToInt32();
-                GC.KeepAlive(this);
-                return res;
-            }
+            get { return NativeMethods.vector_DTrees_Split_getSize(ptr).ToInt32(); }
         }
 
         /// <summary>
@@ -78,13 +101,12 @@ namespace OpenCvSharp
         /// </summary>
         public IntPtr ElemPtr
         {
-            get
-            {
-                var res = NativeMethods.vector_DTrees_Split_getPointer(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
+            get { return NativeMethods.vector_DTrees_Split_getPointer(ptr); }
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Converts std::vector to managed array
@@ -100,11 +122,11 @@ namespace OpenCvSharp
             var dst = new DTrees.Split[size];
             using (var dstPtr = new ArrayAddress1<DTrees.Split>(dst))
             {
-                MemoryHelper.CopyMemory(dstPtr, ElemPtr, MarshalHelper.SizeOf<DTrees.Split>() * dst.Length);
+                Utility.CopyMemory(dstPtr, ElemPtr, Marshal.SizeOf(typeof(DTrees.Split)) * dst.Length);
             }
-            GC.KeepAlive(this); // ElemPtr is IntPtr to memory held by this object, so
-                                // make sure we are not disposed until finished with copy.
             return dst;
         }
+
+        #endregion
     }
 }

@@ -8,6 +8,7 @@ namespace OpenCvSharp
     /// </summary>
     public sealed class OutputArrayOfMatList : OutputArray
     {
+        private bool disposed;
         private List<Mat> list;
 
         /// <summary>
@@ -43,19 +44,23 @@ namespace OpenCvSharp
             using (var vectorOfMat = new VectorOfMat())
             {
                 NativeMethods.core_OutputArray_getVectorOfMat(ptr, vectorOfMat.CvPtr);
-                GC.KeepAlive(this);
                 list.Clear();
                 list.AddRange(vectorOfMat.ToArray());
             }
         }
 
         /// <summary>
-        /// Releases managed resources
+        /// 
         /// </summary>
-        protected override void DisposeManaged()
+        /// <param name="disposing"></param>
+        protected override void Dispose(bool disposing)
         {
-            list = null;
-            base.DisposeManaged();
+            if (!disposed)
+            {
+                list = null;
+                disposed = true;
+                base.Dispose(disposing);
+            }
         }
     }
 }

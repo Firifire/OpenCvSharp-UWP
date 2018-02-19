@@ -8,8 +8,10 @@ namespace OpenCvSharp
     /// <summary>
     /// Sparse matrix class.
     /// </summary>
-    public class SparseMat : DisposableCvObject
+    public class SparseMat : DisposableCvObject, ICloneable
     {
+        private bool disposed;
+
         #region Init & Disposal
 
 #if LANG_JP
@@ -86,7 +88,6 @@ namespace OpenCvSharp
                 throw new ArgumentNullException(nameof(m));
             m.ThrowIfDisposed();
             ptr = NativeMethods.core_SparseMat_new3(m.CvPtr);
-            GC.KeepAlive(m);
             if (ptr == IntPtr.Zero)
                 throw new OpenCvSharpException();
         }
@@ -105,14 +106,50 @@ namespace OpenCvSharp
             Dispose();
         }
 
+#if LANG_JP
         /// <summary>
-        /// Releases unmanaged resources
+        /// リソースの解放
         /// </summary>
-        protected override void DisposeUnmanaged()
+        /// <param name="disposing">
+        /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+        /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+        ///</param>
+#else
+        /// <summary>
+        /// Releases the resources
+        /// </summary>
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            NativeMethods.core_SparseMat_delete(ptr);
-            base.DisposeUnmanaged();
+            if (!disposed)
+            {
+                try
+                {
+                    // releases managed resources
+                    if (disposing)
+                    {
+                    }
+                    // releases unmanaged resources
+                    if (IsEnabledDispose)
+                    {
+                        if (ptr != IntPtr.Zero)
+                        {
+                            NativeMethods.core_SparseMat_delete(ptr);
+                        }
+                    }
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
+
 
         #region Static Initializers
 
@@ -151,8 +188,6 @@ namespace OpenCvSharp
             if(m == null)
                 throw new ArgumentNullException(nameof(m));
             NativeMethods.core_SparseMat_operatorAssign_SparseMat(ptr, m.CvPtr);
-            GC.KeepAlive(this);
-            GC.KeepAlive(m);
             return this;
         }
 
@@ -167,8 +202,6 @@ namespace OpenCvSharp
             if (m == null)
                 throw new ArgumentNullException(nameof(m));
             NativeMethods.core_SparseMat_operatorAssign_Mat(ptr, m.CvPtr);
-            GC.KeepAlive(this);
-            GC.KeepAlive(m);
             return this;
         }
         
@@ -180,8 +213,11 @@ namespace OpenCvSharp
         {
             ThrowIfDisposed();
             IntPtr p = NativeMethods.core_SparseMat_clone(ptr);
-            GC.KeepAlive(this);
             return new SparseMat(p);
+        }
+        object ICloneable.Clone()
+        {
+            return Clone();
         }
 
         /// <summary>
@@ -192,8 +228,6 @@ namespace OpenCvSharp
         {
             ThrowIfDisposed();
             NativeMethods.core_SparseMat_copyTo_SparseMat(ptr, m.CvPtr);
-            GC.KeepAlive(this);
-            GC.KeepAlive(m);
         }
         /// <summary>
         /// converts sparse matrix to dense matrix.
@@ -203,8 +237,6 @@ namespace OpenCvSharp
         {
             ThrowIfDisposed();
             NativeMethods.core_SparseMat_copyTo_Mat(ptr, m.CvPtr);
-            GC.KeepAlive(this);
-            GC.KeepAlive(m);
         }
 
         /// <summary>
@@ -217,8 +249,6 @@ namespace OpenCvSharp
         {
             ThrowIfDisposed();
             NativeMethods.core_SparseMat_convertTo_SparseMat(ptr, m.CvPtr, rtype, alpha);
-            GC.KeepAlive(this);
-            GC.KeepAlive(m);
         }
 
         /// <summary>
@@ -231,9 +261,7 @@ namespace OpenCvSharp
         public void ConvertTo(Mat m, int rtype, double alpha = 1, double beta = 0)
         {
             ThrowIfDisposed();
-            NativeMethods.core_SparseMat_convertTo_Mat(ptr, m.CvPtr, rtype, alpha, beta);
-            GC.KeepAlive(this);
-            GC.KeepAlive(m);
+            NativeMethods.core_SparseMat_convertTo_SparseMat(ptr, m.CvPtr, rtype, alpha);
         }
 
         /// <summary>
@@ -245,8 +273,6 @@ namespace OpenCvSharp
         {
             ThrowIfDisposed();
             NativeMethods.core_SparseMat_assignTo(ptr, m.CvPtr, type);
-            GC.KeepAlive(this);
-            GC.KeepAlive(m);
         }
 
         /// <summary>
@@ -265,7 +291,6 @@ namespace OpenCvSharp
             if (sizes.Length == 1)
                 throw new ArgumentException("sizes is empty");
             NativeMethods.core_SparseMat_create(ptr, sizes.Length, sizes, type);
-            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -275,7 +300,6 @@ namespace OpenCvSharp
         {
             ThrowIfDisposed();
             NativeMethods.core_SparseMat_clear(ptr);
-            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -285,7 +309,6 @@ namespace OpenCvSharp
         {
             ThrowIfDisposed();
             NativeMethods.core_SparseMat_addref(ptr);
-            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -295,9 +318,8 @@ namespace OpenCvSharp
         public int ElemSize()
         {
             ThrowIfDisposed();
-            var res = NativeMethods.core_SparseMat_elemSize(ptr);
-            GC.KeepAlive(this);
-            return res;
+            return NativeMethods.core_SparseMat_elemSize(ptr);
+
         }
 
         /// <summary>
@@ -307,9 +329,8 @@ namespace OpenCvSharp
         public int ElemSize1()
         {
             ThrowIfDisposed();
-            var res = NativeMethods.core_SparseMat_elemSize1(ptr);
-            GC.KeepAlive(this);
-            return res;
+            return NativeMethods.core_SparseMat_elemSize1(ptr);
+
         }
 
         /// <summary>
@@ -319,9 +340,7 @@ namespace OpenCvSharp
         public MatType Type()
         {
             ThrowIfDisposed();
-            var res = NativeMethods.core_SparseMat_type(ptr);
-            GC.KeepAlive(this);
-            return res;
+            return NativeMethods.core_SparseMat_type(ptr);
         }
 
         /// <summary>
@@ -331,9 +350,7 @@ namespace OpenCvSharp
         public int Depth()
         {
             ThrowIfDisposed();
-            var res = NativeMethods.core_SparseMat_depth(ptr);
-            GC.KeepAlive(this);
-            return res;
+            return NativeMethods.core_SparseMat_depth(ptr);
         }
 
         /// <summary>
@@ -342,9 +359,7 @@ namespace OpenCvSharp
         public int Dims()
         {
             ThrowIfDisposed();
-            var res = NativeMethods.core_SparseMat_dims(ptr);
-            GC.KeepAlive(this);
-            return res;
+            return NativeMethods.core_Mat_dims(ptr);
         }
 
         /// <summary>
@@ -354,9 +369,7 @@ namespace OpenCvSharp
         public int Channels()
         {
             ThrowIfDisposed();
-            var res = NativeMethods.core_SparseMat_channels(ptr);
-            GC.KeepAlive(this);
-            return res;
+            return NativeMethods.core_Mat_channels(ptr);
         }
 
         /// <summary>
@@ -374,7 +387,6 @@ namespace OpenCvSharp
             int length = Dims();
             int[] size = new int[length];
             Marshal.Copy(sizePtr, size, 0, length);
-            GC.KeepAlive(this);
             return size;
         }
 
@@ -386,9 +398,7 @@ namespace OpenCvSharp
         public int Size(int dim)
         {
             ThrowIfDisposed();
-            var res = NativeMethods.core_SparseMat_size2(ptr, dim);
-            GC.KeepAlive(this);
-            return res;
+            return NativeMethods.core_SparseMat_size2(ptr, dim);
         }
 
         #region Hash
@@ -401,9 +411,7 @@ namespace OpenCvSharp
         public long Hash(int i0)
         {
             ThrowIfDisposed();
-            var res = NativeMethods.core_SparseMat_hash_1d(ptr, i0).ToInt64();
-            GC.KeepAlive(this);
-            return res;
+            return NativeMethods.core_SparseMat_hash_1d(ptr, i0).ToInt64();
         }
 
         /// <summary>
@@ -415,9 +423,7 @@ namespace OpenCvSharp
         public long Hash(int i0, int i1)
         {
             ThrowIfDisposed();
-            var res = NativeMethods.core_SparseMat_hash_2d(ptr, i0, i1).ToInt64();
-            GC.KeepAlive(this);
-            return res;
+            return NativeMethods.core_SparseMat_hash_2d(ptr, i0, i1).ToInt64();
         }
 
         /// <summary>
@@ -430,9 +436,7 @@ namespace OpenCvSharp
         public long Hash(int i0, int i1, int i2)
         {
             ThrowIfDisposed();
-            var res = NativeMethods.core_SparseMat_hash_3d(ptr, i0, i1, i2).ToInt64();
-            GC.KeepAlive(this);
-            return res;
+            return NativeMethods.core_SparseMat_hash_3d(ptr, i0, i1, i2).ToInt64();
         }
 
         /// <summary>
@@ -443,9 +447,7 @@ namespace OpenCvSharp
         public long Hash(params int[] idx)
         {
             ThrowIfDisposed();
-            var res = NativeMethods.core_SparseMat_hash_nd(ptr, idx).ToInt64();
-            GC.KeepAlive(this);
-            return res;
+            return NativeMethods.core_SparseMat_hash_nd(ptr, idx).ToInt64();
         }
 
         #endregion
@@ -460,20 +462,15 @@ namespace OpenCvSharp
         /// <returns></returns>
         public IntPtr Ptr(int i0, bool createMissing, long? hashVal = null)
         {
-            IntPtr res;
             //ThrowIfDisposed();
             if (hashVal.HasValue)
             {
                 ulong hashVal0 = (ulong)hashVal.Value;
-                res = NativeMethods.core_SparseMat_ptr_1d(
+                return NativeMethods.core_SparseMat_ptr_1d(
                     ptr, i0, createMissing ? 1 : 0, ref hashVal0);
             }
-            else
-                res = NativeMethods.core_SparseMat_ptr_1d(
+            return NativeMethods.core_SparseMat_ptr_1d(
                     ptr, i0, createMissing ? 1 : 0, IntPtr.Zero);
-
-            GC.KeepAlive(this);
-            return res;
         }
 
         /// <summary>
@@ -486,20 +483,15 @@ namespace OpenCvSharp
         /// <returns></returns>
         public IntPtr Ptr(int i0, int i1, bool createMissing, long? hashVal = null)
         {
-            IntPtr res;
             //ThrowIfDisposed();
             if (hashVal.HasValue)
             {
                 ulong hashVal0 = (ulong)hashVal.Value;
-                res = NativeMethods.core_SparseMat_ptr_2d(
+                return NativeMethods.core_SparseMat_ptr_2d(
                     ptr, i0, i1, createMissing ? 1 : 0, ref hashVal0);
             }
-            else
-                res = NativeMethods.core_SparseMat_ptr_2d(
+            return NativeMethods.core_SparseMat_ptr_2d(
                     ptr, i0, i1, createMissing ? 1 : 0, IntPtr.Zero);
-
-            GC.KeepAlive(this);
-            return res;
         }
 
         /// <summary>
@@ -513,20 +505,15 @@ namespace OpenCvSharp
         /// <returns></returns>
         public IntPtr Ptr(int i0, int i1, int i2, bool createMissing, long? hashVal = null)
         {
-            IntPtr res;
             //ThrowIfDisposed();
             if (hashVal.HasValue)
             {
                 ulong hashVal0 = (ulong)hashVal.Value;
-                res = NativeMethods.core_SparseMat_ptr_3d(
+                return NativeMethods.core_SparseMat_ptr_3d(
                     ptr, i0, i1, i2, createMissing ? 1 : 0, ref hashVal0);
             }
-            else
-                res = NativeMethods.core_SparseMat_ptr_3d(
+            return NativeMethods.core_SparseMat_ptr_3d(
                     ptr, i0, i1, i2, createMissing ? 1 : 0, IntPtr.Zero);
-
-            GC.KeepAlive(this);
-            return res;
         }
 
         /// <summary>
@@ -538,19 +525,15 @@ namespace OpenCvSharp
         /// <returns></returns>
         public IntPtr Ptr(int[] idx, bool createMissing, long? hashVal = null)
         {
-            IntPtr res;
             //ThrowIfDisposed();
             if (hashVal.HasValue)
             {
                 ulong hashVal0 = (ulong)hashVal.Value;
-                res = NativeMethods.core_SparseMat_ptr_nd(
+                return NativeMethods.core_SparseMat_ptr_nd(
                     ptr, idx, createMissing ? 1 : 0, ref hashVal0);
             }
-            else
-                res = NativeMethods.core_SparseMat_ptr_nd(
+            return NativeMethods.core_SparseMat_ptr_nd(
                     ptr, idx, createMissing ? 1 : 0, IntPtr.Zero);
-            GC.KeepAlive(this);
-            return res;
         }
 
         #endregion
@@ -569,7 +552,7 @@ namespace OpenCvSharp
             if (p == IntPtr.Zero)
                 return null;
 
-            return MarshalHelper.PtrToStructure<T>(p);
+            return (T)Marshal.PtrToStructure(p, typeof(T));
         }
 
         /// <summary>
@@ -586,7 +569,7 @@ namespace OpenCvSharp
             if (p == IntPtr.Zero)
                 return null;
 
-            return MarshalHelper.PtrToStructure<T>(p);
+            return (T)Marshal.PtrToStructure(p, typeof(T));
         }
 
         /// <summary>
@@ -604,7 +587,7 @@ namespace OpenCvSharp
             if (p == IntPtr.Zero)
                 return null;
 
-            return MarshalHelper.PtrToStructure<T>(p);
+            return (T)Marshal.PtrToStructure(p, typeof(T));
         }
 
         /// <summary>
@@ -620,7 +603,7 @@ namespace OpenCvSharp
             if (p == IntPtr.Zero)
                 return null;
 
-            return MarshalHelper.PtrToStructure<T>(p);
+            return (T)Marshal.PtrToStructure(p, typeof(T));
         }
 
         #endregion
@@ -639,7 +622,7 @@ namespace OpenCvSharp
             if (p == IntPtr.Zero)
                 return default(T);
 
-            return MarshalHelper.PtrToStructure<T>(p);
+            return (T)Marshal.PtrToStructure(p, typeof(T));
         }
 
         /// <summary>
@@ -656,7 +639,7 @@ namespace OpenCvSharp
             if (p == IntPtr.Zero)
                 return default(T);
 
-            return MarshalHelper.PtrToStructure<T>(p);
+            return (T)Marshal.PtrToStructure(p, typeof(T));
         }
 
         /// <summary>
@@ -674,7 +657,7 @@ namespace OpenCvSharp
             if (p == IntPtr.Zero)
                 return default(T);
 
-            return MarshalHelper.PtrToStructure<T>(p);
+            return (T)Marshal.PtrToStructure(p, typeof(T));
         }
 
         /// <summary>
@@ -690,7 +673,7 @@ namespace OpenCvSharp
             if (p == IntPtr.Zero)
                 return default(T);
 
-            return MarshalHelper.PtrToStructure<T>(p);
+            return (T)Marshal.PtrToStructure(p, typeof(T));
         }
 
         #endregion
@@ -718,7 +701,7 @@ namespace OpenCvSharp
                 get
                 {
                     IntPtr p = parent.Ptr(i0, true, hashVal);
-                    return MarshalHelper.PtrToStructure<T>(p);
+                    return (T)Marshal.PtrToStructure(p, typeof(T));
                 }
                 set
                 {
@@ -739,7 +722,7 @@ namespace OpenCvSharp
                 get
                 {
                     IntPtr p = parent.Ptr(i0, i1, true, hashVal);
-                    return MarshalHelper.PtrToStructure<T>(p);
+                    return (T)Marshal.PtrToStructure(p, typeof(T));
                 }
                 set
                 {
@@ -761,7 +744,7 @@ namespace OpenCvSharp
                 get
                 {
                     IntPtr p = parent.Ptr(i0, i1, i2, true, hashVal);
-                    return MarshalHelper.PtrToStructure<T>(p);
+                    return (T)Marshal.PtrToStructure(p, typeof(T));
                 }
                 set
                 {
@@ -781,7 +764,7 @@ namespace OpenCvSharp
                 get
                 {
                     IntPtr p = parent.Ptr(idx, true, hashVal);
-                    return MarshalHelper.PtrToStructure<T>(p);
+                    return (T)Marshal.PtrToStructure(p, typeof(T));
                 }
                 set
                 {
