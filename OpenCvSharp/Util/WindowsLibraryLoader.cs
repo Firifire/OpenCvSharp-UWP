@@ -95,8 +95,7 @@ namespace OpenCvSharp.Util
         /// <returns></returns>
         public bool IsCurrentPlatformSupported()
         {
-            return Environment.OSVersion.Platform == PlatformID.Win32NT ||
-                Environment.OSVersion.Platform == PlatformID.Win32Windows;
+            return false;
         }
 
         /// <summary>
@@ -135,32 +134,6 @@ namespace OpenCvSharp.Util
                         if (dllHandle != IntPtr.Zero) return;
                     }
 
-                    // Try loading from executing assembly domain
-                    var executingAssembly = Assembly.GetExecutingAssembly();
-                    baseDirectory = Path.GetDirectoryName(executingAssembly.Location);
-                    dllHandle = LoadLibraryInternal(dllName, baseDirectory, processArch);
-                    if (dllHandle != IntPtr.Zero) return;
-
-                    // Fallback to current app domain
-                    baseDirectory = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory);
-                    dllHandle = LoadLibraryInternal(dllName, baseDirectory, processArch);
-                    if (dllHandle != IntPtr.Zero) return;
-
-                    // Finally try the working directory
-                    baseDirectory = Path.GetFullPath(Environment.CurrentDirectory);
-                    dllHandle = LoadLibraryInternal(dllName, baseDirectory, processArch);
-                    if (dllHandle != IntPtr.Zero) return;
-
-                    // ASP.NET hack, requires an active context
-#if false
-                    if (HttpContext.Current != null)
-                    {
-                        var server = HttpContext.Current.Server;
-                        baseDirectory = Path.GetFullPath(server.MapPath("bin"));
-                        dllHandle = LoadLibraryInternal(dllName, baseDirectory, processArch);
-                        if (dllHandle != IntPtr.Zero) return;
-                    }
-#endif
                     StringBuilder errorMessage = new StringBuilder();
                     errorMessage.AppendFormat("Failed to find dll \"{0}\", for processor architecture {1}.", dllName,
                                               processArch.Architecture);
@@ -285,20 +258,12 @@ namespace OpenCvSharp.Util
         /// </summary>
         private string FixUpDllFileName(string fileName)
         {
-            if (!String.IsNullOrEmpty(fileName))
+            if(!String.IsNullOrEmpty(fileName))
             {
-                PlatformID platformId = Environment.OSVersion.Platform;
-
-                if ((platformId == PlatformID.Win32S) ||
-                    (platformId == PlatformID.Win32Windows) ||
-                    (platformId == PlatformID.Win32NT) ||
-                    (platformId == PlatformID.WinCE))
+                if(!fileName.EndsWith(DllFileExtension,
+                        StringComparison.OrdinalIgnoreCase))
                 {
-                    if (!fileName.EndsWith(DllFileExtension,
-                            StringComparison.OrdinalIgnoreCase))
-                    {
-                        return fileName + DllFileExtension;
-                    }
+                    return fileName + DllFileExtension;
                 }
             }
 
@@ -352,7 +317,7 @@ namespace OpenCvSharp.Util
         }
 
         [DllImport("kernel32", EntryPoint = "LoadLibrary", CallingConvention = CallingConvention.Winapi,
-            SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            SetLastError = true, CharSet = CharSet.Unicode, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         private static extern IntPtr Win32LoadLibrary(string dllPath);
     }
 }

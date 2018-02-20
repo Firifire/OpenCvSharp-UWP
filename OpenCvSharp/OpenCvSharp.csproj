@@ -459,6 +459,7 @@
     <Compile Include="Util\PlatformUtil.cs" />
     <Compile Include="Util\ScopedGCHandle.cs" />
     <Compile Include="Util\StringArrayAddress.cs" />
+    <Compile Include="Util\StringHelper.cs" />
     <Compile Include="Util\StructurePointer.cs" />
     <Compile Include="Util\TimeMeasurer.cs" />
     <Compile Include="Util\Utility.cs" />

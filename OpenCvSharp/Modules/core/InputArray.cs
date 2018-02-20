@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenCvSharp.Gpu;
+using System.Reflection;
 
 namespace OpenCvSharp
 {
@@ -78,13 +79,14 @@ namespace OpenCvSharp
         /// 
         /// </summary>
         /// <param name="mat"></param>
-        internal InputArray(GpuMat mat)
-        {
-            if (mat == null)
-                throw new ArgumentNullException(nameof(mat));
-            ptr = NativeMethods.core_InputArray_new_byGpuMat(mat.CvPtr);
-            obj = mat;
-        }
+        /// ///<GPUMAT></GPUMAT>
+        //internal InputArray(GpuMat mat)
+        //{
+        //    if (mat == null)
+        //        throw new ArgumentNullException(nameof(mat));
+        //    ptr = NativeMethods.core_InputArray_new_byGpuMat(mat.CvPtr);
+        //    obj = mat;
+        //}
 
         /// <summary>
         /// 
@@ -176,10 +178,11 @@ namespace OpenCvSharp
         /// </summary>
         /// <param name="mat"></param>
         /// <returns></returns>
-        public static implicit operator InputArray(GpuMat mat)
-        {
-            return Create(mat);
-        }
+        ///<GPUMAT></GPUMAT>
+        //public static implicit operator InputArray(GpuMat mat)
+        //{
+        //    return Create(mat);
+        //}
 
         /// <summary>
         /// 
@@ -264,10 +267,11 @@ namespace OpenCvSharp
         /// </summary>
         /// <param name="mat"></param>
         /// <returns></returns>
-        public static InputArray Create(GpuMat mat)
-        {
-            return new InputArray(mat);
-        }
+        /// ///<GPUMAT></GPUMAT>
+        //public static InputArray Create(GpuMat mat)
+        //{
+        //    return new InputArray(mat);
+        //}
 
         /// <summary>
         /// Creates a proxy class of the specified array of Mat 
@@ -379,30 +383,25 @@ namespace OpenCvSharp
         /// <returns></returns>
         private static MatType EstimateType(Type t)
         {
-            if(!t.IsValueType)
+            if(!t.GetTypeInfo().IsValueType)
                 throw new ArgumentException();
 
             // Primitive types
-            TypeCode code = Type.GetTypeCode(t);
-            switch (code)
-            {
-                case TypeCode.Byte:
-                    return MatType.CV_8UC1;
-                case TypeCode.SByte:
-                    return MatType.CV_8SC1;
-                case TypeCode.UInt16:
-                    return MatType.CV_16UC1;
-                case TypeCode.Int16:
-                case TypeCode.Char:
-                    return MatType.CV_16SC1;
-                case TypeCode.UInt32:
-                case TypeCode.Int32:
-                    return MatType.CV_32SC1;
-                case TypeCode.Single:
-                    return MatType.CV_32FC1;
-                case TypeCode.Double:
-                    return MatType.CV_64FC1;
-            }
+            if(t == typeof(byte))
+                return MatType.CV_8UC1;
+            if(t == typeof(sbyte))
+                return MatType.CV_8SC1;
+            if(t == typeof(ushort) || t == typeof(char))
+                return MatType.CV_16UC1;
+            if(t == typeof(short))
+                return MatType.CV_16SC1;
+            if(t == typeof(int) || t == typeof(uint))
+                return MatType.CV_32SC1;
+            if(t == typeof(float))
+                return MatType.CV_32FC1;
+            if(t == typeof(double))
+                return MatType.CV_64FC1;
+
             // OpenCV struct types
             if (t == typeof(Point))
                 return MatType.CV_32SC2;
