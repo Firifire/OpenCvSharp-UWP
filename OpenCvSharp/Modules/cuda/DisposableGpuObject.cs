@@ -50,8 +50,9 @@ namespace OpenCvSharp.Gpu
         {
             if (IsDisposed)
                 throw new ObjectDisposedException(GetType().Name);
-            if (Cv2Gpu.GetCudaEnabledDeviceCount() < 1)
-                throw new OpenCvSharpException("Your OpenCV DLL does not support GPU module.");
+            //<GPUMAT>
+            //if(Cv2Gpu.GetCudaEnabledDeviceCount() < 1)
+            //    throw new OpenCvSharpException("Your OpenCV DLL does not support GPU module.");
 
             if (!IsGpuCompatible)
                 throw new OpenCvSharpException("The selected GPU device is not compatible.");
@@ -64,12 +65,14 @@ namespace OpenCvSharp.Gpu
         {
             get
             {
-                if (!isGpuAvailable.HasValue)
-                {
-                    isGpuAvailable = (Cv2Gpu.GetCudaEnabledDeviceCount() >= 1) &&
-                                     new DeviceInfo(Cv2Gpu.GetDevice()).IsCompatible;
-                }
-                return isGpuAvailable.Value;
+                //<GPUMAT>
+                return false;
+                //if(!isGpuAvailable.HasValue)
+                //{
+                //    isGpuAvailable = (Cv2Gpu.GetCudaEnabledDeviceCount() >= 1) &&
+                //                     new DeviceInfo(Cv2Gpu.GetDevice()).IsCompatible;
+                //}
+                //return isGpuAvailable.Value;
             }
         }
 

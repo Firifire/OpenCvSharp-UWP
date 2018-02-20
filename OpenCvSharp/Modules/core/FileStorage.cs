@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using OpenCvSharp.Util;
 
 namespace OpenCvSharp
 {
@@ -109,7 +110,9 @@ namespace OpenCvSharp
                     sbyte* buf = NativeMethods.core_FileStorage_elname(ptr);
                     if (buf == null)
                         return null;
-                    return new string(buf);
+                    var res = StringHelper.PtrToStringAnsi(buf);
+                    GC.KeepAlive(this);
+                    return res;
                 }
             }
         }

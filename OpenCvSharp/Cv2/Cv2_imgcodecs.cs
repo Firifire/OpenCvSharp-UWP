@@ -122,7 +122,7 @@ namespace OpenCvSharp
             if (buf == null)
                 throw new ArgumentNullException(nameof(buf));
             IntPtr matPtr = NativeMethods.imgcodecs_imdecode_vector(
-                buf, new IntPtr(buf.LongLength), (int) flags);
+                buf, new IntPtr(buf.Length), (int) flags);
             return new Mat(matPtr);
         }
 
