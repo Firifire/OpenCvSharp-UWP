@@ -3,8 +3,8 @@ namespace OpenCvSharp
 {
 #if LANG_JP
     /// <summary>
-	/// 線分の種類
-	/// </summary>
+    /// 線分の種類
+    /// </summary>
 #else
     /// <summary>
     /// Type of the line
@@ -12,11 +12,6 @@ namespace OpenCvSharp
 #endif
     public enum LineTypes : int
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        Filled = -1,
-
         /// <summary>
         /// 8-connected line.
         /// </summary>

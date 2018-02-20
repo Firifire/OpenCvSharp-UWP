@@ -7,15 +7,8 @@ namespace OpenCvSharp
     /// <summary>
     /// 
     /// </summary>
-    internal class VectorOfVectorFloat : DisposableCvObject, IStdVector<float[]>
+    public class VectorOfVectorFloat : DisposableCvObject, IStdVector<float[]>
     {
-        /// <summary>
-        /// Track whether Dispose has been called
-        /// </summary>
-        private bool disposed = false;
-
-        #region Init and Dispose
-
         /// <summary>
         /// 
         /// </summary>
@@ -36,43 +29,30 @@ namespace OpenCvSharp
         }
 
         /// <summary>
-        /// Clean up any resources being used.
+        /// Releases unmanaged resources
         /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-        protected override void Dispose(bool disposing)
+        protected override void DisposeUnmanaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    if (IsEnabledDispose)
-                    {
-                        NativeMethods.vector_vector_float_delete(ptr);
-                    }
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            NativeMethods.vector_vector_float_delete(ptr);
+            base.DisposeUnmanaged();
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// vector.size()
         /// </summary>
         public int Size1
         {
-            get { return NativeMethods.vector_vector_float_getSize1(ptr).ToInt32(); }
+            get
+            {
+                var res = NativeMethods.vector_vector_float_getSize1(ptr).ToInt32();
+                GC.KeepAlive(this);
+                return res;
+            }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int Size
         {
             get { return Size1; }
@@ -88,6 +68,7 @@ namespace OpenCvSharp
                 int size1 = Size1;
                 IntPtr[] size2Org = new IntPtr[size1];
                 NativeMethods.vector_vector_float_getSize2(ptr, size2Org);
+                GC.KeepAlive(this);
                 long[] size2 = new long[size1];
                 for (int i = 0; i < size1; i++)
                 {
@@ -97,18 +78,18 @@ namespace OpenCvSharp
             }
         }
 
-
         /// <summary>
         /// &amp;vector[0]
         /// </summary>
         public IntPtr ElemPtr
         {
-            get { return NativeMethods.vector_vector_float_getPointer(ptr); }
+            get
+            {
+                var res = NativeMethods.vector_vector_float_getPointer(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Converts std::vector to managed array
@@ -129,10 +110,9 @@ namespace OpenCvSharp
             using (var retPtr = new ArrayAddress2<float>(ret))
             {
                 NativeMethods.vector_vector_float_copy(ptr, retPtr);
+                GC.KeepAlive(this);
             }
             return ret;
         }
-
-        #endregion
     }
 }

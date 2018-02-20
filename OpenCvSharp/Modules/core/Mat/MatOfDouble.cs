@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using OpenCvSharp.Util;
 
 namespace OpenCvSharp
@@ -465,6 +466,7 @@ namespace OpenCvSharp
             {
                 ptr = (byte*)parent.Data.ToPointer();
             }
+
             /// <summary>
             /// 1-dimensional indexer
             /// </summary>
@@ -481,6 +483,7 @@ namespace OpenCvSharp
                     *(double*)(ptr + (steps[0] * i0)) = value;
                 }
             }
+
             /// <summary>
             /// 2-dimensional indexer
             /// </summary>
@@ -498,6 +501,7 @@ namespace OpenCvSharp
                     *(double*)(ptr + (steps[0] * i0) + (steps[1] * i1)) = value;
                 }
             }
+
             /// <summary>
             /// 3-dimensional indexer
             /// </summary>
@@ -516,6 +520,7 @@ namespace OpenCvSharp
                     *(double*)(ptr + (steps[0] * i0) + (steps[1] * i1) + (steps[2] * i2)) = value;
                 }
             }
+
             /// <summary>
             /// n-dimensional indexer
             /// </summary>
@@ -543,6 +548,7 @@ namespace OpenCvSharp
                 }
             }
         }
+
         /// <summary>
         /// Gets a type-specific indexer. The indexer has getters/setters to access each matrix element.
         /// </summary>
@@ -574,7 +580,10 @@ namespace OpenCvSharp
 
             int numElems = arr.Length / ThisChannels;
             var mat = new MatOfDouble(numElems, 1);
-            mat.SetArray(0, 0, arr);
+
+            IntPtr ptr = mat.Ptr(0, 0);
+            Marshal.Copy(arr, 0, ptr, arr.Length);
+            //mat.SetArray(0, 0, arr);
             return mat;
         }
 #if LANG_JP
@@ -598,7 +607,16 @@ namespace OpenCvSharp
             int rows = arr.GetLength(0);
             int cols = arr.GetLength(1);
             var mat = new MatOfDouble(rows, cols);
-            mat.SetArray(0, 0, arr);
+
+            unsafe
+            {
+                void* dst = mat.Ptr(0, 0).ToPointer();
+                fixed (double* src = arr)
+                {
+                    MemoryHelper.CopyMemory(dst, src, rows * cols * sizeof(double));
+                }
+            }
+            //mat.SetArray(0, 0, arr);
             return mat;
         }
 #if LANG_JP
@@ -684,6 +702,7 @@ namespace OpenCvSharp
         {
             ThrowIfDisposed();
             NativeMethods.core_Mat_push_back_double(ptr, value);
+            GC.KeepAlive(this);
         }
     }
 }

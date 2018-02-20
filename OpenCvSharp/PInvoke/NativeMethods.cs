@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using OpenCvSharp.Util;
 
 // ReSharper disable InconsistentNaming
@@ -14,7 +13,6 @@ namespace OpenCvSharp
     /// <summary>
     /// P/Invoke methods of OpenCV 2.x C++ interface
     /// </summary>
-    [SuppressUnmanagedCodeSecurity]
     public static partial class NativeMethods
     {
         /// <summary>
@@ -31,13 +29,13 @@ namespace OpenCvSharp
 
         private static readonly string[] RuntimeDllNames =
         {
-            DllMsvcr,
-            DllMsvcp,
+            //DllVCRuntime,
+            //DllMsvcp,
         };
 
         private static readonly string[] OpenCVDllNames =
         {
-            "opencv_world",
+            //"opencv_world",
         };
 
         public const string DllFfmpegX86 = "opencv_ffmpeg" + Version;
@@ -46,10 +44,9 @@ namespace OpenCvSharp
         /// <summary>
         /// Static constructor
         /// </summary>
-        [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         static NativeMethods()
         {
-            LoadLibraries(WindowsLibraryLoader.Instance.AdditionalPaths);
+            //LoadLibraries(WindowsLibraryLoader.Instance.AdditionalPaths);
 
             // call cv to enable redirecting 
             TryPInvoke();
@@ -61,40 +58,7 @@ namespace OpenCvSharp
         /// <param name="additionalPaths"></param>
         public static void LoadLibraries(IEnumerable<string> additionalPaths = null)
         {
-            if (IsUnix())
-                return;
 
-            string[] ap = EnumerableEx.ToArray(additionalPaths);
-            List<string> runtimePaths = new List<string> (ap);
-            runtimePaths.Add(Environment.GetFolderPath(Environment.SpecialFolder.System));
-            
-            foreach (string dll in RuntimeDllNames)
-            {
-                WindowsLibraryLoader.Instance.LoadLibrary(dll, runtimePaths);
-            }
-            foreach (string dll in OpenCVDllNames)
-            {
-                WindowsLibraryLoader.Instance.LoadLibrary(dll + Version, ap);
-            }
-
-            // calib3d, contrib, core, features2d, flann, highgui, imgproc, legacy,
-            // ml, nonfree, objdetect, photo, superres, video, videostab
-            WindowsLibraryLoader.Instance.LoadLibrary(DllExtern, ap);
-
-            // Redirection of error occurred in native library 
-            IntPtr zero = IntPtr.Zero;
-            IntPtr current = redirectError(ErrorHandlerThrowException, zero, ref zero);
-            if (current != IntPtr.Zero)
-            {
-                ErrorHandlerDefault = (CvErrorCallback)Marshal.GetDelegateForFunctionPointer(
-                    current,
-                    typeof(CvErrorCallback)
-                );
-            }
-            else
-            {
-                ErrorHandlerDefault = null;
-            }
         }
 
         /// <summary>
@@ -112,27 +76,15 @@ namespace OpenCvSharp
             }
             catch (DllNotFoundException e)
             {
-                var exception = PInvokeHelper.CreateException(e);
-                try{Console.WriteLine(exception.Message);}
-                catch{}
-                try{Debug.WriteLine(exception.Message);}
-                catch{}
-                throw exception;
+                throw;
             }
             catch (BadImageFormatException e)
             {
-                var exception = PInvokeHelper.CreateException(e);
-                try { Console.WriteLine(exception.Message); }
-                catch { }
-                try { Debug.WriteLine(exception.Message); }
-                catch { }
-                throw exception;
+                throw;
             }
             catch (Exception e)
             {
                 Exception ex = e.InnerException ?? e;
-                try{ Console.WriteLine(ex.Message); }
-                catch{}
                 try{ Debug.WriteLine(ex.Message); }
                 catch{}
                 throw;
@@ -154,10 +106,7 @@ namespace OpenCvSharp
         /// <returns></returns>
         public static bool IsUnix()
         {
-            var p = Environment.OSVersion.Platform;
-            return (p == PlatformID.Unix ||
-                    p == PlatformID.MacOSX ||
-                    (int)p == 128);
+            return false;
         }
 
         /// <summary>

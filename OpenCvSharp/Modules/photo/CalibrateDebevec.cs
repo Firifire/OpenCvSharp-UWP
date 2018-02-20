@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OpenCvSharp
 {
@@ -9,11 +7,7 @@ namespace OpenCvSharp
     /// </summary>
     public class CalibrateDebevec : CalibrateCRF
     {
-        /// <summary>
-        /// Track whether Dispose has been called
-        /// </summary>
-        private bool disposed;
-        private Ptr<CalibrateDebevec> ptrObj;
+        private Ptr ptrObj;
 
         /// <summary>
         /// Creates instance by raw pointer cv::ml::Boost*
@@ -21,7 +15,7 @@ namespace OpenCvSharp
         protected CalibrateDebevec(IntPtr p)
             : base()
         {
-            ptrObj = new Ptr<CalibrateDebevec>(p);
+            ptrObj = new Ptr(p);
             ptr = ptrObj.Get();
         }
 
@@ -35,49 +29,38 @@ namespace OpenCvSharp
         /// otherwise the form a rectangular grid.</param>
         /// <returns></returns>
         public static CalibrateDebevec Create(int samples = 70, float lambda = 10.0f, bool random = false)
-	    {
+        {
             IntPtr ptr = NativeMethods.photo_createCalibrateDebevec(samples, lambda, random ? 1 : 0);
             return new CalibrateDebevec(ptr);
-	    }
+        }
 
-#if LANG_JP
         /// <summary>
-        /// リソースの解放
+        /// Releases managed resources
         /// </summary>
-        /// <param name="disposing">
-        /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-        /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-        ///</param>
-#else
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
+        protected override void DisposeManaged()
         {
-            if (!disposed)
+            ptrObj?.Dispose();
+            ptrObj = null;
+            base.DisposeManaged();
+        }
+
+        internal class Ptr : OpenCvSharp.Ptr
+        {
+            public Ptr(IntPtr ptr) : base(ptr)
             {
-                try
-                {
-                    if (disposing)
-                    {
-                        if (ptrObj != null)
-                        {
-                            ptrObj.Dispose();
-                            ptrObj = null;
-                        }
-                    }
-                    ptr = IntPtr.Zero;
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
+            }
+
+            public override IntPtr Get()
+            {
+                var res = NativeMethods.photo_Ptr_CalibrateDebevec_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+
+            protected override void DisposeUnmanaged()
+            {
+                NativeMethods.photo_Ptr_CalibrateDebevec_delete(ptr);
+                base.DisposeUnmanaged();
             }
         }
     }

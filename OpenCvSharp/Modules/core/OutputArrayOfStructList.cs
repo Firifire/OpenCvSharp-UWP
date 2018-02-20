@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using OpenCvSharp.Util;
 
 namespace OpenCvSharp
@@ -11,7 +10,6 @@ namespace OpenCvSharp
     public sealed class OutputArrayOfStructList<T> : OutputArray
         where T : struct
     {
-        private bool disposed;
         private List<T> list;
 
         /// <summary>
@@ -36,6 +34,7 @@ namespace OpenCvSharp
 
             // Matで結果取得
             IntPtr matPtr = NativeMethods.core_OutputArray_getMat(ptr);
+            GC.KeepAlive(this);
             using (Mat mat = new Mat(matPtr))
             {
                 // 配列サイズ
@@ -44,8 +43,8 @@ namespace OpenCvSharp
                 T[] array = new T[size];
                 using (ArrayAddress1<T> aa = new ArrayAddress1<T>(array))
                 {
-                    int elemSize = Marshal.SizeOf(typeof(T));
-                    Utility.CopyMemory(aa.Pointer, mat.Data, size * elemSize);
+                    int elemSize = MarshalHelper.SizeOf<T>();
+                    MemoryHelper.CopyMemory(aa.Pointer, mat.Data, size * elemSize);
                 }
                 // リストにコピー
                 list.Clear();
@@ -54,17 +53,12 @@ namespace OpenCvSharp
         }
 
         /// <summary>
-        /// 
+        /// Releases managed resources
         /// </summary>
-        /// <param name="disposing"></param>
-        protected override void Dispose(bool disposing)
+        protected override void DisposeManaged()
         {
-            if (!disposed)
-            {
-                list = null;
-                disposed = true;
-                base.Dispose(disposing);
-            }
+            list = null;
+            base.DisposeManaged();
         }
     }
 }

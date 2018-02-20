@@ -25,8 +25,7 @@ namespace OpenCvSharp
 #endif
     public class StereoSGBM : StereoMatcher
     {
-        private bool disposed;
-        private Ptr<StereoSGBM> ptrObj;
+        private Ptr ptrObj;
 
         #region Init and Disposal
 
@@ -35,7 +34,7 @@ namespace OpenCvSharp
         /// </summary>
         protected StereoSGBM(IntPtr ptr) : base(ptr)
         {
-            ptrObj = new Ptr<StereoSGBM>(ptr);
+            ptrObj = new Ptr(ptr);
         }
 
         /// <summary>
@@ -67,49 +66,16 @@ namespace OpenCvSharp
             return new StereoSGBM(ptrObj);
         }
 
-#if LANG_JP
         /// <summary>
-        /// リソースの解放
+        /// Releases managed resources
         /// </summary>
-        /// <param name="disposing">
-        /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-        /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-        ///</param>
-#else
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
+        protected override void DisposeManaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    if (disposing)
-                    {                        
-                    }
-                    if (IsEnabledDispose)
-                    {
-                        if (ptrObj != null)
-                        {
-                            ptrObj.Dispose();
-                        }
-                        ptrObj = null;
-                        ptr = IntPtr.Zero;
-                    }
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            ptrObj?.Dispose();
+            ptrObj = null;
+            base.DisposeManaged();
         }
+
         #endregion
 
         #region Properties
@@ -121,15 +87,16 @@ namespace OpenCvSharp
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.calib3d_StereoSGBM_getPreFilterCap(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.calib3d_StereoSGBM_getPreFilterCap(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.calib3d_StereoSGBM_setPreFilterCap(ptr, value);
+                GC.KeepAlive(this);
             }
         }
 
@@ -140,15 +107,16 @@ namespace OpenCvSharp
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.calib3d_StereoSGBM_getUniquenessRatio(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.calib3d_StereoSGBM_getUniquenessRatio(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.calib3d_StereoSGBM_setUniquenessRatio(ptr, value);
+                GC.KeepAlive(this);
             }
         }
 
@@ -159,15 +127,16 @@ namespace OpenCvSharp
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.calib3d_StereoSGBM_getP1(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.calib3d_StereoSGBM_getP1(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.calib3d_StereoSGBM_setP1(ptr, value);
+                GC.KeepAlive(this);
             }
         }
 
@@ -178,15 +147,16 @@ namespace OpenCvSharp
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.calib3d_StereoSGBM_getP2(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.calib3d_StereoSGBM_getP2(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.calib3d_StereoSGBM_setP2(ptr, value);
+                GC.KeepAlive(this);
             }
         }
 
@@ -197,19 +167,39 @@ namespace OpenCvSharp
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return (StereoSGBMMode)NativeMethods.calib3d_StereoSGBM_getMode(ptr);
+                ThrowIfDisposed();
+                var res = (StereoSGBMMode)NativeMethods.calib3d_StereoSGBM_getMode(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.calib3d_StereoSGBM_setMode(ptr, (int)value);
+                GC.KeepAlive(this);
             }
         }
 
         #endregion
 
+        internal class Ptr : OpenCvSharp.Ptr
+        {
+            public Ptr(IntPtr ptr) : base(ptr)
+            {
+            }
+
+            public override IntPtr Get()
+            {
+                var res = NativeMethods.calib3d_Ptr_StereoSGBM_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+
+            protected override void DisposeUnmanaged()
+            {
+                NativeMethods.calib3d_Ptr_StereoSGBM_delete(ptr);
+                base.DisposeUnmanaged();
+            }
+        }
     }
 }

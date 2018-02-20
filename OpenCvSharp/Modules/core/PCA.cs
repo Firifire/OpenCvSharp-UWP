@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OpenCvSharp
 {
@@ -9,9 +7,8 @@ namespace OpenCvSharp
     /// </summary>
     public class PCA : DisposableCvObject
     {
-        private bool disposed;
-
         #region Init & Disposal
+
         /// <summary>
         /// 
         /// </summary>
@@ -19,6 +16,7 @@ namespace OpenCvSharp
         {
             ptr = NativeMethods.core_PCA_new1();
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -35,7 +33,10 @@ namespace OpenCvSharp
             data.ThrowIfDisposed();
             mean.ThrowIfDisposed();
             ptr = NativeMethods.core_PCA_new2(data.CvPtr, mean.CvPtr, (int)flags, maxComponents);
+            GC.KeepAlive(data);
+            GC.KeepAlive(mean);
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -52,34 +53,19 @@ namespace OpenCvSharp
             data.ThrowIfDisposed();
             mean.ThrowIfDisposed();
             ptr = NativeMethods.core_PCA_new3(data.CvPtr, mean.CvPtr, (int)flags, retainedVariance);
+            GC.KeepAlive(data);
+            GC.KeepAlive(mean);
         }
 
         /// <summary>
-        /// 
+        /// Releases unmanaged resources
         /// </summary>
-        /// <param name="disposing"></param>
-        protected override void Dispose(bool disposing)
+        protected override void DisposeUnmanaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    if (disposing)
-                    {
-                    }
-                    if (ptr != IntPtr.Zero)
-                    {
-                        NativeMethods.core_PCA_delete(ptr);
-                        ptr = IntPtr.Zero;
-                    }
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            NativeMethods.core_PCA_delete(ptr);
+            base.DisposeUnmanaged();
         }
+
         #endregion
 
         #region Properties
@@ -90,9 +76,9 @@ namespace OpenCvSharp
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException("PCA");
+                ThrowIfDisposed();
                 IntPtr ret = NativeMethods.core_PCA_eigenvectors(ptr);
+                GC.KeepAlive(this);
                 return new Mat(ret);
             }
         }
@@ -104,9 +90,9 @@ namespace OpenCvSharp
         {
             get
             {
-                if(disposed)
-                    throw new ObjectDisposedException("PCA");
+                ThrowIfDisposed();
                 IntPtr ret = NativeMethods.core_PCA_eigenvalues(ptr);
+                GC.KeepAlive(this);
                 return new Mat(ret);
             }
         }
@@ -118,15 +104,17 @@ namespace OpenCvSharp
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException("PCA");
+                ThrowIfDisposed();
                 IntPtr ret = NativeMethods.core_PCA_mean(ptr);
+                GC.KeepAlive(this);
                 return new Mat(ret);
             }
         }
+
         #endregion
 
         #region Methods
+
         /// <summary>
         /// operator that performs PCA. The previously stored data, if any, is released
         /// </summary>
@@ -137,8 +125,7 @@ namespace OpenCvSharp
         /// <returns></returns>
         public PCA Compute(InputArray data, InputArray mean, Flags flags, int maxComponents = 0)
         {
-            if (disposed)
-                throw new ObjectDisposedException("PCA");
+            ThrowIfDisposed();
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
             if (mean == null)
@@ -146,6 +133,8 @@ namespace OpenCvSharp
             data.ThrowIfDisposed();
             mean.ThrowIfDisposed();
             NativeMethods.core_PCA_operatorThis(ptr, data.CvPtr, mean.CvPtr, (int)flags, maxComponents);
+            GC.KeepAlive(data);
+            GC.KeepAlive(mean);
             return this;
         }
 
@@ -159,8 +148,7 @@ namespace OpenCvSharp
         /// <returns></returns>
         public PCA ComputeVar(InputArray data, InputArray mean, Flags flags, double retainedVariance)
         {
-            if (disposed)
-                throw new ObjectDisposedException("PCA");
+            ThrowIfDisposed();
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
             if (mean == null)
@@ -168,6 +156,8 @@ namespace OpenCvSharp
             data.ThrowIfDisposed();
             mean.ThrowIfDisposed();
             NativeMethods.core_PCA_computeVar(ptr, data.CvPtr, mean.CvPtr, (int)flags, retainedVariance);
+            GC.KeepAlive(data);
+            GC.KeepAlive(mean);
             return this;
         }
 
@@ -178,12 +168,13 @@ namespace OpenCvSharp
         /// <returns></returns>
         public Mat Project(InputArray vec)
         {
-            if (disposed)
-                throw new ObjectDisposedException("PCA");
+            ThrowIfDisposed();
             if (vec == null)
                 throw new ArgumentNullException(nameof(vec));
             vec.ThrowIfDisposed();
-            IntPtr ret = NativeMethods.core_PCA_project(ptr, vec.CvPtr);
+            IntPtr ret = NativeMethods.core_PCA_project1(ptr, vec.CvPtr);
+            GC.KeepAlive(this);
+            GC.KeepAlive(vec);
             return new Mat(ret);
         }
         /// <summary>
@@ -193,16 +184,18 @@ namespace OpenCvSharp
         /// <param name="result"></param>
         public void Project(InputArray vec, OutputArray result)
         {
-            if (disposed)
-                throw new ObjectDisposedException("PCA");
+            ThrowIfDisposed();
             if (vec == null)
                 throw new ArgumentNullException(nameof(vec));
             if (result == null)
                 throw new ArgumentNullException(nameof(result));
             vec.ThrowIfDisposed();
             result.ThrowIfNotReady();
-            NativeMethods.core_PCA_project(ptr, vec.CvPtr, result.CvPtr);
+            NativeMethods.core_PCA_project2(ptr, vec.CvPtr, result.CvPtr);
             result.Fix();
+            GC.KeepAlive(this);
+            GC.KeepAlive(vec);
+            GC.KeepAlive(result);
         }
 
         /// <summary>
@@ -212,12 +205,13 @@ namespace OpenCvSharp
         /// <returns></returns>
         public Mat BackProject(InputArray vec)
         {
-            if (disposed)
-                throw new ObjectDisposedException("PCA");
+            ThrowIfDisposed();
             if (vec == null)
                 throw new ArgumentNullException(nameof(vec));
             vec.ThrowIfDisposed();
-            IntPtr ret = NativeMethods.core_PCA_backProject(ptr, vec.CvPtr);
+            IntPtr ret = NativeMethods.core_PCA_backProject1(ptr, vec.CvPtr);
+            GC.KeepAlive(this);
+            GC.KeepAlive(vec);
             return new Mat(ret);
         }
         /// <summary>
@@ -227,16 +221,18 @@ namespace OpenCvSharp
         /// <param name="result"></param>
         public void BackProject(InputArray vec, OutputArray result)
         {
-            if (disposed)
-                throw new ObjectDisposedException("PCA");
+            ThrowIfDisposed();
             if (vec == null)
                 throw new ArgumentNullException(nameof(vec));
             if (result == null)
                 throw new ArgumentNullException(nameof(result));
             vec.ThrowIfDisposed();
             result.ThrowIfNotReady();
-            NativeMethods.core_PCA_backProject(ptr, vec.CvPtr, result.CvPtr);
+            NativeMethods.core_PCA_backProject2(ptr, vec.CvPtr, result.CvPtr);
             result.Fix();
+            GC.KeepAlive(this);
+            GC.KeepAlive(vec);
+            GC.KeepAlive(result);
         }
         #endregion
 

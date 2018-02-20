@@ -58,6 +58,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <PlatformTarget>ARM</PlatformTarget>
@@ -111,27 +112,26 @@
     <Compile Include="Cv2\Cv2_calib3d.cs" />
     <Compile Include="Cv2\Cv2_core.cs" />
     <Compile Include="Cv2\Cv2_cuda.cs" />
-    <Compile Include="Cv2\Cv2_face.cs" />
     <Compile Include="Cv2\Cv2_features2d.cs" />
     <Compile Include="Cv2\Cv2_highgui.cs" />
     <Compile Include="Cv2\Cv2_imgcodecs.cs" />
     <Compile Include="Cv2\Cv2_imgproc.cs" />
-    <Compile Include="Cv2\Cv2_ml.cs" />
     <Compile Include="Cv2\Cv2_objdetect.cs" />
-    <Compile Include="Cv2\Cv2_optflow.cs" />
     <Compile Include="Cv2\Cv2_photo.cs" />
     <Compile Include="Cv2\Cv2_superres.cs" />
     <Compile Include="Cv2\Cv2_video.cs" />
-    <Compile Include="Cv2\Cv2_xfeatures2d.cs" />
-    <Compile Include="CvObject.cs" />
-    <Compile Include="Delegate\CvErrorCallback.cs" />
-    <Compile Include="Delegate\CvMouseCallback.cs" />
-    <Compile Include="Delegate\CvTrackbarCallback.cs" />
-    <Compile Include="Delegate\MatForeachFunction.cs" />
-    <Compile Include="DisposableCvObject.cs" />
-    <Compile Include="DisposableObject.cs" />
-    <Compile Include="ICvPtrHolder.cs" />
-    <Compile Include="MatProxy.cs" />
+    <Compile Include="Fundamentals\CvObject.cs" />
+    <Compile Include="Fundamentals\DisposableCvObject.cs" />
+    <Compile Include="Fundamentals\DisposableObject.cs" />
+    <Compile Include="Fundamentals\ICvPtrHolder.cs" />
+    <Compile Include="Fundamentals\OpenCVException.cs" />
+    <Compile Include="Fundamentals\OpenCvSharpException.cs" />
+    <Compile Include="Fundamentals\Ptr.cs" />
+    <Compile Include="Fundamentals\SerializableAttribute.cs" />
+    <Compile Include="Modules\aruco\CvAruco.cs" />
+    <Compile Include="Modules\aruco\DetectorParameters.cs" />
+    <Compile Include="Modules\aruco\Dictionary.cs" />
+    <Compile Include="Modules\aruco\Enum\PredefinedDictionaryName.cs" />
     <Compile Include="Modules\bgsegm\BackgroundSubtractorGMG.cs" />
     <Compile Include="Modules\bgsegm\BackgroundSubtractorMOG.cs" />
     <Compile Include="Modules\calib3d\Enum\CalibrationFlags.cs" />
@@ -145,6 +145,8 @@
     <Compile Include="Modules\calib3d\StereoMatcher.cs" />
     <Compile Include="Modules\calib3d\StereoSGBM.cs" />
     <Compile Include="Modules\core\Algorithm.cs" />
+    <Compile Include="Modules\core\Delegate\CvErrorCallback.cs" />
+    <Compile Include="Modules\core\Delegate\MatForeachFunction.cs" />
     <Compile Include="Modules\core\Enum\AlgorithmParamType.cs" />
     <Compile Include="Modules\core\Enum\CmpTypes.cs" />
     <Compile Include="Modules\core\Enum\CovarFlags.cs" />
@@ -202,12 +204,11 @@
     <Compile Include="Modules\core\OutputArrayOfMatList.cs" />
     <Compile Include="Modules\core\OutputArrayOfStructList.cs" />
     <Compile Include="Modules\core\PCA.cs" />
-    <Compile Include="Modules\core\Ptr.cs" />
     <Compile Include="Modules\core\RNG.cs" />
+    <Compile Include="Modules\core\RNG_MT19937.cs" />
     <Compile Include="Modules\core\SparseMat.cs" />
     <Compile Include="Modules\core\SparseMatIndexer.cs" />
     <Compile Include="Modules\core\Struct\DMatch.cs" />
-    <Compile Include="Modules\core\Struct\IVec.cs" />
     <Compile Include="Modules\core\Struct\KeyPoint.cs" />
     <Compile Include="Modules\core\Struct\MatType.cs" />
     <Compile Include="Modules\core\Struct\Point.cs" />
@@ -219,18 +220,39 @@
     <Compile Include="Modules\core\Struct\Range.cs" />
     <Compile Include="Modules\core\Struct\Rangef.cs" />
     <Compile Include="Modules\core\Struct\Rect.cs" />
-    <Compile Include="Modules\core\Struct\Rectf.cs" />
+    <Compile Include="Modules\core\Struct\Rect2d.cs" />
+    <Compile Include="Modules\core\Struct\Rect2f.cs" />
     <Compile Include="Modules\core\Struct\RotatedRect.cs" />
     <Compile Include="Modules\core\Struct\Scalar.cs" />
     <Compile Include="Modules\core\Struct\Size.cs" />
+    <Compile Include="Modules\core\Struct\Size2d.cs" />
     <Compile Include="Modules\core\Struct\Size2f.cs" />
     <Compile Include="Modules\core\Struct\TermCriteria.cs" />
-    <Compile Include="Modules\core\Struct\Vecb.cs" />
-    <Compile Include="Modules\core\Struct\Vecd.cs" />
-    <Compile Include="Modules\core\Struct\Vecf.cs" />
-    <Compile Include="Modules\core\Struct\Veci.cs" />
-    <Compile Include="Modules\core\Struct\Vecs.cs" />
-    <Compile Include="Modules\core\Struct\Vecw.cs" />
+    <Compile Include="Modules\core\Struct\Vec\IVec.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec2b.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec2d.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec2f.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec2i.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec2s.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec2w.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec3b.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec3d.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec3f.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec3i.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec3s.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec3w.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec4b.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec4d.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec4f.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec4i.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec4s.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec4w.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec6b.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec6d.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec6f.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec6i.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec6s.cs" />
+    <Compile Include="Modules\core\Struct\Vec\Vec6w.cs" />
     <Compile Include="Modules\core\SVD.cs" />
     <Compile Include="Modules\cuda\DescriptorFormat.cs" />
     <Compile Include="Modules\cuda\DeviceInfo.cs" />
@@ -241,7 +263,13 @@
     <Compile Include="Modules\cuda\GpuMatIndexer.cs" />
     <Compile Include="Modules\cuda\GpuMatRowColIndexer.cs" />
     <Compile Include="Modules\cuda\Stream.cs" />
+    <Compile Include="Modules\dnn\CvDnn.cs" />
+    <Compile Include="Modules\dnn\Net.cs" />
+    <Compile Include="Modules\face\BasicFaceRecognizer.cs" />
+    <Compile Include="Modules\face\EigenFaceRecognizer.cs" />
     <Compile Include="Modules\face\FaceRecognizer.cs" />
+    <Compile Include="Modules\face\FisherFaceRecognizer.cs" />
+    <Compile Include="Modules\face\LBPHFaceRecognizer.cs" />
     <Compile Include="Modules\features2d\AgastFeatureDetector.cs" />
     <Compile Include="Modules\features2d\AKAZE.cs" />
     <Compile Include="Modules\features2d\BFMatcher.cs" />
@@ -275,9 +303,12 @@
     <Compile Include="Modules\flann\IndexParams\KDTreeIndexParams.cs" />
     <Compile Include="Modules\flann\IndexParams\KMeansIndexParams.cs" />
     <Compile Include="Modules\flann\IndexParams\LinearIndexParams.cs" />
+    <Compile Include="Modules\flann\IndexParams\LshIndexParams.cs" />
     <Compile Include="Modules\flann\IndexParams\SavedIndexParams.cs" />
     <Compile Include="Modules\flann\IndexParams\SearchParams.cs" />
+    <Compile Include="Modules\highgui\CvMouseCallback.cs" />
     <Compile Include="Modules\highgui\CvTrackbar.cs" />
+    <Compile Include="Modules\highgui\CvTrackbarCallback.cs" />
     <Compile Include="Modules\highgui\Enum\ButtonTypes.cs" />
     <Compile Include="Modules\highgui\Enum\MouseEvent.cs" />
     <Compile Include="Modules\highgui\Enum\WindowMode.cs" />
@@ -331,6 +362,14 @@
     <Compile Include="Modules\imgproc\Model\LineSegmentPolar.cs" />
     <Compile Include="Modules\imgproc\Moments.cs" />
     <Compile Include="Modules\imgproc\Subdiv2D.cs" />
+    <Compile Include="Modules\img_hash\AverageHash.cs" />
+    <Compile Include="Modules\img_hash\BlockMeanHash.cs" />
+    <Compile Include="Modules\img_hash\ColorMomentHash.cs" />
+    <Compile Include="Modules\img_hash\Enum\BlockMeanHashMode.cs" />
+    <Compile Include="Modules\img_hash\ImgHashBase.cs" />
+    <Compile Include="Modules\img_hash\MarrHildrethHash.cs" />
+    <Compile Include="Modules\img_hash\PHash.cs" />
+    <Compile Include="Modules\img_hash\RadialVarianceHash.cs" />
     <Compile Include="Modules\ml\ANN_MLP.cs" />
     <Compile Include="Modules\ml\Boost.cs" />
     <Compile Include="Modules\ml\DTrees.cs" />
@@ -350,6 +389,7 @@
     <Compile Include="Modules\objdetect\HOGDescriptor.cs" />
     <Compile Include="Modules\objdetect\LatendSvmDetector.cs" />
     <Compile Include="Modules\objdetect\SimilarRects.cs" />
+    <Compile Include="Modules\optflow\CvOptFlow.cs" />
     <Compile Include="Modules\photo\CalibrateCRF.cs" />
     <Compile Include="Modules\photo\CalibrateDebevec.cs" />
     <Compile Include="Modules\photo\EdgePreservingMethods.cs" />
@@ -365,6 +405,17 @@
     <Compile Include="Modules\superres\FrameSourceImpl.cs" />
     <Compile Include="Modules\superres\SuperResolution.cs" />
     <Compile Include="Modules\superres\SuperResolutionImpl.cs" />
+    <Compile Include="Modules\text\BaseOCR.cs" />
+    <Compile Include="Modules\text\ComponentLevels.cs" />
+    <Compile Include="Modules\text\OCRTesseract.cs" />
+    <Compile Include="Modules\tracking\Enum\TrackerTypes.cs" />
+    <Compile Include="Modules\tracking\Tracker.cs" />
+    <Compile Include="Modules\tracking\TrackerBoosting.cs" />
+    <Compile Include="Modules\tracking\TrackerGOTURN.cs" />
+    <Compile Include="Modules\tracking\TrackerKCF.cs" />
+    <Compile Include="Modules\tracking\TrackerMedianFlow.cs" />
+    <Compile Include="Modules\tracking\TrackerMIL.cs" />
+    <Compile Include="Modules\tracking\TrackerTLD.cs" />
     <Compile Include="Modules\videoio\Enum\CameraChannels.cs" />
     <Compile Include="Modules\videoio\Enum\CaptureDevice.cs" />
     <Compile Include="Modules\videoio\Enum\CapturePosRatio.cs" />
@@ -375,7 +426,7 @@
     <Compile Include="Modules\videoio\VideoWriter.cs" />
     <Compile Include="Modules\video\BackgroundSubtractor.cs" />
     <Compile Include="Modules\video\BackgroundSubtractorKNN.cs" />
-    <Compile Include="Modules\video\BackgroundSubtractorMOG2.cs" />
+    <Compile Include="Modules\video\BackgroundSubtractorMog2.cs" />
     <Compile Include="Modules\video\DenseOpticalFlow.cs" />
     <Compile Include="Modules\video\DenseOpticalFlowImpl.cs" />
     <Compile Include="Modules\video\KalmanFilter.cs" />
@@ -385,8 +436,20 @@
     <Compile Include="Modules\xfeatures2d\SIFT.cs" />
     <Compile Include="Modules\xfeatures2d\StarDetector.cs" />
     <Compile Include="Modules\xfeatures2d\SURF.cs" />
-    <Compile Include="OpenCVException.cs" />
-    <Compile Include="OpenCvSharpException.cs" />
+    <Compile Include="Modules\ximgproc\CvXImgProc.cs" />
+    <Compile Include="Modules\ximgproc\Enum\AngleRangeOption.cs" />
+    <Compile Include="Modules\ximgproc\Enum\HoughDeskewOption.cs" />
+    <Compile Include="Modules\ximgproc\Enum\HoughOP.cs" />
+    <Compile Include="Modules\ximgproc\Enum\RulesOption.cs" />
+    <Compile Include="Modules\ximgproc\Enum\ThinningTypes.cs" />
+    <Compile Include="Modules\ximgproc\Enum\WMFWeightType.cs" />
+    <Compile Include="Modules\ximgproc\FastLineDetector.cs" />
+    <Compile Include="Modules\xphoto\CvXPhoto.cs" />
+    <Compile Include="Modules\xphoto\Enum\InpaintTypes.cs" />
+    <Compile Include="Modules\xphoto\GrayworldWB.cs" />
+    <Compile Include="Modules\xphoto\LearningBasedWB.cs" />
+    <Compile Include="Modules\xphoto\SimpleWB.cs" />
+    <Compile Include="Modules\xphoto\WhiteBalancer.cs" />
     <Compile Include="PInvoke\calib3d\NativeMethods_calib3d.cs" />
     <Compile Include="PInvoke\calib3d\NativeMethods_calib3d_StereoMatcher.cs" />
     <Compile Include="PInvoke\core\NativeMethods_core.cs" />
@@ -450,19 +513,23 @@
     <Compile Include="PInvoke\Win32API.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ArrayAddress.cs" />
+    <Compile Include="Util\ArrayAddress2.cs" />
     <Compile Include="Util\DynamicInvoker.cs" />
     <Compile Include="Util\EnumerableEx.cs" />
+    <Compile Include="Util\MarshalHelper.cs" />
+    <Compile Include="Util\MemoryHelper.cs" />
     <Compile Include="Util\PInvokeHelper.cs" />
     <Compile Include="Util\Platform.cs" />
     <Compile Include="Util\PlatformUtil.cs" />
     <Compile Include="Util\ScopedGCHandle.cs" />
     <Compile Include="Util\StringArrayAddress.cs" />
+    <Compile Include="Util\StringHelper.cs" />
     <Compile Include="Util\StructurePointer.cs" />
     <Compile Include="Util\TimeMeasurer.cs" />
-    <Compile Include="Util\Utility.cs" />
-    <Compile Include="Util\WindowsLibraryLoader.cs" />
+    <Compile Include="Util\TypeHelper.cs" />
     <Compile Include="Vector\IStdVector.cs" />
     <Compile Include="Vector\VectorOfByte.cs" />
+    <Compile Include="Vector\VectorOfCvString.cs" />
     <Compile Include="Vector\VectorOfDMatch.cs" />
     <Compile Include="Vector\VectorOfDouble.cs" />
     <Compile Include="Vector\VectorOfDTreesNode.cs" />
@@ -475,6 +542,7 @@
     <Compile Include="Vector\VectorOfPoint2f.cs" />
     <Compile Include="Vector\VectorOfPoint3f.cs" />
     <Compile Include="Vector\VectorOfRect.cs" />
+    <Compile Include="Vector\VectorOfSByte.cs" />
     <Compile Include="Vector\VectorOfString.cs" />
     <Compile Include="Vector\VectorOfVec2f.cs" />
     <Compile Include="Vector\VectorOfVec3f.cs" />
@@ -493,10 +561,9 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.6</Version>
+      <Version>5.0.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="OpenCvSharp.dll.config" />
   </ItemGroup>
