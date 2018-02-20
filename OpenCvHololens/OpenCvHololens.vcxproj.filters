@@ -207,6 +207,7 @@
     <ClCompile Include="Source\xfeatures2d.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
