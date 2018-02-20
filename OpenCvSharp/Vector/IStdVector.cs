@@ -5,7 +5,7 @@ namespace OpenCvSharp
     /// <summary>
     /// Represents std::vector 
     /// </summary>
-    public interface IStdVector<out T> : IDisposable
+    internal interface IStdVector<out T> : IDisposable
     {
         /// <summary>
         /// vector.size()

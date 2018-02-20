@@ -2,12 +2,16 @@
 
 namespace OpenCvSharp.ML
 {
-    /// <summary>
+	/// <summary>
     /// Implements Logistic Regression classifier.
     /// </summary>
-    public class LogisticRegression : StatModel
-    {
-        private Ptr ptrObj;
+	public class LogisticRegression : StatModel
+	{
+        /// <summary>
+        /// Track whether Dispose has been called
+        /// </summary>
+        private bool disposed;
+        private Ptr<LogisticRegression> ptrObj;
 
         #region Init and Disposal
 
@@ -16,7 +20,7 @@ namespace OpenCvSharp.ML
         /// </summary>
         protected LogisticRegression(IntPtr p)
         {
-            ptrObj = new Ptr(p);
+            ptrObj = new Ptr<LogisticRegression>(p);
             ptr = ptrObj.Get();
         }
 
@@ -25,48 +29,42 @@ namespace OpenCvSharp.ML
         /// </summary>
         /// <returns></returns>
         public static LogisticRegression Create()
-        {
+	    {
             IntPtr ptr = NativeMethods.ml_LogisticRegression_create();
             return new LogisticRegression(ptr);
-        }
+	    }
 
         /// <summary>
-        /// Loads and creates a serialized model from a file.
+        /// Clean up any resources being used.
         /// </summary>
-        /// <param name="filePath"></param>
-        /// <returns></returns>
-        public static LogisticRegression Load(string filePath)
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+        protected override void Dispose(bool disposing)
         {
-            if (filePath == null)
-                throw new ArgumentNullException(nameof(filePath));
-            IntPtr ptr = NativeMethods.ml_LogisticRegression_load(filePath);
-            return new LogisticRegression(ptr);
+            if (!disposed)
+            {
+                try
+                {
+                    if (disposing)
+                    {
+                        if (ptrObj != null)
+                        {
+                            ptrObj.Dispose();
+                            ptrObj = null;
+                        }
+                    }
+                    ptr = IntPtr.Zero;
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
-
-        /// <summary>
-        /// Loads algorithm from a String.
-        /// </summary>
-        /// <param name="strModel">he string variable containing the model you want to load.</param>
-        /// <returns></returns>
-        public static LogisticRegression LoadFromString(string strModel)
-        {
-            if (strModel == null)
-                throw new ArgumentNullException(nameof(strModel));
-            IntPtr ptr = NativeMethods.ml_LogisticRegression_loadFromString(strModel);
-            return new LogisticRegression(ptr);
-        }
-
-        /// <summary>
-        /// Releases managed resources
-        /// </summary>
-        protected override void DisposeManaged()
-        {
-            ptrObj?.Dispose();
-            ptrObj = null;
-            base.DisposeManaged();
-        }
-
-        #endregion
+		#endregion
 
         #region Properties
 
@@ -75,35 +73,17 @@ namespace OpenCvSharp.ML
         /// </summary>
         public double LearningRate
         {
-            get
-            {
-                var res = NativeMethods.ml_LogisticRegression_getLearningRate(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-            set
-            {
-                NativeMethods.ml_LogisticRegression_setLearningRate(ptr, value);
-                GC.KeepAlive(this);
-            }
+            get { return NativeMethods.ml_LogisticRegression_getLearningRate(ptr); }
+            set { NativeMethods.ml_LogisticRegression_setLearningRate(ptr, value); }
         }
-
+        
         /// <summary>
         /// Number of iterations.
         /// </summary>
         public int Iterations
         {
-            get
-            {
-                var res = NativeMethods.ml_LogisticRegression_getIterations(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-            set
-            {
-                NativeMethods.ml_LogisticRegression_setIterations(ptr, value);
-                GC.KeepAlive(this);
-            }
+            get { return NativeMethods.ml_LogisticRegression_getIterations(ptr); }
+            set { NativeMethods.ml_LogisticRegression_setIterations(ptr, value); }
         }
 
         /// <summary>
@@ -111,17 +91,8 @@ namespace OpenCvSharp.ML
         /// </summary>
         public RegKinds Regularization
         {
-            get
-            {
-                var res = (RegKinds)NativeMethods.ml_LogisticRegression_getRegularization(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-            set
-            {
-                NativeMethods.ml_LogisticRegression_setRegularization(ptr, (int)value);
-                GC.KeepAlive(this);
-            }
+            get { return (RegKinds)NativeMethods.ml_LogisticRegression_getRegularization(ptr); }
+            set { NativeMethods.ml_LogisticRegression_setRegularization(ptr, (int)value); }
         }
 
         /// <summary>
@@ -129,17 +100,8 @@ namespace OpenCvSharp.ML
         /// </summary>
         public Methods TrainMethod
         {
-            get
-            {
-                var res = (Methods)NativeMethods.ml_LogisticRegression_getTrainMethod(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-            set
-            {
-                NativeMethods.ml_LogisticRegression_setTrainMethod(ptr, (int)value);
-                GC.KeepAlive(this);
-            }
+            get { return (Methods)NativeMethods.ml_LogisticRegression_getTrainMethod(ptr); }
+            set { NativeMethods.ml_LogisticRegression_setTrainMethod(ptr, (int)value); }
         }
 
         /// <summary>
@@ -149,17 +111,8 @@ namespace OpenCvSharp.ML
         /// </summary>
         public int MiniBatchSize
         {
-            get
-            {
-                var res = NativeMethods.ml_LogisticRegression_getMiniBatchSize(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-            set
-            {
-                NativeMethods.ml_LogisticRegression_setMiniBatchSize(ptr, value);
-                GC.KeepAlive(this);
-            }
+            get { return NativeMethods.ml_LogisticRegression_getMiniBatchSize(ptr); }
+            set { NativeMethods.ml_LogisticRegression_setMiniBatchSize(ptr, value); }
         }
 
         /// <summary>
@@ -167,22 +120,13 @@ namespace OpenCvSharp.ML
         /// </summary>
         public TermCriteria TermCriteria
         {
-            get
-            {
-                var res = NativeMethods.ml_LogisticRegression_getTermCriteria(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-            set
-            {
-                NativeMethods.ml_LogisticRegression_setTermCriteria(ptr, value);
-                GC.KeepAlive(this);
-            }
+            get { return NativeMethods.ml_LogisticRegression_getTermCriteria(ptr); }
+            set { NativeMethods.ml_LogisticRegression_setTermCriteria(ptr, value); }
         }
 
         #endregion
 
-        #region Methods
+		#region Methods
 
         /// <summary>
         /// Predicts responses for input samples and returns a float type.
@@ -193,9 +137,10 @@ namespace OpenCvSharp.ML
         /// <param name="results">Predicted labels as a column matrix of type CV_32S.</param>
         /// <param name="flags">Not used.</param>
         /// <returns></returns>
-        public float Predict(InputArray samples, OutputArray results = null, int flags = 0)
+	    public float Predict(InputArray samples, OutputArray results = null, int flags = 0)
         {
-            ThrowIfDisposed();
+            if (disposed)
+	            throw new NotImplementedException(GetType().Name);
             if (samples == null)
                 throw new ArgumentNullException(nameof(samples));
             samples.ThrowIfDisposed();
@@ -203,29 +148,28 @@ namespace OpenCvSharp.ML
                 results.ThrowIfNotReady();
 
             float ret = NativeMethods.ml_LogisticRegression_predict(ptr, samples.CvPtr, Cv2.ToPtr(results), flags);
-            GC.KeepAlive(this);
+
             GC.KeepAlive(samples);
-            GC.KeepAlive(results);
             if (results != null)
                 results.Fix();
 
             return ret;
         }
 
-        /// <summary>
+	    /// <summary>
         /// This function returns the trained paramters arranged across rows.
         ///  For a two class classifcation problem, it returns a row matrix. 
         /// It returns learnt paramters of the Logistic Regression as a matrix of type CV_32F.
         /// </summary>
         /// <returns></returns>
-        public Mat GetLearntThetas()
-        {
-            ThrowIfDisposed();
+	    public Mat GetLearntThetas()
+	    {
+            if (disposed)
+                throw new NotImplementedException(GetType().Name);
 
-            IntPtr p = NativeMethods.ml_LogisticRegression_get_learnt_thetas(ptr);
-            GC.KeepAlive(this);
+	        IntPtr p = NativeMethods.ml_LogisticRegression_get_learnt_thetas(ptr);
             return new Mat(p);
-        }
+	    }
 
         #endregion
 
@@ -239,7 +183,7 @@ namespace OpenCvSharp.ML
             /// <summary>
             /// Regularization disabled
             /// </summary>
-            RegDisable = -1,
+            RegDisable = -1, 
 
             /// <summary>
             /// L1 norm
@@ -249,7 +193,7 @@ namespace OpenCvSharp.ML
             /// <summary>
             /// L2 norm
             /// </summary>
-            RegL2 = 1
+            RegL2 = 1 
         }
 
         /// <summary>
@@ -269,25 +213,5 @@ namespace OpenCvSharp.ML
         }
 
         #endregion
-
-        internal class Ptr : OpenCvSharp.Ptr
-        {
-            public Ptr(IntPtr ptr) : base(ptr)
-            {
-            }
-
-            public override IntPtr Get()
-            {
-                var res = NativeMethods.ml_Ptr_LogisticRegression_get(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-
-            protected override void DisposeUnmanaged()
-            {
-                NativeMethods.ml_Ptr_LogisticRegression_delete(ptr);
-                base.DisposeUnmanaged();
-            }
-        }
     }
 }

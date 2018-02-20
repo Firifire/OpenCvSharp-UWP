@@ -17,9 +17,10 @@ namespace OpenCvSharp.XFeatures2D
 #endif
     public class FREAK : Feature2D
     {
-        private Ptr ptrObj;
+        private bool disposed;
+        private Ptr<FREAK> ptrObj;
 
-        //internal override IntPtr PtrObj => ptrObj.CvPtr;
+        internal override IntPtr PtrObj => ptrObj.CvPtr;
 
         #region Init & Disposal
 
@@ -28,7 +29,7 @@ namespace OpenCvSharp.XFeatures2D
         /// </summary>
         protected FREAK(IntPtr p)
         {
-            ptrObj = new Ptr(p);
+            ptrObj = new Ptr<FREAK>(p);
             ptr = ptrObj.Get();
         }
 
@@ -56,14 +57,47 @@ namespace OpenCvSharp.XFeatures2D
             return new FREAK(ptr);
         }
 
+#if LANG_JP
+    /// <summary>
+    /// リソースの解放
+    /// </summary>
+    /// <param name="disposing">
+    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+    ///</param>
+#else
         /// <summary>
-        /// Releases managed resources
+        /// Releases the resources
         /// </summary>
-        protected override void DisposeManaged()
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            ptrObj?.Dispose();
-            ptrObj = null;
-            base.DisposeManaged();
+            if (!disposed)
+            {
+                try
+                {
+                    // releases managed resources
+                    if (disposing)
+                    {
+                        if (ptrObj != null)
+                        {
+                            ptrObj.Dispose();
+                            ptrObj = null;
+                        }
+                    }
+                    // releases unmanaged resources
+
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
 
         #endregion
@@ -71,25 +105,5 @@ namespace OpenCvSharp.XFeatures2D
         #region Methods
 
         #endregion
-
-        internal new class Ptr : OpenCvSharp.Ptr
-        {
-            public Ptr(IntPtr ptr) : base(ptr)
-            {
-            }
-
-            public override IntPtr Get()
-            {
-                var res = NativeMethods.xfeatures2d_Ptr_FREAK_get(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-
-            protected override void DisposeUnmanaged()
-            {
-                NativeMethods.xfeatures2d_Ptr_FREAK_delete(ptr);
-                base.DisposeUnmanaged();
-            }
-        }
     }
 }

@@ -4,9 +4,9 @@ namespace OpenCvSharp
     // ReSharper disable InconsistentNaming
 
 #if LANG_JP
-    /// <summary>
-    /// カメラキャプチャの初期化に用いるカメラのデバイス
-    /// </summary>
+	/// <summary>
+	/// カメラキャプチャの初期化に用いるカメラのデバイス
+	/// </summary>
 #else
     /// <summary>
     /// Camera device types
@@ -138,25 +138,5 @@ namespace OpenCvSharp
         /// gPhoto2 connection
         /// </summary>
         GPhoto2 = 1700,
-
-        /// <summary>
-        /// GStreamer
-        /// </summary>
-        GStreamer = 1800,
-
-        /// <summary>
-        /// Open and record video file or stream using the FFMPEG library
-        /// </summary>
-        FFMPEG = 1900, 
-
-        /// <summary>
-        ///  OpenCV Image Sequence (e.g. img_%02d.jpg)
-        /// </summary>
-        Images = 2000,
-
-        /// <summary>
-        /// Aravis SDK
-        /// </summary>
-        Aravis = 2100,
     }
 }

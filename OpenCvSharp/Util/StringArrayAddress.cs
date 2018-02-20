@@ -18,11 +18,7 @@ namespace OpenCvSharp.Util
             var byteList = new List<byte[]>();
             for (int i = 0; i < stringArray.Length; i++)
             {
-#if true
-                byteList.Add(Encoding.UTF8.GetBytes(stringArray[i])); // TODO
-#else
                 byteList.Add(Encoding.ASCII.GetBytes(stringArray[i]));
-#endif
             }
             Initialize(byteList.ToArray());
         }

@@ -13,8 +13,12 @@ namespace OpenCvSharp
 #endif
     public class VideoWriter : DisposableCvObject
     {
-        #region Init and Disposal
+        /// <summary>
+        /// Track whether Dispose has been called
+        /// </summary>
+        private bool disposed = false;
 
+        #region Init and Disposal
         /// <summary>
         /// 
         /// </summary>
@@ -126,7 +130,6 @@ namespace OpenCvSharp
             if (ptr == IntPtr.Zero)
                 throw new OpenCvSharpException("Failed to create VideoWriter");
         }
-
         /// <summary>
         /// Initializes from native pointer
         /// </summary>
@@ -136,15 +139,44 @@ namespace OpenCvSharp
             this.ptr = ptr;
         }
 
+#if LANG_JP
         /// <summary>
-        /// Releases unmanaged resources
+        /// リソースの解放
         /// </summary>
-        protected override void DisposeUnmanaged()
+        /// <param name="disposing">
+        /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+        /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+        ///</param>
+#else
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            NativeMethods.videoio_VideoWriter_delete(ptr);
-            base.DisposeUnmanaged();
+            if (!disposed)
+            {
+                try
+                {
+                    if (disposing)
+                    {
+                    }
+                    if (IsEnabledDispose)
+                    {
+                        NativeMethods.videoio_VideoWriter_delete(ptr);
+                    }
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
-
         #endregion
 
         #region Properties
@@ -292,7 +324,6 @@ namespace OpenCvSharp
             FrameSize = frameSize;
             IsColor = isColor;
             NativeMethods.videoio_VideoWriter_open(ptr, fileName, fourcc, fps, frameSize, isColor ? 1 : 0);
-            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -302,9 +333,7 @@ namespace OpenCvSharp
         public bool IsOpened()
         {
             ThrowIfDisposed();
-            var res = NativeMethods.videoio_VideoWriter_isOpened(ptr) != 0;
-            GC.KeepAlive(this);
-            return res;
+            return NativeMethods.videoio_VideoWriter_isOpened(ptr) != 0;
         }
 
         /// <summary>
@@ -315,7 +344,6 @@ namespace OpenCvSharp
         {
             ThrowIfDisposed();
             NativeMethods.videoio_VideoWriter_release(ptr);
-            GC.KeepAlive(this);
         }
 
 #if LANG_JP
@@ -338,8 +366,6 @@ namespace OpenCvSharp
                 throw new ArgumentNullException(nameof(image));
             image.ThrowIfDisposed();
             NativeMethods.videoio_VideoWriter_write(ptr, image.CvPtr);
-            GC.KeepAlive(this);
-            GC.KeepAlive(image);
         }
 
         /// <summary>

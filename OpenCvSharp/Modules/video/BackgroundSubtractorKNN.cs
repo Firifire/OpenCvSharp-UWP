@@ -12,7 +12,11 @@ namespace OpenCvSharp
         /// <summary>
         /// cv::Ptr&lt;T&gt;
         /// </summary>
-        private Ptr objectPtr;
+        private Ptr<BackgroundSubtractorKNN> objectPtr;
+        /// <summary>
+        /// 
+        /// </summary>
+        private bool disposed;
 
         #region Init & Disposal
 
@@ -33,20 +37,53 @@ namespace OpenCvSharp
 
         internal BackgroundSubtractorKNN(IntPtr ptr)
         {
-            this.objectPtr = new Ptr(ptr);
+            this.objectPtr = new Ptr<BackgroundSubtractorKNN>(ptr);
             this.ptr = objectPtr.Get(); 
         }
 
+#if LANG_JP
+    /// <summary>
+    /// リソースの解放
+    /// </summary>
+    /// <param name="disposing">
+    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+    ///</param>
+#else
         /// <summary>
-        /// Releases managed resources
+        /// Clean up any resources being used.
         /// </summary>
-        protected override void DisposeManaged()
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            objectPtr?.Dispose();
-            objectPtr = null;
-            base.DisposeManaged();
+            if (!disposed)
+            {
+                try
+                {
+                    if (disposing)
+                    {
+                    }
+                    if (IsEnabledDispose)
+                    {
+                        if (objectPtr != null)
+                        {
+                            objectPtr.Dispose();
+                        }
+                        objectPtr = null;
+                        ptr = IntPtr.Zero;
+                    }
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
-
         #endregion
 
         #region Properties
@@ -58,16 +95,15 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.video_BackgroundSubtractorKNN_getHistory(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.video_BackgroundSubtractorKNN_getHistory(ptr);
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.video_BackgroundSubtractorKNN_setHistory(ptr, value);
-                GC.KeepAlive(this);
             }
         }
 
@@ -78,16 +114,15 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.video_BackgroundSubtractorKNN_getNSamples(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.video_BackgroundSubtractorKNN_getNSamples(ptr);
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.video_BackgroundSubtractorKNN_setNSamples(ptr, value);
-                GC.KeepAlive(this);
             }
         }
 
@@ -98,16 +133,15 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.video_BackgroundSubtractorKNN_getDist2Threshold(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.video_BackgroundSubtractorKNN_getDist2Threshold(ptr);
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.video_BackgroundSubtractorKNN_setDist2Threshold(ptr, value);
-                GC.KeepAlive(this);
             }
         }
 
@@ -118,16 +152,15 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.video_BackgroundSubtractorKNN_getkNNSamples(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.video_BackgroundSubtractorKNN_getkNNSamples(ptr);
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.video_BackgroundSubtractorKNN_setkNNSamples(ptr, value);
-                GC.KeepAlive(this);
             }
         }
 
@@ -138,16 +171,15 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.video_BackgroundSubtractorKNN_getDetectShadows(ptr) != 0;
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.video_BackgroundSubtractorKNN_getDetectShadows(ptr) != 0;
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.video_BackgroundSubtractorKNN_setDetectShadows(ptr, value ? 1 : 0);
-                GC.KeepAlive(this);
             }
         }
 
@@ -158,16 +190,15 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.video_BackgroundSubtractorKNN_getShadowValue(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.video_BackgroundSubtractorKNN_getShadowValue(ptr);
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.video_BackgroundSubtractorKNN_setShadowValue(ptr, value);
-                GC.KeepAlive(this);
             }
         }
 
@@ -178,39 +209,18 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.video_BackgroundSubtractorKNN_getShadowThreshold(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.video_BackgroundSubtractorKNN_getShadowThreshold(ptr);
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.video_BackgroundSubtractorKNN_setShadowThreshold(ptr, value);
-                GC.KeepAlive(this);
             }
         }
-
+        
         #endregion
-
-        internal class Ptr : OpenCvSharp.Ptr
-        {
-            public Ptr(IntPtr ptr) : base(ptr)
-            {
-            }
-
-            public override IntPtr Get()
-            {
-                var res = NativeMethods.video_Ptr_BackgroundSubtractorKNN_get(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-
-            protected override void DisposeUnmanaged()
-            {
-                NativeMethods.video_Ptr_BackgroundSubtractorKNN_delete(ptr);
-                base.DisposeUnmanaged();
-            }
-        }
     }
 }

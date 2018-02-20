@@ -10,6 +10,13 @@ namespace OpenCvSharp
     public class VectorOfPoint3f : DisposableCvObject, IStdVector<Point3f>
     {
         /// <summary>
+        /// Track whether Dispose has been called
+        /// </summary>
+        private bool disposed = false;
+
+        #region Init and Dispose
+
+        /// <summary>
         /// 
         /// </summary>
         public VectorOfPoint3f()
@@ -41,25 +48,41 @@ namespace OpenCvSharp
         }
 
         /// <summary>
-        /// Releases unmanaged resources
+        /// Clean up any resources being used.
         /// </summary>
-        protected override void DisposeUnmanaged()
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+        protected override void Dispose(bool disposing)
         {
-            NativeMethods.vector_Point3f_delete(ptr);
-            base.DisposeUnmanaged();
+            if (!disposed)
+            {
+                try
+                {
+                    if (IsEnabledDispose)
+                    {
+                        NativeMethods.vector_Point3f_delete(ptr);
+                    }
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// vector.size()
         /// </summary>
         public int Size
         {
-            get
-            {
-                var res = NativeMethods.vector_Point3f_getSize(ptr).ToInt32();
-                GC.KeepAlive(this);
-                return res;
-            }
+            get { return NativeMethods.vector_Point3f_getSize(ptr).ToInt32(); }
         }
 
         /// <summary>
@@ -67,13 +90,12 @@ namespace OpenCvSharp
         /// </summary>
         public IntPtr ElemPtr
         {
-            get
-            {
-                var res = NativeMethods.vector_Point3f_getPointer(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
+            get { return NativeMethods.vector_Point3f_getPointer(ptr); }
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Converts std::vector to managed array
@@ -87,13 +109,13 @@ namespace OpenCvSharp
                 return new Point3f[0];
             }
             Point3f[] dst = new Point3f[size];
-            using (var dstPtr = new ArrayAddress1<Point3f>(dst))
+            using (ArrayAddress1<Point3f> dstPtr = new ArrayAddress1<Point3f>(dst))
             {
-                MemoryHelper.CopyMemory(dstPtr, ElemPtr, Point3f.SizeOf*dst.Length);
+                Util.Utility.CopyMemory(dstPtr, ElemPtr, Point3f.SizeOf*dst.Length);
             }
-            GC.KeepAlive(this); // ElemPtr is IntPtr to memory held by this object, so
-                                // make sure we are not disposed until finished with copy.
             return dst;
         }
+
+        #endregion
     }
 }

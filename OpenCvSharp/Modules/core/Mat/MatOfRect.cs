@@ -699,7 +699,6 @@ namespace OpenCvSharp
         {
             ThrowIfDisposed();
             NativeMethods.core_Mat_push_back_Rect(ptr, value);
-            GC.KeepAlive(this);
         }
     }
 }
