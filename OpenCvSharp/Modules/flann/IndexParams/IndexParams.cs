@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace OpenCvSharp.Flann
@@ -9,72 +8,41 @@ namespace OpenCvSharp.Flann
     /// </summary>
     public class IndexParams : DisposableCvObject
     {
-        private bool disposed = false;
+        internal OpenCvSharp.Ptr PtrObj { get; set; }
 
-        #region Properties
-
-        #endregion
-
-        #region Init & Disposal
-#if LANG_JP
         /// <summary>
         /// 
         /// </summary>
-#else
-        /// <summary>
-        /// 
-        /// </summary>
-#endif
         public IndexParams()
+            : base()
         {
-            ptr = NativeMethods.flann_IndexParams_new();
-            if (ptr == IntPtr.Zero)
-                throw new OpenCvSharpException("Failed to create IndexParams");
+            IntPtr p = NativeMethods.flann_Ptr_IndexParams_new();
+            if (p == IntPtr.Zero)
+                throw new OpenCvSharpException($"Failed to create {nameof(IndexParams)}");
+
+            PtrObj = new Ptr(p);
+            ptr = PtrObj.Get();
         }
 
-#if LANG_JP
         /// <summary>
-        /// リソースの解放
+        /// 
         /// </summary>
-        /// <param name="disposing">
-        /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-        /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-        ///</param>
-#else
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
+        protected IndexParams(OpenCvSharp.Ptr ptrObj)
+            : base()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    if (disposing)
-                    {
-                    }
-                    if (IsEnabledDispose)
-                    {
-                        if (ptr != IntPtr.Zero)
-                        {
-                            NativeMethods.flann_IndexParams_delete(ptr);
-                        }
-                        ptr = IntPtr.Zero;
-                    }
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            PtrObj = ptrObj;
+            ptr = PtrObj?.Get() ?? IntPtr.Zero;
         }
-        #endregion
+
+        /// <summary>
+        /// Releases managed resources
+        /// </summary>
+        protected override void DisposeManaged()
+        {
+            PtrObj?.Dispose();
+            PtrObj = null;
+            base.DisposeManaged();
+        }
 
         #region Methods
         #region Get**
@@ -88,6 +56,7 @@ namespace OpenCvSharp.Flann
         {
             StringBuilder sb = new StringBuilder(1024);
             NativeMethods.flann_IndexParams_getString(ptr, key, defaultVal, sb);
+            GC.KeepAlive(this);
             return sb.ToString();
         }
         /// <summary>
@@ -108,8 +77,11 @@ namespace OpenCvSharp.Flann
         /// <returns></returns>
         public int GetInt(string key, int defaultVal)
         {
-            return NativeMethods.flann_IndexParams_getInt(ptr, key, defaultVal);
+            var ret = NativeMethods.flann_IndexParams_getInt(ptr, key, defaultVal);
+            GC.KeepAlive(this);
+            return ret;
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -119,6 +91,7 @@ namespace OpenCvSharp.Flann
         {
             return GetInt(key, -1);
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -127,8 +100,11 @@ namespace OpenCvSharp.Flann
         /// <returns></returns>
         public double GetDouble(string key, double defaultVal)
         {
-            return NativeMethods.flann_IndexParams_getDouble(ptr, key, defaultVal);
+            var ret = NativeMethods.flann_IndexParams_getDouble(ptr, key, defaultVal);
+            GC.KeepAlive(this);
+            return ret;
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -138,6 +114,7 @@ namespace OpenCvSharp.Flann
         {
             return GetDouble(key, -1);
         }
+
         #endregion
         #region Set**
         /// <summary>
@@ -148,6 +125,7 @@ namespace OpenCvSharp.Flann
         public void SetString(string key, string value)
         {
             NativeMethods.flann_IndexParams_setString(ptr, key, value);
+            GC.KeepAlive(this);
         }
         /// <summary>
         /// 
@@ -157,6 +135,7 @@ namespace OpenCvSharp.Flann
         public void SetInt(string key, int value)
         {
             NativeMethods.flann_IndexParams_setInt(ptr, key, value);
+            GC.KeepAlive(this);
         }
         /// <summary>
         /// 
@@ -166,6 +145,7 @@ namespace OpenCvSharp.Flann
         public void SetDouble(string key, double value)
         {
             NativeMethods.flann_IndexParams_setDouble(ptr, key, value);
+            GC.KeepAlive(this);
         }
         /// <summary>
         /// 
@@ -175,6 +155,7 @@ namespace OpenCvSharp.Flann
         public void SetFloat(string key, float value)
         {
             NativeMethods.flann_IndexParams_setFloat(ptr, key, value);
+            GC.KeepAlive(this);
         }
         /// <summary>
         /// 
@@ -184,6 +165,7 @@ namespace OpenCvSharp.Flann
         public void SetBool(string key, bool value)
         {
             NativeMethods.flann_IndexParams_setBool(ptr, key, value ? 1 : 0);
+            GC.KeepAlive(this);
         }
         /// <summary>
         /// 
@@ -192,8 +174,29 @@ namespace OpenCvSharp.Flann
         public void SetAlgorithm(int value)
         {
             NativeMethods.flann_IndexParams_setAlgorithm(ptr, value);
+            GC.KeepAlive(this);
         }
         #endregion
         #endregion
+
+        internal class Ptr : OpenCvSharp.Ptr
+        {
+            public Ptr(IntPtr ptr) : base(ptr)
+            {
+            }
+
+            public override IntPtr Get()
+            {
+                var res = NativeMethods.flann_Ptr_IndexParams_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+
+            protected override void DisposeUnmanaged()
+            {
+                NativeMethods.flann_Ptr_IndexParams_delete(ptr);
+                base.DisposeUnmanaged();
+            }
+        }
     }
 }

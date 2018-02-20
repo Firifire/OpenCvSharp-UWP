@@ -13,12 +13,7 @@ namespace OpenCvSharp.ML
 #endif
     public class DTrees : StatModel
     {
-        /// <summary>
-        /// Track whether Dispose has been called
-        /// </summary>
-        private bool disposed;
-
-        private Ptr<DTrees> ptrObj;
+        private Ptr ptrObj;
 
         #region Init and Disposal
 
@@ -35,7 +30,7 @@ namespace OpenCvSharp.ML
         /// </summary>
         protected DTrees(IntPtr p)
         {
-            ptrObj = new Ptr<DTrees>(p);
+            ptrObj = new Ptr(p);
             ptr = ptrObj.Get();
         }
 
@@ -49,45 +44,40 @@ namespace OpenCvSharp.ML
             return new DTrees(ptr);
         }
 
-#if LANG_JP
-    /// <summary>
-    /// リソースの解放
-    /// </summary>
-    /// <param name="disposing">
-    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-    ///</param>
-#else
         /// <summary>
-        /// Clean up any resources being used.
+        /// Loads and creates a serialized model from a file.
         /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public static DTrees Load(string filePath)
         {
-            if (!disposed)
-            {
-                try
-                {
-                    if (disposing)
-                    {
-                        if (ptrObj != null)
-                        {
-                            ptrObj.Dispose();
-                            ptrObj = null;
-                        }
-                    }
-                    ptr = IntPtr.Zero;
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            if (filePath == null)
+                throw new ArgumentNullException(nameof(filePath));
+            IntPtr ptr = NativeMethods.ml_DTrees_load(filePath);
+            return new DTrees(ptr);
+        }
+
+        /// <summary>
+        /// Loads algorithm from a String.
+        /// </summary>
+        /// <param name="strModel">he string variable containing the model you want to load.</param>
+        /// <returns></returns>
+        public static DTrees LoadFromString(string strModel)
+        {
+            if (strModel == null)
+                throw new ArgumentNullException(nameof(strModel));
+            IntPtr ptr = NativeMethods.ml_DTrees_loadFromString(strModel);
+            return new DTrees(ptr);
+        }
+
+        /// <summary>
+        /// Releases managed resources
+        /// </summary>
+        protected override void DisposeManaged()
+        {
+            ptrObj?.Dispose();
+            ptrObj = null;
+            base.DisposeManaged();
         }
 
         #endregion
@@ -100,8 +90,17 @@ namespace OpenCvSharp.ML
         /// </summary>
         public int MaxCategories
         {
-            get { return NativeMethods.ml_DTrees_getMaxCategories(ptr); }
-            set { NativeMethods.ml_DTrees_setMaxCategories(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_DTrees_getMaxCategories(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_DTrees_setMaxCategories(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -109,8 +108,17 @@ namespace OpenCvSharp.ML
         /// </summary>
         public int MaxDepth
         {
-            get { return NativeMethods.ml_DTrees_getMaxDepth(ptr); }
-            set { NativeMethods.ml_DTrees_setMaxDepth(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_DTrees_getMaxDepth(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_DTrees_setMaxDepth(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -119,8 +127,17 @@ namespace OpenCvSharp.ML
         /// </summary>
         public int MinSampleCount
         {
-            get { return NativeMethods.ml_DTrees_getMinSampleCount(ptr); }
-            set { NativeMethods.ml_DTrees_setMinSampleCount(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_DTrees_getMinSampleCount(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_DTrees_setMinSampleCount(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -130,8 +147,17 @@ namespace OpenCvSharp.ML
 // ReSharper disable once InconsistentNaming
         public int CVFolds
         {
-            get { return NativeMethods.ml_DTrees_getCVFolds(ptr); }
-            set { NativeMethods.ml_DTrees_setCVFolds(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_DTrees_getCVFolds(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_DTrees_setCVFolds(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -141,8 +167,17 @@ namespace OpenCvSharp.ML
         /// </summary>
         public bool UseSurrogates
         {
-            get { return NativeMethods.ml_DTrees_getUseSurrogates(ptr) != 0; }
-            set { NativeMethods.ml_DTrees_setUseSurrogates(ptr, value ? 1 : 0); }
+            get
+            {
+                var res = NativeMethods.ml_DTrees_getUseSurrogates(ptr) != 0;
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_DTrees_setUseSurrogates(ptr, value ? 1 : 0);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -153,8 +188,17 @@ namespace OpenCvSharp.ML
 // ReSharper disable once InconsistentNaming
         public bool Use1SERule
         {
-            get { return NativeMethods.ml_DTrees_getUse1SERule(ptr) != 0; }
-            set { NativeMethods.ml_DTrees_setUse1SERule(ptr, value ? 1 : 0); }
+            get
+            {
+                var res = NativeMethods.ml_DTrees_getUse1SERule(ptr) != 0;
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_DTrees_setUse1SERule(ptr, value ? 1 : 0);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -164,8 +208,17 @@ namespace OpenCvSharp.ML
         /// </summary>
         public bool TruncatePrunedTree
         {
-            get { return NativeMethods.ml_DTrees_getTruncatePrunedTree(ptr) != 0; }
-            set { NativeMethods.ml_DTrees_setTruncatePrunedTree(ptr, value ? 1 : 0); }
+            get
+            {
+                var res = NativeMethods.ml_DTrees_getTruncatePrunedTree(ptr) != 0;
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_DTrees_setTruncatePrunedTree(ptr, value ? 1 : 0);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -176,8 +229,17 @@ namespace OpenCvSharp.ML
         /// </summary>
         public float RegressionAccuracy
         {
-            get { return NativeMethods.ml_DTrees_getRegressionAccuracy(ptr); }
-            set { NativeMethods.ml_DTrees_setRegressionAccuracy(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_DTrees_getRegressionAccuracy(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_DTrees_setRegressionAccuracy(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -188,9 +250,14 @@ namespace OpenCvSharp.ML
             get
             {
                 IntPtr p = NativeMethods.ml_DTrees_getPriors(ptr);
+                GC.KeepAlive(this);
                 return new Mat(p);
             }
-            set { NativeMethods.ml_DTrees_setPriors(ptr, value.CvPtr); }
+            set
+            {
+                NativeMethods.ml_DTrees_setPriors(ptr, value.CvPtr);
+                GC.KeepAlive(this);
+            }
         }
 
         #endregion
@@ -209,6 +276,7 @@ namespace OpenCvSharp.ML
             using (var vector = new VectorOfInt32())
             {
                 NativeMethods.ml_DTrees_getRoots(ptr, vector.CvPtr);
+                GC.KeepAlive(this);
                 return vector.ToArray();
             }
         }
@@ -225,6 +293,7 @@ namespace OpenCvSharp.ML
             using (var vector = new VectorOfDTreesNode())
             {
                 NativeMethods.ml_DTrees_getNodes(ptr, vector.CvPtr);
+                GC.KeepAlive(this);
                 return vector.ToArray();
             }
         }
@@ -242,6 +311,7 @@ namespace OpenCvSharp.ML
             using (var vector = new VectorOfDTreesSplit())
             {
                 NativeMethods.ml_DTrees_getSplits(ptr, vector.CvPtr);
+                GC.KeepAlive(this);
                 return vector.ToArray();
             }
         }
@@ -255,10 +325,11 @@ namespace OpenCvSharp.ML
         {
             if (ptr == IntPtr.Zero)
                 throw new ObjectDisposedException(GetType().Name);
-            
+
             using (var vector = new VectorOfInt32())
             {
                 NativeMethods.ml_DTrees_getSubsets(ptr, vector.CvPtr);
+                GC.KeepAlive(this);
                 return vector.ToArray();
             }
         }
@@ -282,17 +353,17 @@ namespace OpenCvSharp.ML
             /// Class index normalized to 0..class_count-1 range and assigned to the 
             /// node. It is used internally in classification trees and tree ensembles.
             /// </summary>
-            public int ClassIdx; 
+            public int ClassIdx;
 
             /// <summary>
             /// Index of the parent node
             /// </summary>
-            public int Parent; 
+            public int Parent;
 
             /// <summary>
             /// Index of the left child node
             /// </summary>
-            public int Left; 
+            public int Left;
 
             /// <summary>
             /// Index of right child node
@@ -303,12 +374,12 @@ namespace OpenCvSharp.ML
             /// Default direction where to go (-1: left or +1: right). It helps in the
             /// case of missing values.
             /// </summary>
-            public int DefaultDir; 
+            public int DefaultDir;
 
             /// <summary>
             /// Index of the first split
             /// </summary>
-            public int Split; 
+            public int Split;
         }
 
         /// <summary>
@@ -325,29 +396,49 @@ namespace OpenCvSharp.ML
             /// If not 0, then the inverse split rule is used (i.e. left and right
             /// branches are exchanged in the rule expressions below).
             /// </summary>
-            public int Inversed; 
+            public int Inversed;
 
             /// <summary>
             /// The split quality, a positive number. It is used to choose the best split.
             /// </summary>
-            public float Quality; 
+            public float Quality;
 
             /// <summary>
             /// Index of the next split in the list of splits for the node
             /// </summary>
-            public int Next; 
+            public int Next;
 
             /// <summary>
             /// The threshold value in case of split on an ordered variable.
             /// </summary>
-            public float C; 
+            public float C;
 
             /// <summary>
             /// Offset of the bitset used by the split on a categorical variable.
             /// </summary>
-            public int SubsetOfs; 
+            public int SubsetOfs;
         }
 
         #endregion
+
+        internal class Ptr : OpenCvSharp.Ptr
+        {
+            public Ptr(IntPtr ptr) : base(ptr)
+            {
+            }
+
+            public override IntPtr Get()
+            {
+                var res = NativeMethods.ml_Ptr_DTrees_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+
+            protected override void DisposeUnmanaged()
+            {
+                NativeMethods.ml_Ptr_DTrees_delete(ptr);
+                base.DisposeUnmanaged();
+            }
+        }
     }
 }

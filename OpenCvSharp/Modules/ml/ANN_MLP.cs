@@ -7,26 +7,22 @@ namespace OpenCvSharp.ML
     /// MLPモデルクラス
     /// </summary>
 #else
-	/// <summary>
+    /// <summary>
     /// Artificial Neural Networks - Multi-Layer Perceptrons.
     /// </summary>
 #endif
-	public class ANN_MLP : StatModel
-	{
-        /// <summary>
-        /// Track whether Dispose has been called
-        /// </summary>
-        private bool disposed;
-        private Ptr<ANN_MLP> ptrObj;
+    // ReSharper disable once InconsistentNaming
+    public class ANN_MLP : StatModel
+    {
+        private Ptr ptrObj;
 
         #region Init and Disposal
         /// <summary>
         /// Creates instance by raw pointer cv::ml::ANN_MLP*
         /// </summary>
         protected ANN_MLP(IntPtr p)
-            : base()
         {
-            ptrObj = new Ptr<ANN_MLP>(p);
+            ptrObj = new Ptr(p);
             ptr = ptrObj.Get();
         }
 
@@ -35,42 +31,50 @@ namespace OpenCvSharp.ML
         /// </summary>
         /// <returns></returns>
         public static ANN_MLP Create()
-	    {
+        {
             IntPtr ptr = NativeMethods.ml_ANN_MLP_create();
             return new ANN_MLP(ptr);
-	    }
+        }
 
         /// <summary>
-        /// Clean up any resources being used.
+        /// Loads and creates a serialized ANN from a file.
+        /// Use ANN::save to serialize and store an ANN to disk.
+        /// Load the ANN from this file again, by calling this function with the path to the file.
         /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-        protected override void Dispose(bool disposing)
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public static ANN_MLP Load(string filePath)
         {
-            if (!disposed)
-            {
-                try
-                {
-                    if (disposing)
-                    {
-                        if (ptrObj != null)
-                        {
-                            ptrObj.Dispose();
-                            ptrObj = null;
-                        }
-                    }
-                    ptr = IntPtr.Zero;
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            if (filePath == null)
+                throw new ArgumentNullException(nameof(filePath));
+            IntPtr ptr = NativeMethods.ml_ANN_MLP_load(filePath);
+            return new ANN_MLP(ptr);
         }
-		#endregion
+
+        /// <summary>
+        /// Loads algorithm from a String.
+        /// </summary>
+        /// <param name="strModel">he string variable containing the model you want to load.</param>
+        /// <returns></returns>
+        public static ANN_MLP LoadFromString(string strModel)
+        {
+            if (strModel == null)
+                throw new ArgumentNullException(nameof(strModel));
+            IntPtr ptr = NativeMethods.ml_ANN_MLP_loadFromString(strModel);
+            return new ANN_MLP(ptr);
+        }
+
+        /// <summary>
+        /// Releases managed resources
+        /// </summary>
+        protected override void DisposeManaged()
+        {
+            ptrObj?.Dispose();
+            ptrObj = null;
+            base.DisposeManaged();
+        }
+
+        #endregion
 
         #region Properties
 
@@ -79,8 +83,17 @@ namespace OpenCvSharp.ML
         /// </summary>
         public TermCriteria TermCriteria
         {
-            get { return NativeMethods.ml_ANN_MLP_getTermCriteria(ptr); }
-            set { NativeMethods.ml_ANN_MLP_setTermCriteria(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_ANN_MLP_getTermCriteria(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_ANN_MLP_setTermCriteria(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -89,8 +102,17 @@ namespace OpenCvSharp.ML
         /// </summary>
         public double BackpropWeightScale
         {
-            get { return NativeMethods.ml_ANN_MLP_getBackpropWeightScale(ptr); }
-            set { NativeMethods.ml_ANN_MLP_setBackpropWeightScale(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_ANN_MLP_getBackpropWeightScale(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_ANN_MLP_setBackpropWeightScale(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -101,8 +123,17 @@ namespace OpenCvSharp.ML
         /// </summary>
         public double BackpropMomentumScale
         {
-            get { return NativeMethods.ml_ANN_MLP_getBackpropMomentumScale(ptr); }
-            set { NativeMethods.ml_ANN_MLP_setBackpropMomentumScale(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_ANN_MLP_getBackpropMomentumScale(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_ANN_MLP_setBackpropMomentumScale(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -111,8 +142,17 @@ namespace OpenCvSharp.ML
 // ReSharper disable once InconsistentNaming
         public double RpropDW0
         {
-            get { return NativeMethods.ml_ANN_MLP_getRpropDW0(ptr); }
-            set { NativeMethods.ml_ANN_MLP_setRpropDW0(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_ANN_MLP_getRpropDW0(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_ANN_MLP_setRpropDW0(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -122,8 +162,17 @@ namespace OpenCvSharp.ML
 // ReSharper disable once InconsistentNaming
         public double RpropDWPlus
         {
-            get { return NativeMethods.ml_ANN_MLP_getRpropDWPlus(ptr); }
-            set { NativeMethods.ml_ANN_MLP_setRpropDWPlus(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_ANN_MLP_getRpropDWPlus(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_ANN_MLP_setRpropDWPlus(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -133,8 +182,17 @@ namespace OpenCvSharp.ML
 // ReSharper disable once InconsistentNaming
         public double RpropDWMinus
         {
-            get { return NativeMethods.ml_ANN_MLP_getRpropDWPlus(ptr); }
-            set { NativeMethods.ml_ANN_MLP_setRpropDWPlus(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_ANN_MLP_getRpropDWPlus(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_ANN_MLP_setRpropDWPlus(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -144,8 +202,17 @@ namespace OpenCvSharp.ML
 // ReSharper disable once InconsistentNaming
         public double RpropDWMin
         {
-            get { return NativeMethods.ml_ANN_MLP_getRpropDWMin(ptr); }
-            set { NativeMethods.ml_ANN_MLP_setRpropDWMin(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_ANN_MLP_getRpropDWMin(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_ANN_MLP_setRpropDWMin(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -155,8 +222,17 @@ namespace OpenCvSharp.ML
 // ReSharper disable once InconsistentNaming
         public double RpropDWMax
         {
-            get { return NativeMethods.ml_ANN_MLP_getRpropDWMax(ptr); }
-            set { NativeMethods.ml_ANN_MLP_setRpropDWMax(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_ANN_MLP_getRpropDWMax(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_ANN_MLP_setRpropDWMax(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         #endregion
@@ -170,12 +246,13 @@ namespace OpenCvSharp.ML
         /// </summary>
         /// <param name="layerSizes"></param>
         public virtual void SetLayerSizes(InputArray layerSizes)
-	    {
-	        if (disposed)
-                throw new ObjectDisposedException(GetType().Name);
+        {
+            ThrowIfDisposed();
             if (layerSizes == null)
                 throw new ArgumentNullException(nameof(layerSizes));
             NativeMethods.ml_ANN_MLP_setLayerSizes(ptr, layerSizes.CvPtr);
+            GC.KeepAlive(this);
+            GC.KeepAlive(layerSizes);
         }
 
         /// <summary>
@@ -184,13 +261,13 @@ namespace OpenCvSharp.ML
         /// The last element - number of elements in the output layer.
         /// </summary>
         /// <returns></returns>
-	    public virtual Mat GetLayerSizes()
-	    {
-            if (disposed)
-                throw new ObjectDisposedException(GetType().Name);
-	        IntPtr p = NativeMethods.ml_ANN_MLP_getLayerSizes(ptr);
+        public virtual Mat GetLayerSizes()
+        {
+            ThrowIfDisposed();
+            IntPtr p = NativeMethods.ml_ANN_MLP_getLayerSizes(ptr);
+            GC.KeepAlive(this);
             return new Mat(p);
-	    }
+        }
 
         #endregion
 
@@ -256,14 +333,34 @@ namespace OpenCvSharp.ML
             /// <summary>
             /// The back-propagation algorithm.
             /// </summary>
-            BackProp = 0, 
+            BackProp = 0,
 
             /// <summary>
             /// The RPROP algorithm. See @cite RPROP93 for details.
             /// </summary>
-            RProp = 1  
+            RProp = 1
         }
 
         #endregion
+
+        internal class Ptr : OpenCvSharp.Ptr
+        {
+            public Ptr(IntPtr ptr) : base(ptr)
+            {
+            }
+
+            public override IntPtr Get()
+            {
+                var res = NativeMethods.ml_Ptr_ANN_MLP_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+
+            protected override void DisposeUnmanaged()
+            {
+                NativeMethods.ml_Ptr_ANN_MLP_delete(ptr);
+                base.DisposeUnmanaged();
+            }
+        }
     }
 }

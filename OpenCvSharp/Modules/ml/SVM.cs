@@ -9,18 +9,14 @@ namespace OpenCvSharp.ML
     /// SVM model classifier
     /// </summary>
 #else
-	/// <summary>
+    /// <summary>
     /// Support Vector Machines
     /// </summary>
 #endif
 
     public class SVM : StatModel
     {
-        /// <summary>
-        /// Track whether Dispose has been called
-        /// </summary>
-        private bool disposed;
-        private Ptr<SVM> ptrObj;
+        private Ptr ptrObj;
 
         #region Init and Disposal
 
@@ -29,7 +25,7 @@ namespace OpenCvSharp.ML
         /// </summary>
         protected SVM(IntPtr p)
         {
-            ptrObj = new Ptr<SVM>(p);
+            ptrObj = new Ptr(p);
             ptr = ptrObj.Get();
         }
 
@@ -40,125 +36,186 @@ namespace OpenCvSharp.ML
         /// parameters for your problem, it can be done with SVM::TrainAuto.
         /// </summary>
         /// <returns></returns>
-	    public static SVM Create()
-	    {
+        public static SVM Create()
+        {
             IntPtr ptr = NativeMethods.ml_SVM_create();
             return new SVM(ptr);
-	    }
-
-#if LANG_JP
-        /// <summary>
-        /// リソースの解放
-        /// </summary>
-        /// <param name="disposing">
-        /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-        /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-        ///</param>
-#else
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                try
-                {
-                    if (disposing)
-                    {
-                        if (ptrObj != null)
-                        {
-                            ptrObj.Dispose();
-                            ptrObj = null;
-                        }
-                    }
-                    ptr = IntPtr.Zero;
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
         }
+
+        /// <summary>
+        /// Loads and creates a serialized svm from a file.
+        /// Use SVM::save to serialize and store an SVM to disk.
+        /// Load the SVM from this file again, by calling this function with the path to the file.
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public static SVM Load(string filePath)
+        {
+            if (filePath == null)
+                throw new ArgumentNullException(nameof(filePath));
+            IntPtr ptr = NativeMethods.ml_SVM_load(filePath);
+            return new SVM(ptr);
+        }
+
+        /// <summary>
+        /// Loads algorithm from a String.
+        /// </summary>
+        /// <param name="strModel">The string variable containing the model you want to load.</param>
+        /// <returns></returns>
+        public static SVM LoadFromString(string strModel)
+        {
+            if (strModel == null)
+                throw new ArgumentNullException(nameof(strModel));
+            IntPtr ptr = NativeMethods.ml_SVM_loadFromString(strModel);
+            return new SVM(ptr);
+        }
+
+        /// <summary>
+        /// Releases managed resources
+        /// </summary>
+        protected override void DisposeManaged()
+        {
+            ptrObj?.Dispose();
+            ptrObj = null;
+            base.DisposeManaged();
+        }
+
         #endregion
 
         #region Properties
 
-	    /// <summary>
-	    /// Type of a %SVM formulation. 
-	    /// Default value is SVM::C_SVC.
-	    /// </summary>
-	    public Types Type
-	    {
-	        get { return (Types) NativeMethods.ml_SVM_getType(ptr); }
-	        set { NativeMethods.ml_SVM_setType(ptr, (int) value); }
-	    }
+        /// <summary>
+        /// Type of a %SVM formulation. 
+        /// Default value is SVM::C_SVC.
+        /// </summary>
+        public Types Type
+        {
+            get
+            {
+                var res = (Types)NativeMethods.ml_SVM_getType(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_SVM_setType(ptr, (int)value);
+                GC.KeepAlive(this);
+            }
+        }
 
         /// <summary>
         /// Parameter gamma of a kernel function.
         /// For SVM::POLY, SVM::RBF, SVM::SIGMOID or SVM::CHI2. Default value is 1. 
         /// </summary>
-	    public double Gamma
-	    {
-	        get { return NativeMethods.ml_SVM_getGamma(ptr); }
-	        set { NativeMethods.ml_SVM_setGamma(ptr, value); }
-	    }
+        public double Gamma
+        {
+            get
+            {
+                var res = NativeMethods.ml_SVM_getGamma(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_SVM_setGamma(ptr, value);
+                GC.KeepAlive(this);
+            }
+        }
 
         /// <summary>
         /// Parameter coef0 of a kernel function.
         /// For SVM::POLY or SVM::SIGMOID. Default value is 0.
         /// </summary>
-	    public double Coef0
-	    {
-	        get { return NativeMethods.ml_SVM_getCoef0(ptr); }
-	        set { NativeMethods.ml_SVM_setCoef0(ptr, value); }
-	    }
+        public double Coef0
+        {
+            get
+            {
+                var res = NativeMethods.ml_SVM_getCoef0(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_SVM_setCoef0(ptr, value);
+                GC.KeepAlive(this);
+            }
+        }
 
         /// <summary>
         /// Parameter degree of a kernel function.
         /// For SVM::POLY. Default value is 0.
         /// </summary>
-	    public double Degree
-	    {
-	  	    get { return NativeMethods.ml_SVM_getDegree(ptr); }
-	        set { NativeMethods.ml_SVM_setDegree(ptr, value); }      
-	    }
+        public double Degree
+        {
+            get
+            {
+                var res = NativeMethods.ml_SVM_getDegree(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_SVM_setDegree(ptr, value);
+                GC.KeepAlive(this);
+            }
+        }
 
         /// <summary>
         /// Parameter C of a %SVM optimization problem.
         /// For SVM::C_SVC, SVM::EPS_SVR or SVM::NU_SVR. Default value is 0.
         /// </summary>
-	    public double C
-	    {
-	        get { return NativeMethods.ml_SVM_getC(ptr); }
-	        set { NativeMethods.ml_SVM_setC(ptr, value); }    
-	    }
+        public double C
+        {
+            get
+            {
+                var res = NativeMethods.ml_SVM_getC(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_SVM_setC(ptr, value);
+                GC.KeepAlive(this);
+            }
+        }
 
         /// <summary>
         /// Parameter nu of a %SVM optimization problem.
         /// For SVM::NU_SVC, SVM::ONE_CLASS or SVM::NU_SVR. Default value is 0.
         /// </summary>
-	    public double Nu
-	    {
-	    	get { return NativeMethods.ml_SVM_getNu(ptr); }
-	        set { NativeMethods.ml_SVM_setNu(ptr, value); }        
-	    }
+        public double Nu
+        {
+            get
+            {
+                var res = NativeMethods.ml_SVM_getNu(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_SVM_setNu(ptr, value);
+                GC.KeepAlive(this);
+            }
+        }
 
         /// <summary>
         /// Parameter epsilon of a %SVM optimization problem.
         /// For SVM::EPS_SVR. Default value is 0.
         /// </summary>
-	    public double P
-	    {
-	        get { return NativeMethods.ml_SVM_getP(ptr); }
-	        set { NativeMethods.ml_SVM_setP(ptr, value); }     
-	    }
+        public double P
+        {
+            get
+            {
+                var res = NativeMethods.ml_SVM_getP(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_SVM_setP(ptr, value);
+                GC.KeepAlive(this);
+            }
+        }
 
         /// <summary>
         /// Optional weights in the SVM::C_SVC problem, assigned to particular classes.
@@ -169,18 +226,21 @@ namespace OpenCvSharp.ML
         /// The larger weight, the larger penalty on misclassification of data from the 
         /// corresponding class. Default value is empty Mat.
         /// </remarks>
-	    public Mat ClassWeights
-	    {
-	        get
-	        {
-	            IntPtr p = NativeMethods.ml_SVM_getClassWeights(ptr);
+        public Mat ClassWeights
+        {
+            get
+            {
+                IntPtr p = NativeMethods.ml_SVM_getClassWeights(ptr);
+                GC.KeepAlive(this);
                 return new Mat(p);
-	        }
-	        set
-	        {
-	            NativeMethods.ml_SVM_setClassWeights(ptr, value.CvPtr);
-	        }   
-	    }
+            }
+            set
+            {
+                NativeMethods.ml_SVM_setClassWeights(ptr, value.CvPtr);
+                GC.KeepAlive(this);
+                GC.KeepAlive(value);
+            }
+        }
 
         /// <summary>
         /// Termination criteria of the iterative SVM training procedure 
@@ -190,33 +250,51 @@ namespace OpenCvSharp.ML
         /// You can specify tolerance and/or the maximum number of iterations. 
         /// Default value is `TermCriteria( TermCriteria::MAX_ITER + TermCriteria::EPS, 1000, FLT_EPSILON )`;
         /// </remarks>
-	    public TermCriteria TermCriteria
-	    {
-	        get { return NativeMethods.ml_SVM_getTermCriteria(ptr); }
-	        set { NativeMethods.ml_SVM_setTermCriteria(ptr, value); }
-	    }
-        
+        public TermCriteria TermCriteria
+        {
+            get
+            {
+                var res = NativeMethods.ml_SVM_getTermCriteria(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_SVM_setTermCriteria(ptr, value);
+                GC.KeepAlive(this);
+            }
+        }
+
         /// <summary>
         /// Type of a %SVM kernel. See SVM::KernelTypes. Default value is SVM::RBF.
         /// </summary>
         public KernelTypes KernelType
         {
-            get { return (KernelTypes)NativeMethods.ml_SVM_getKernelType(ptr); }
-            set { NativeMethods.ml_SVM_setKernel(ptr, (int)value); }
+            get
+            {
+                var res = (KernelTypes)NativeMethods.ml_SVM_getKernelType(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_SVM_setKernel(ptr, (int)value);
+                GC.KeepAlive(this);
+            }
         }
 
         #endregion
 
         #region Methods
-        
+
         /// <summary>
         /// Initialize with custom kernel.
         /// </summary>
         /// <param name="kernel"></param>
-	    public void SetCustomKernel(Kernel kernel)
-	    {
+        public void SetCustomKernel(Kernel kernel)
+        {
             throw new NotImplementedException();
-	    }
+        }
 
         /// <summary>
         /// Trains an %SVM with optimal parameters.
@@ -236,18 +314,18 @@ namespace OpenCvSharp.ML
         /// more balanced cross-validation subsets that is proportions between classes in subsets are close 
         /// to such proportion in the whole train dataset.</param>
         /// <returns></returns>
-	    public bool TrainAuto(TrainData data, int kFold = 10,
-	        ParamGrid? cGrid = null,
-	        ParamGrid? gammaGrid = null,
-	        ParamGrid? pGrid = null,
-	        ParamGrid? nuGrid = null,
-	        ParamGrid? coeffGrid = null,
+        public bool TrainAuto(TrainData data, int kFold = 10,
+            ParamGrid? cGrid = null,
+            ParamGrid? gammaGrid = null,
+            ParamGrid? pGrid = null,
+            ParamGrid? nuGrid = null,
+            ParamGrid? coeffGrid = null,
             ParamGrid? degreeGrid = null,
-	        bool balanced = false)
-	    {
+            bool balanced = false)
+        {
             throw new NotImplementedException();
             /*
-	        var cGridValue = cGrid.GetValueOrDefault(GetDefaultGrid(ParamTypes.C));
+            var cGridValue = cGrid.GetValueOrDefault(GetDefaultGrid(ParamTypes.C));
             var gammaGridValue = gammaGrid.GetValueOrDefault(GetDefaultGrid(ParamTypes.Gamma));
             var pGridValue = pGrid.GetValueOrDefault(GetDefaultGrid(ParamTypes.P));
             var nuGridValue = nuGrid.GetValueOrDefault(GetDefaultGrid(ParamTypes.Nu));
@@ -259,13 +337,13 @@ namespace OpenCvSharp.ML
         /// Retrieves all the support vectors
         /// </summary>
         /// <returns></returns>
-	    public Mat GetSupportVectors()
-	    {
-            if (disposed)
-                throw new ObjectDisposedException(GetType().Name);
+        public Mat GetSupportVectors()
+        {
+            ThrowIfDisposed();
             IntPtr p = NativeMethods.ml_SVM_getSupportVectors(ptr);
+            GC.KeepAlive(this);
             return new Mat(p);
-	    }
+        }
 
         /// <summary>
         /// Retrieves the decision function
@@ -280,10 +358,9 @@ namespace OpenCvSharp.ML
         /// within the matrix of support vectors (which can be retrieved by SVM::getSupportVectors). 
         /// In the case of linear %SVM each decision function consists of a single "compressed" support vector.</param>
         /// <returns></returns>
-	    public double GetDecisionFunction(int i, OutputArray alpha, OutputArray svidx)
-	    {
-            if (disposed)
-                throw new ObjectDisposedException(GetType().Name);
+        public double GetDecisionFunction(int i, OutputArray alpha, OutputArray svidx)
+        {
+            ThrowIfDisposed();
             if (alpha == null)
                 throw new ArgumentNullException(nameof(alpha));
             if (svidx == null)
@@ -291,11 +368,14 @@ namespace OpenCvSharp.ML
 
             alpha.ThrowIfNotReady();
             svidx.ThrowIfNotReady();
-	        double ret = NativeMethods.ml_SVM_getDecisionFunction(ptr, i, alpha.CvPtr, svidx.CvPtr);
+            double ret = NativeMethods.ml_SVM_getDecisionFunction(ptr, i, alpha.CvPtr, svidx.CvPtr);
             alpha.Fix();
             svidx.Fix();
-	        return ret;
-	    }
+            GC.KeepAlive(this);
+            GC.KeepAlive(alpha);
+            GC.KeepAlive(svidx);
+            return ret;
+        }
 
         /// <summary>
         /// Generates a grid for SVM parameters.
@@ -303,10 +383,10 @@ namespace OpenCvSharp.ML
         /// <param name="paramId">SVM parameters IDs that must be one of the SVM::ParamTypes. 
         /// The grid is generated for the parameter with this ID.</param>
         /// <returns></returns>
-	    public static ParamGrid GetDefaultGrid(ParamTypes paramId)
-	    {
-	        return NativeMethods.ml_SVM_getDefaultGrid((int)paramId);
-	    }
+        public static ParamGrid GetDefaultGrid(ParamTypes paramId)
+        {
+            return NativeMethods.ml_SVM_getDefaultGrid((int)paramId);
+        }
 
         #endregion
 
@@ -315,57 +395,57 @@ namespace OpenCvSharp.ML
         /// <summary>
         /// 
         /// </summary>
-	    public class Kernel
-	    {
+        public class Kernel
+        {
             /// <summary>
             /// 
             /// </summary>
-	        public Kernel()
-	        {
-	            throw new NotImplementedException();
-	        }
-	    }
+            public Kernel()
+            {
+                throw new NotImplementedException();
+            }
+        }
 
-	    /// <summary>
-	    /// SVM type
-	    /// </summary>
-	    public enum Types
-	    {
-	        /// <summary>
-	        /// C-Support Vector Classification. n-class classification (n \f$\geq\f$ 2), 
-	        /// allows imperfect separation of classes with penalty multiplier C for outliers.
-	        /// </summary>
-	        CSvc = 100,
+        /// <summary>
+        /// SVM type
+        /// </summary>
+        public enum Types
+        {
+            /// <summary>
+            /// C-Support Vector Classification. n-class classification (n \f$\geq\f$ 2), 
+            /// allows imperfect separation of classes with penalty multiplier C for outliers.
+            /// </summary>
+            CSvc = 100,
 
-	        /// <summary>
-	        /// nu-Support Vector Classification. n-class classification with possible
-	        /// imperfect separation. Parameter \f$\nu\f$ (in the range 0..1, the larger 
-	        /// the value, the smoother the decision boundary) is used instead of C.
-	        /// </summary>
-	        NuSvc = 101,
+            /// <summary>
+            /// nu-Support Vector Classification. n-class classification with possible
+            /// imperfect separation. Parameter \f$\nu\f$ (in the range 0..1, the larger 
+            /// the value, the smoother the decision boundary) is used instead of C.
+            /// </summary>
+            NuSvc = 101,
 
-	        /// <summary>
-	        /// Distribution Estimation (One-class %SVM). All the training data are from
-	        /// the same class, %SVM builds a boundary that separates the class from the 
-	        /// rest of the feature space.
-	        /// </summary>
-	        OneClass = 102,
+            /// <summary>
+            /// Distribution Estimation (One-class %SVM). All the training data are from
+            /// the same class, %SVM builds a boundary that separates the class from the 
+            /// rest of the feature space.
+            /// </summary>
+            OneClass = 102,
 
-	        /// <summary>
-	        /// epsilon-Support Vector Regression. 
-	        /// The distance between feature vectors from the training set and the fitting 
-	        /// hyper-plane must be less than p. For outliers the penalty multiplier C is used.
-	        /// </summary>
-	        EpsSvr = 103,
+            /// <summary>
+            /// epsilon-Support Vector Regression. 
+            /// The distance between feature vectors from the training set and the fitting 
+            /// hyper-plane must be less than p. For outliers the penalty multiplier C is used.
+            /// </summary>
+            EpsSvr = 103,
 
-	        /// <summary>
-	        /// nu-Support Vector Regression. \f$\nu\f$ is used instead of p.
-	        /// See @cite LibSVM for details.
-	        /// </summary>
-	        NuSvr = 104
-	    }
+            /// <summary>
+            /// nu-Support Vector Regression. \f$\nu\f$ is used instead of p.
+            /// See @cite LibSVM for details.
+            /// </summary>
+            NuSvr = 104
+        }
 
-	    /// <summary>
+        /// <summary>
         /// SVM kernel type
         /// </summary>
         public enum KernelTypes
@@ -398,7 +478,7 @@ namespace OpenCvSharp.ML
             /// \f$K(x_i, x_j) = \tanh(\gamma x_i^T x_j + coef0)\f$.
             /// </summary>
             Sigmoid = 3,
-            
+
             /// <summary>
             /// Exponential Chi2 kernel, similar to the RBF kernel:
             /// \f$K(x_i, x_j) = e^{-\gamma \chi^2(x_i,x_j)}, \chi^2(x_i,x_j) = (x_i-x_j)^2/(x_i+x_j), \gamma &gt; 0\f$. 
@@ -428,5 +508,25 @@ namespace OpenCvSharp.ML
         };
 
         #endregion
+
+        internal class Ptr : OpenCvSharp.Ptr
+        {
+            public Ptr(IntPtr ptr) : base(ptr)
+            {
+            }
+
+            public override IntPtr Get()
+            {
+                var res = NativeMethods.ml_Ptr_SVM_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+
+            protected override void DisposeUnmanaged()
+            {
+                NativeMethods.ml_Ptr_SVM_delete(ptr);
+                base.DisposeUnmanaged();
+            }
+        }
     }
 }

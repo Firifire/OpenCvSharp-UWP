@@ -11,12 +11,10 @@ namespace OpenCvSharp
     /// </summary>
     internal sealed class SuperResolutionImpl : SuperResolution
     {
-        private bool disposed;
-
         /// <summary>
         /// 
         /// </summary>
-        private Ptr<SuperResolution> detectorPtr;
+        private Ptr detectorPtr;
 
         #region Init & Disposal
 
@@ -39,7 +37,7 @@ namespace OpenCvSharp
             if (ptr == IntPtr.Zero)
                 throw new OpenCvSharpException("Invalid FrameSource pointer");
 
-            var ptrObj = new Ptr<SuperResolution>(ptr);
+            var ptrObj = new Ptr(ptr);
             var obj = new SuperResolutionImpl
             {
                 detectorPtr = ptrObj,
@@ -64,49 +62,14 @@ namespace OpenCvSharp
             return obj;
         }
 
-
-#if LANG_JP
-    /// <summary>
-    /// リソースの解放
-    /// </summary>
-    /// <param name="disposing">
-    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-    ///</param>
-#else
         /// <summary>
-        /// Releases the resources
+        /// Releases managed resources
         /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
+        protected override void DisposeManaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    // releases managed resources
-                    if (disposing)
-                    {
-                    }
-                    // releases unmanaged resources
-                    if (IsEnabledDispose)
-                    {
-                        if (detectorPtr != null)
-                            detectorPtr.Dispose();
-                        detectorPtr = null;
-                        ptr = IntPtr.Zero;
-                    }
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            detectorPtr?.Dispose();
+            detectorPtr = null;
+            base.DisposeManaged();
         }
 
         #endregion
@@ -123,6 +86,8 @@ namespace OpenCvSharp
             if (fs == null)
                 throw new ArgumentNullException(nameof(fs));
             NativeMethods.superres_SuperResolution_setInput(ptr, fs.CvPtr);
+            GC.KeepAlive(this);
+            GC.KeepAlive(fs);
         }
 
         /// <summary>
@@ -137,6 +102,8 @@ namespace OpenCvSharp
             frame.ThrowIfNotReady();
             NativeMethods.superres_SuperResolution_nextFrame(ptr, frame.CvPtr);
             frame.Fix();
+            GC.KeepAlive(this);
+            GC.KeepAlive(frame);
         }
 
         /// <summary>
@@ -146,6 +113,7 @@ namespace OpenCvSharp
         {
             ThrowIfDisposed();
             NativeMethods.superres_SuperResolution_reset(ptr);
+            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -155,6 +123,7 @@ namespace OpenCvSharp
         {
             ThrowIfDisposed();
             NativeMethods.superres_SuperResolution_collectGarbage(ptr);
+            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -177,5 +146,25 @@ namespace OpenCvSharp
         }
 
         #endregion
+
+        internal class Ptr : OpenCvSharp.Ptr
+        {
+            public Ptr(IntPtr ptr) : base(ptr)
+            {
+            }
+
+            public override IntPtr Get()
+            {
+                var res = NativeMethods.superres_Ptr_SuperResolution_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+
+            protected override void DisposeUnmanaged()
+            {
+                NativeMethods.superres_Ptr_SuperResolution_delete(ptr);
+                base.DisposeUnmanaged();
+            }
+        }
     }
 }

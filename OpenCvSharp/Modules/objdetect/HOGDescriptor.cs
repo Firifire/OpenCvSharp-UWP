@@ -16,6 +16,7 @@ namespace OpenCvSharp
     public class HOGDescriptor : DisposableCvObject
     {
         #region Fields
+
         /// <summary>
         /// 
         /// </summary>
@@ -28,10 +29,6 @@ namespace OpenCvSharp
         /// sizeof(HOGDescriptor) 
         /// </summary>
         public static readonly int SizeOf = NativeMethods.objdetect_HOGDescriptor_sizeof();
-        /// <summary>
-        /// Track whether Dispose has been called
-        /// </summary>
-        private bool disposed;
 
         #region DefaultPeopleDetector
 
@@ -1368,9 +1365,10 @@ namespace OpenCvSharp
         /// </summary>
 #endif
         public HOGDescriptor()
-	    {
+        {
             ptr = NativeMethods.objdetect_HOGDescriptor_new1();               
-	    }
+        }
+
 #if LANG_JP
         /// <summary>
         /// HOG ディスクリプタおよび検出器を作成します
@@ -1459,46 +1457,15 @@ namespace OpenCvSharp
             this.ptr = ptr;
         }
 
-#if LANG_JP
         /// <summary>
-        /// リソースの解放
+        /// Releases unmanaged resources
         /// </summary>
-        /// <param name="disposing">
-        /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-        /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-        ///</param>
-#else
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
+        protected override void DisposeUnmanaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    if (disposing)
-                    {
-                    }
-                    if (IsEnabledDispose)
-                    {
-                        if(ptr != IntPtr.Zero)
-                            NativeMethods.objdetect_HOGDescriptor_delete(ptr);
-                        ptr = IntPtr.Zero;
-                    }
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            NativeMethods.objdetect_HOGDescriptor_delete(ptr);
+            base.DisposeUnmanaged();
         }
+
         #endregion
 
         #region Properties
@@ -1507,88 +1474,187 @@ namespace OpenCvSharp
         /// </summary>
         public Size WinSize
         {
-            get { return NativeMethods.objdetect_HOGDescriptor_winSize_get(ptr); }
-            set { NativeMethods.objdetect_HOGDescriptor_winSize_set(ptr, value); }
+            get
+            {
+                var res = NativeMethods.objdetect_HOGDescriptor_winSize_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.objdetect_HOGDescriptor_winSize_set(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
         /// <summary>
         /// 
         /// </summary>
         public Size BlockSize
         {
-            get { return NativeMethods.objdetect_HOGDescriptor_blockSize_get(ptr); }
-            set { NativeMethods.objdetect_HOGDescriptor_blockSize_set(ptr, value); }
+            get
+            {
+                var res = NativeMethods.objdetect_HOGDescriptor_blockSize_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.objdetect_HOGDescriptor_blockSize_set(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
         /// <summary>
         /// 
         /// </summary>
         public Size BlockStride
         {
-            get { return NativeMethods.objdetect_HOGDescriptor_blockStride_get(ptr); }
-            set { NativeMethods.objdetect_HOGDescriptor_blockStride_set(ptr, value); }
+            get
+            {
+                var res = NativeMethods.objdetect_HOGDescriptor_blockStride_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.objdetect_HOGDescriptor_blockStride_set(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
         /// <summary>
         /// 
         /// </summary>
         public Size CellSize
         {
-            get { return NativeMethods.objdetect_HOGDescriptor_cellSize_get(ptr); }
-            set { NativeMethods.objdetect_HOGDescriptor_cellSize_set(ptr, value); }
+            get
+            {
+                var res = NativeMethods.objdetect_HOGDescriptor_cellSize_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.objdetect_HOGDescriptor_cellSize_set(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
         /// <summary>
         /// 
         /// </summary>
         public int Nbins
         {
-            get { return NativeMethods.objdetect_HOGDescriptor_nbins_get(ptr); }
-            set { NativeMethods.objdetect_HOGDescriptor_nbins_set(ptr, value); }
+            get
+            {
+                var res = NativeMethods.objdetect_HOGDescriptor_nbins_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.objdetect_HOGDescriptor_nbins_set(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
         /// <summary>
         /// 
         /// </summary>
         public int DerivAperture
         {
-            get { return NativeMethods.objdetect_HOGDescriptor_derivAperture_get(ptr); }
-            set { NativeMethods.objdetect_HOGDescriptor_derivAperture_set(ptr, value); }
+            get
+            {
+                var res = NativeMethods.objdetect_HOGDescriptor_derivAperture_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.objdetect_HOGDescriptor_derivAperture_set(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
         /// <summary>
         /// 
         /// </summary>
         public double WinSigma
         {
-            get { return NativeMethods.objdetect_HOGDescriptor_winSigma_get(ptr); }
-            set { NativeMethods.objdetect_HOGDescriptor_winSigma_set(ptr, value); }
+            get
+            {
+                var res = NativeMethods.objdetect_HOGDescriptor_winSigma_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.objdetect_HOGDescriptor_winSigma_set(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
         /// <summary>
         /// 
         /// </summary>
         public HistogramNormType HistogramNormType
         {
-            get { return (HistogramNormType)NativeMethods.objdetect_HOGDescriptor_histogramNormType_get(ptr); }
-            set { NativeMethods.objdetect_HOGDescriptor_histogramNormType_set(ptr, (int)value); }
+            get
+            {
+                var res = (HistogramNormType)NativeMethods.objdetect_HOGDescriptor_histogramNormType_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.objdetect_HOGDescriptor_histogramNormType_set(ptr, (int)value);
+                GC.KeepAlive(this);
+            }
         }
         /// <summary>
         /// 
         /// </summary>
         public double L2HysThreshold
         {
-            get { return NativeMethods.objdetect_HOGDescriptor_L2HysThreshold_get(ptr); }
-            set { NativeMethods.objdetect_HOGDescriptor_L2HysThreshold_set(ptr, value); }
+            get
+            {
+                var res = NativeMethods.objdetect_HOGDescriptor_L2HysThreshold_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.objdetect_HOGDescriptor_L2HysThreshold_set(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
         /// <summary>
         /// 
         /// </summary>
         public bool GammaCorrection
         {
-            get { return NativeMethods.objdetect_HOGDescriptor_gammaCorrection_get(ptr) != 0; }
-            set { NativeMethods.objdetect_HOGDescriptor_gammaCorrection_set(ptr, value ? 1 : 0); }
+            get
+            {
+                var res = NativeMethods.objdetect_HOGDescriptor_gammaCorrection_get(ptr) != 0;
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.objdetect_HOGDescriptor_gammaCorrection_set(ptr, value ? 1 : 0);
+                GC.KeepAlive(this);
+            }
         }
         /// <summary>
         /// 
         /// </summary>
         public int NLevels
         {
-            get { return NativeMethods.objdetect_HOGDescriptor_nlevels_get(ptr); }
-            set { NativeMethods.objdetect_HOGDescriptor_nlevels_set(ptr, value); }
+            get
+            {
+                var res = NativeMethods.objdetect_HOGDescriptor_nlevels_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.objdetect_HOGDescriptor_nlevels_set(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
         #endregion
 
@@ -1639,12 +1705,12 @@ namespace OpenCvSharp
 #endif
         public virtual void SetSVMDetector(float[] svmDetector)
         {
-            if (disposed)
-                throw new ObjectDisposedException("HOGDescriptor");
+            ThrowIfDisposed();
 
             using (var svmDetectorVec = new VectorOfFloat(svmDetector))
             {
                 NativeMethods.objdetect_HOGDescriptor_setSVMDetector(ptr, svmDetectorVec.CvPtr);
+                GC.KeepAlive(this);
             }
         }
 
@@ -1656,9 +1722,10 @@ namespace OpenCvSharp
         /// <returns></returns>
         public virtual bool Load(string fileName, string objName = null)
         {
-            if (disposed)
-                throw new ObjectDisposedException("HOGDescriptor");
-            return NativeMethods.objdetect_HOGDescriptor_load(ptr, fileName, objName);
+            ThrowIfDisposed();
+            var res = NativeMethods.objdetect_HOGDescriptor_load(ptr, fileName, objName);
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -1668,9 +1735,9 @@ namespace OpenCvSharp
         /// <param name="objName"></param>
         public virtual void Save(string fileName, string objName = null)
         {
-            if (disposed)
-                throw new ObjectDisposedException("HOGDescriptor");
+            ThrowIfDisposed();
             NativeMethods.objdetect_HOGDescriptor_save(ptr, fileName, objName);
+            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -1679,9 +1746,10 @@ namespace OpenCvSharp
         /// <returns></returns>
         public int GetDescriptorSize()
         {
-            if (disposed)
-                throw new ObjectDisposedException("HOGDescriptor");
-            return NativeMethods.objdetect_HOGDescriptor_getDescriptorSize(ptr).ToInt32();
+            ThrowIfDisposed();
+            var res = NativeMethods.objdetect_HOGDescriptor_getDescriptorSize(ptr).ToInt32();
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -1690,9 +1758,10 @@ namespace OpenCvSharp
         /// <returns></returns>
         public bool CheckDetectorSize()
         {
-            if (disposed)
-                throw new ObjectDisposedException("HOGDescriptor");
-            return NativeMethods.objdetect_HOGDescriptor_checkDetectorSize(ptr) != 0;
+            ThrowIfDisposed();
+            var res = NativeMethods.objdetect_HOGDescriptor_checkDetectorSize(ptr) != 0;
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -1701,9 +1770,10 @@ namespace OpenCvSharp
         /// <returns></returns>
         public double GetWinSigma()
         {
-            if (disposed)
-                throw new ObjectDisposedException("HOGDescriptor");
-            return NativeMethods.objdetect_HOGDescriptor_getWinSigma(ptr);
+            ThrowIfDisposed();
+            var res = NativeMethods.objdetect_HOGDescriptor_getWinSigma(ptr);
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -1716,8 +1786,7 @@ namespace OpenCvSharp
         /// <returns></returns>
         public virtual float[] Compute(Mat img, Size? winStride = null, Size? padding = null, Point[] locations = null)
         {
-            if (disposed)
-                throw new ObjectDisposedException("HOGDescriptor");
+            ThrowIfDisposed();
             if (img == null)
                 throw new ArgumentNullException(nameof(img));
 
@@ -1725,8 +1794,10 @@ namespace OpenCvSharp
             Size padding0 = padding.GetValueOrDefault(new Size());
             using (var flVec = new VectorOfFloat())
             {
-                int length = (locations != null) ? locations.Length : 0;
+                int length = locations?.Length ?? 0;
                 NativeMethods.objdetect_HOGDescriptor_compute(ptr, img.CvPtr, flVec.CvPtr, winStride0, padding0, locations, length);
+                GC.KeepAlive(this);
+                GC.KeepAlive(img);
                 return flVec.ToArray();
             }
         }
@@ -1746,8 +1817,7 @@ namespace OpenCvSharp
         public virtual Point[] Detect(Mat img, 
             double hitThreshold = 0, Size? winStride = null, Size? padding = null, Point[] searchLocations = null)
         {
-            if (disposed)
-                throw new ObjectDisposedException("HOGDescriptor");
+            ThrowIfDisposed();
             if (img == null)
                 throw new ArgumentNullException(nameof(img));
             img.ThrowIfDisposed();
@@ -1756,9 +1826,11 @@ namespace OpenCvSharp
             Size padding0 = padding.GetValueOrDefault(new Size());
             using (var flVec = new VectorOfPoint())
             {
-                int slLength = (searchLocations != null) ? searchLocations.Length : 0;
-                NativeMethods.objdetect_HOGDescriptor_detect(ptr, img.CvPtr, flVec.CvPtr, 
+                int slLength = searchLocations?.Length ?? 0;
+                NativeMethods.objdetect_HOGDescriptor_detect1(ptr, img.CvPtr, flVec.CvPtr, 
                     hitThreshold, winStride0, padding0, searchLocations, slLength);
+                GC.KeepAlive(this);
+                GC.KeepAlive(img);
                 return flVec.ToArray();
             }
         }
@@ -1778,8 +1850,7 @@ namespace OpenCvSharp
         public virtual Point[] Detect(Mat img, out double[] weights, 
             double hitThreshold = 0, Size? winStride = null, Size? padding = null, Point[] searchLocations = null)
         {
-            if (disposed)
-                throw new ObjectDisposedException("HOGDescriptor");
+            ThrowIfDisposed();
             if (img == null)
                 throw new ArgumentNullException(nameof(img));
             img.ThrowIfDisposed();
@@ -1789,9 +1860,11 @@ namespace OpenCvSharp
             using (var flVec = new VectorOfPoint())
             using (var weightsVec = new VectorOfDouble())
             {
-                int slLength = (searchLocations != null) ? searchLocations.Length : 0;
-                NativeMethods.objdetect_HOGDescriptor_detect(ptr, img.CvPtr, flVec.CvPtr, weightsVec.CvPtr,
+                int slLength = searchLocations?.Length ?? 0;
+                NativeMethods.objdetect_HOGDescriptor_detect2(ptr, img.CvPtr, flVec.CvPtr, weightsVec.CvPtr,
                     hitThreshold, winStride0, padding0, searchLocations, slLength);
+                GC.KeepAlive(this);
+                GC.KeepAlive(img);
                 weights = weightsVec.ToArray();
                 return flVec.ToArray();
             }
@@ -1812,8 +1885,7 @@ namespace OpenCvSharp
         public virtual Rect[] DetectMultiScale(Mat img, 
             double hitThreshold = 0, Size? winStride = null, Size? padding = null, double scale=1.05, int groupThreshold = 2)
         {
-            if (disposed)
-                throw new ObjectDisposedException("HOGDescriptor");
+            ThrowIfDisposed();
             if (img == null)
                 throw new ArgumentNullException(nameof(img));
             img.ThrowIfDisposed();
@@ -1822,8 +1894,10 @@ namespace OpenCvSharp
             Size padding0 = padding.GetValueOrDefault(new Size());
             using (var flVec = new VectorOfRect())
             {
-                NativeMethods.objdetect_HOGDescriptor_detectMultiScale(ptr, img.CvPtr, flVec.CvPtr, 
+                NativeMethods.objdetect_HOGDescriptor_detectMultiScale1(ptr, img.CvPtr, flVec.CvPtr, 
                     hitThreshold, winStride0, padding0, scale, groupThreshold);
+                GC.KeepAlive(this);
+                GC.KeepAlive(img);
                 return flVec.ToArray();
             }          
         }
@@ -1843,8 +1917,7 @@ namespace OpenCvSharp
         public virtual Rect[] DetectMultiScale(Mat img, out double[] foundWeights,
             double hitThreshold = 0, Size? winStride = null, Size? padding = null, double scale = 1.05, int groupThreshold = 2)
         {
-            if (disposed)
-                throw new ObjectDisposedException("HOGDescriptor");
+            ThrowIfDisposed();
             if (img == null)
                 throw new ArgumentNullException(nameof(img));
             img.ThrowIfDisposed();
@@ -1854,9 +1927,11 @@ namespace OpenCvSharp
             using (var flVec = new VectorOfRect())
             using (var foundWeightsVec = new VectorOfDouble())
             {
-                NativeMethods.objdetect_HOGDescriptor_detectMultiScale(ptr, img.CvPtr, flVec.CvPtr, foundWeightsVec.CvPtr,
+                NativeMethods.objdetect_HOGDescriptor_detectMultiScale2(ptr, img.CvPtr, flVec.CvPtr, foundWeightsVec.CvPtr,
                     hitThreshold, winStride0, padding0, scale, groupThreshold);
+                GC.KeepAlive(this);
                 foundWeights = foundWeightsVec.ToArray();
+                GC.KeepAlive(img);
                 return flVec.ToArray();
             }
         }
@@ -1872,8 +1947,7 @@ namespace OpenCvSharp
         /// <param name="paddingBR"></param>
         public virtual void ComputeGradient(Mat img, Mat grad, Mat angleOfs, Size? paddingTL = null, Size? paddingBR = null)
         {
-            if (disposed)
-                throw new ObjectDisposedException("HOGDescriptor");
+            ThrowIfDisposed();
             if (img == null)
                 throw new ArgumentNullException(nameof(img));
             if (grad == null)
@@ -1887,6 +1961,10 @@ namespace OpenCvSharp
             Size paddingTL0 = paddingTL.GetValueOrDefault(new Size());
             Size paddingBR0 = paddingBR.GetValueOrDefault(new Size());
             NativeMethods.objdetect_HOGDescriptor_computeGradient(ptr, img.CvPtr, grad.CvPtr, angleOfs.CvPtr, paddingTL0, paddingBR0);
+            GC.KeepAlive(this);
+            GC.KeepAlive(img);
+            GC.KeepAlive(grad);
+            GC.KeepAlive(angleOfs);
         }
 
 
@@ -1904,8 +1982,7 @@ namespace OpenCvSharp
             Mat img, Point[] locations, out Point[] foundLocations, out double[] confidences,
             double hitThreshold = 0, Size? winStride = null, Size? padding = null)
         {
-            if (disposed)
-                throw new ObjectDisposedException("HOGDescriptor");
+            ThrowIfDisposed();
             if (img == null)
                 throw new ArgumentNullException(nameof(img));
             if (locations == null)
@@ -1919,6 +1996,8 @@ namespace OpenCvSharp
             {
                 NativeMethods.objdetect_HOGDescriptor_detectROI(ptr, img.CvPtr, locations, locations.Length,
                     flVec.CvPtr, cVec.CvPtr, hitThreshold, winStride0, padding0);
+                GC.KeepAlive(this);
+                GC.KeepAlive(img);
                 foundLocations = flVec.ToArray();
                 confidences = cVec.ToArray();
             }
@@ -1939,8 +2018,7 @@ namespace OpenCvSharp
             double hitThreshold = 0,
             int groupThreshold = 0)
         {
-            if (disposed)
-                throw new ObjectDisposedException("HOGDescriptor");
+            ThrowIfDisposed();
             if (img == null)
                 throw new ArgumentNullException(nameof(img));
             img.ThrowIfDisposed();
@@ -1954,6 +2032,8 @@ namespace OpenCvSharp
                     ptr, img.CvPtr, flVec.CvPtr, 
                     scalesVec.CvPtr, locationsVec.CvPtr, confidencesVec.CvPtr,
                     hitThreshold, groupThreshold);
+                GC.KeepAlive(this);
+                GC.KeepAlive(img);
                 foundLocations = flVec.ToArray();
 
                 double[] s = scalesVec.ToArray();
@@ -1981,9 +2061,9 @@ namespace OpenCvSharp
         /// <param name="modelFile"></param>
         public void ReadALTModel(string modelFile)
         {
-            if (disposed)
-                throw new ObjectDisposedException("HOGDescriptor");
+            ThrowIfDisposed();
             NativeMethods.objdetect_HOGDescriptor_readALTModel(ptr, modelFile);
+            GC.KeepAlive(this);
         }
         /// <summary>
         /// 
@@ -1994,14 +2074,14 @@ namespace OpenCvSharp
         /// <param name="eps"></param>
         public void GroupRectangles(out Rect[] rectList, out double[] weights, int groupThreshold, double eps)
         {
-            if (disposed)
-                throw new ObjectDisposedException("HOGDescriptor");
+            ThrowIfDisposed();
 
             using (var rectListVec = new VectorOfRect())
             using (var weightsVec = new VectorOfDouble())
             {
                 NativeMethods.objdetect_HOGDescriptor_groupRectangles(
                     ptr, rectListVec.CvPtr, weightsVec.CvPtr, groupThreshold, eps);
+                GC.KeepAlive(this);
                 rectList = rectListVec.ToArray();
                 weights = weightsVec.ToArray();
             }

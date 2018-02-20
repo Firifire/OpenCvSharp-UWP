@@ -16,19 +16,15 @@ namespace OpenCvSharp
 #endif
     public class EM : Algorithm
     {
-        /// <summary>
-        /// Track whether Dispose has been called
-        /// </summary>
-        private bool disposed;
-        private Ptr<EM> ptrObj;
+        private Ptr ptrObj;
 
         #region Constants
 
 #pragma warning disable 1591
-// ReSharper disable InconsistentNaming
+        // ReSharper disable InconsistentNaming
         public const int DEFAULT_NCLUSTERS = 5;
         public const int DEFAULT_MAX_ITERS = 100;
-// ReSharper restore InconsistentNaming
+        // ReSharper restore InconsistentNaming
 #pragma warning restore 1591
 
         #endregion
@@ -40,7 +36,7 @@ namespace OpenCvSharp
         /// </summary>
         protected EM(IntPtr p)
         {
-            ptrObj = new Ptr<EM>(p);
+            ptrObj = new Ptr(p);
             ptr = ptrObj.Get();
         }
 
@@ -49,50 +45,45 @@ namespace OpenCvSharp
         /// </summary>
         /// <returns></returns>
         public static EM Create()
-	    {
+        {
             IntPtr ptr = NativeMethods.ml_SVM_create();
             return new EM(ptr);
-	    }
+        }
 
-#if LANG_JP
-    /// <summary>
-    /// リソースの解放
-    /// </summary>
-    /// <param name="disposing">
-    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-    ///</param>
-#else
         /// <summary>
-        /// Clean up any resources being used.
+        /// Loads and creates a serialized model from a file.
         /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public static EM Load(string filePath)
         {
-            if (!disposed)
-            {
-                try
-                {
-                    if (disposing)
-                    {
-                        if (ptrObj != null)
-                        {
-                            ptrObj.Dispose();
-                            ptrObj = null;
-                        }
-                    }
-                    ptr = IntPtr.Zero;
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            if (filePath == null)
+                throw new ArgumentNullException(nameof(filePath));
+            IntPtr ptr = NativeMethods.ml_EM_load(filePath);
+            return new EM(ptr);
+        }
+
+        /// <summary>
+        /// Loads algorithm from a String.
+        /// </summary>
+        /// <param name="strModel">he string variable containing the model you want to load.</param>
+        /// <returns></returns>
+        public static EM LoadFromString(string strModel)
+        {
+            if (strModel == null)
+                throw new ArgumentNullException(nameof(strModel));
+            IntPtr ptr = NativeMethods.ml_EM_loadFromString(strModel);
+            return new EM(ptr);
+        }
+
+        /// <summary>
+        /// Releases managed resources
+        /// </summary>
+        protected override void DisposeManaged()
+        {
+            ptrObj?.Dispose();
+            ptrObj = null;
+            base.DisposeManaged();
         }
 
         #endregion
@@ -107,8 +98,17 @@ namespace OpenCvSharp
         /// </summary>
         public int ClustersNumber
         {
-            get { return NativeMethods.ml_EM_getClustersNumber(ptr); }
-            set { NativeMethods.ml_EM_setClustersNumber(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_EM_getClustersNumber(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_EM_setClustersNumber(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -116,8 +116,17 @@ namespace OpenCvSharp
         /// </summary>
         public int CovarianceMatrixType
         {
-            get { return NativeMethods.ml_EM_getCovarianceMatrixType(ptr); }
-            set { NativeMethods.ml_EM_setCovarianceMatrixType(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_EM_getCovarianceMatrixType(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_EM_setCovarianceMatrixType(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -129,8 +138,17 @@ namespace OpenCvSharp
         /// </summary>
         public TermCriteria TermCriteria
         {
-            get { return NativeMethods.ml_EM_getTermCriteria(ptr); }
-            set { NativeMethods.ml_EM_setTermCriteria(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_EM_getTermCriteria(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_EM_setTermCriteria(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         #endregion
@@ -144,9 +162,9 @@ namespace OpenCvSharp
         /// <returns></returns>
         public Mat GetWeights()
         {
-            if (disposed)
-                throw new ObjectDisposedException(GetType().Name);
+            ThrowIfDisposed();
             IntPtr p = NativeMethods.ml_EM_getWeights(ptr);
+            GC.KeepAlive(this);
             return new Mat(p);
         }
 
@@ -158,9 +176,9 @@ namespace OpenCvSharp
         /// <returns></returns>
         public Mat GetMeans()
         {
-            if (disposed)
-                throw new ObjectDisposedException(GetType().Name);
+            ThrowIfDisposed();
             IntPtr p = NativeMethods.ml_EM_getMeans(ptr);
+            GC.KeepAlive(this);
             return new Mat(p);
         }
 
@@ -171,15 +189,15 @@ namespace OpenCvSharp
         /// </summary>
         public Mat[] GetCovs()
         {
-            if (disposed)
-                throw new ObjectDisposedException(GetType().Name);
+            ThrowIfDisposed();
 
             using (var vec = new VectorOfMat())
             {
                 NativeMethods.ml_EM_getCovs(ptr, vec.CvPtr);
+                GC.KeepAlive(this);
                 return vec.ToArray();
             }
-            
+
         }
 
 #if LANG_JP
@@ -214,8 +232,7 @@ namespace OpenCvSharp
             OutputArray labels = null,
             OutputArray probs = null)
         {
-            if (disposed)
-                throw new ObjectDisposedException(GetType().Name);
+            ThrowIfDisposed();
             if (samples == null)
                 throw new ArgumentNullException(nameof(samples));
             if (means0 == null)
@@ -223,16 +240,11 @@ namespace OpenCvSharp
             samples.ThrowIfDisposed();
             means0.ThrowIfDisposed();
 
-            if (logLikelihoods != null)
-                logLikelihoods.ThrowIfNotReady();
-            if (covs0 != null)
-                covs0.ThrowIfDisposed();
-            if (weights0 != null)
-                weights0.ThrowIfDisposed();
-            if (labels != null)
-                labels.ThrowIfNotReady();
-            if (probs != null)
-                probs.ThrowIfNotReady();
+            logLikelihoods?.ThrowIfNotReady();
+            covs0?.ThrowIfDisposed();
+            weights0?.ThrowIfDisposed();
+            labels?.ThrowIfNotReady();
+            probs?.ThrowIfNotReady();
 
             int ret = NativeMethods.ml_EM_trainE(
                 ptr,
@@ -244,17 +256,17 @@ namespace OpenCvSharp
                 Cv2.ToPtr(labels),
                 Cv2.ToPtr(probs));
 
-            if (logLikelihoods != null)
-                logLikelihoods.Fix();
-            if (labels != null)
-                labels.Fix();
-            if (probs != null)
-                probs.Fix();
+            logLikelihoods?.Fix();
+            labels?.Fix();
+            probs?.Fix();
+            GC.KeepAlive(this);
             GC.KeepAlive(samples);
             GC.KeepAlive(means0);
             GC.KeepAlive(covs0);
             GC.KeepAlive(weights0);
-
+            GC.KeepAlive(logLikelihoods);
+            GC.KeepAlive(labels);
+            GC.KeepAlive(probs);
             return ret != 0;
         }
 
@@ -284,8 +296,7 @@ namespace OpenCvSharp
             OutputArray labels = null,
             OutputArray probs = null)
         {
-            if (disposed)
-                throw new ObjectDisposedException(GetType().Name);
+            ThrowIfDisposed();
             if (samples == null)
                 throw new ArgumentNullException(nameof(samples));
             if (probs0 == null)
@@ -293,12 +304,9 @@ namespace OpenCvSharp
             samples.ThrowIfDisposed();
             probs0.ThrowIfDisposed();
 
-            if (logLikelihoods != null)
-                logLikelihoods.ThrowIfNotReady();
-            if (labels != null)
-                labels.ThrowIfNotReady();
-            if (probs != null)
-                probs.ThrowIfNotReady();
+            logLikelihoods?.ThrowIfNotReady();
+            labels?.ThrowIfNotReady();
+            probs?.ThrowIfNotReady();
 
             int ret = NativeMethods.ml_EM_trainM(
                 ptr,
@@ -308,14 +316,15 @@ namespace OpenCvSharp
                 Cv2.ToPtr(labels),
                 Cv2.ToPtr(probs));
 
-            if (logLikelihoods != null)
-                logLikelihoods.Fix();
-            if (labels != null)
-                labels.Fix();
-            if (probs != null)
-                probs.Fix();
+            logLikelihoods?.Fix();
+            labels?.Fix();
+            probs?.Fix();
+            GC.KeepAlive(this);
             GC.KeepAlive(samples);
             GC.KeepAlive(probs0);
+            GC.KeepAlive(logLikelihoods);
+            GC.KeepAlive(labels);
+            GC.KeepAlive(probs);
 
             return ret != 0;
         }
@@ -335,18 +344,17 @@ namespace OpenCvSharp
 #endif
         public virtual Vec2d Predict2(InputArray sample, OutputArray probs = null)
         {
-            if (disposed)
-                throw new ObjectDisposedException(GetType().Name);
+            ThrowIfDisposed();
             if (sample == null)
                 throw new ArgumentNullException(nameof(sample));
             sample.ThrowIfDisposed();
-            if (probs != null)
-                probs.ThrowIfNotReady();
+            probs?.ThrowIfNotReady();
 
             Vec2d ret = NativeMethods.ml_EM_predict2(ptr, sample.CvPtr, Cv2.ToPtr(probs));
-            if (probs != null)
-                probs.Fix();
+            probs?.Fix();
+            GC.KeepAlive(this);
             GC.KeepAlive(sample);
+            GC.KeepAlive(probs);
             return ret;
         }
 
@@ -392,8 +400,8 @@ namespace OpenCvSharp
 
 #if LANG_JP
     /// <summary>
-	/// アルゴリズムをスタートする最初のステップ
-	/// </summary>
+    /// アルゴリズムをスタートする最初のステップ
+    /// </summary>
 #else
         /// <summary>
         /// The initial step the algorithm starts from
@@ -402,11 +410,11 @@ namespace OpenCvSharp
         public enum StartStep : int
         {
 #if LANG_JP
-		/// <summary>
-		/// アルゴリズムはE-stepでスタートする. 少なくとも平均ベクトルの初期値 CvEMParams.Means が渡されなければならない． 
-		/// オプションとして，ユーザは重み（CvEMParams.Weights）と/または共変動行列（CvEMParams.Covs）を与えることもできる．
-		/// [CvEM::START_E_STEP]
-		/// </summary>
+        /// <summary>
+        /// アルゴリズムはE-stepでスタートする. 少なくとも平均ベクトルの初期値 CvEMParams.Means が渡されなければならない． 
+        /// オプションとして，ユーザは重み（CvEMParams.Weights）と/または共変動行列（CvEMParams.Covs）を与えることもできる．
+        /// [CvEM::START_E_STEP]
+        /// </summary>
 #else
             /// <summary>
             /// The algorithm starts with E-step. 
@@ -418,10 +426,10 @@ namespace OpenCvSharp
 #endif
             E = 1,
 #if LANG_JP
-		/// <summary>
-		/// アルゴリズムはM-stepでスタートする.初期確率 p_i,k が与えられなければならない．
-		/// [CvEM::START_M_STEP]
-		/// </summary>
+        /// <summary>
+        /// アルゴリズムはM-stepでスタートする.初期確率 p_i,k が与えられなければならない．
+        /// [CvEM::START_M_STEP]
+        /// </summary>
 #else
             /// <summary>
             /// The algorithm starts with M-step. The initial probabilities p_i,k must be provided.
@@ -430,10 +438,10 @@ namespace OpenCvSharp
 #endif
             M = 2,
 #if LANG_JP
-		/// <summary>
-		/// ユーザから必要な値が指定されない場合，k-meansアルゴリズムが混合分布パラメータの初期値推定に用いられる．
-		/// [CvEM::START_AUTO_STEP]
-		/// </summary>
+        /// <summary>
+        /// ユーザから必要な値が指定されない場合，k-meansアルゴリズムが混合分布パラメータの初期値推定に用いられる．
+        /// [CvEM::START_AUTO_STEP]
+        /// </summary>
 #else
             /// <summary>
             /// No values are required from the user, k-means algorithm is used to estimate initial mixtures parameters. 
@@ -444,5 +452,25 @@ namespace OpenCvSharp
         }
 
         #endregion
+
+        internal class Ptr : OpenCvSharp.Ptr
+        {
+            public Ptr(IntPtr ptr) : base(ptr)
+            {
+            }
+
+            public override IntPtr Get()
+            {
+                var res = NativeMethods.ml_Ptr_EM_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+
+            protected override void DisposeUnmanaged()
+            {
+                NativeMethods.ml_Ptr_EM_delete(ptr);
+                base.DisposeUnmanaged();
+            }
+        }
     }
 }
