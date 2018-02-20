@@ -29,13 +29,14 @@ namespace OpenCvSharp
         /// 
         /// </summary>
         /// <param name="mat"></param>
-        internal OutputArray(GpuMat mat)
-        {
-            if (mat == null)
-                throw new ArgumentNullException(nameof(mat));
-            ptr = NativeMethods.core_OutputArray_new_byGpuMat(mat.CvPtr);
-            obj = mat;
-        }
+        /// <GPUMAT></GPUMAT>
+        //internal OutputArray(GpuMat mat)
+        //{
+        //    if (mat == null)
+        //        throw new ArgumentNullException(nameof(mat));
+        //    ptr = NativeMethods.core_OutputArray_new_byGpuMat(mat.CvPtr);
+        //    obj = mat;
+        //}
 
         /// <summary>
         /// 
@@ -96,10 +97,11 @@ namespace OpenCvSharp
         /// </summary>
         /// <param name="mat"></param>
         /// <returns></returns>
-        public static implicit operator OutputArray(GpuMat mat)
-        {
-            return new OutputArray(mat);
-        }
+        /// <GPUMAT></GPUMAT>
+        //public static implicit operator OutputArray(GpuMat mat)
+        //{
+        //    return new OutputArray(mat);
+        //}
 
         #endregion
 
@@ -129,19 +131,21 @@ namespace OpenCvSharp
         /// 
         /// </summary>
         /// <returns></returns>
-        public bool IsGpuMat()
-        {
-            return obj is GpuMat;
-        }
+        /// <GPUMAT></GPUMAT>
+        //public bool IsGpuMat()
+        //{
+        //    return obj is GpuMat;
+        //}
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual Mat GetGpuMat()
-        {
-            return obj as GpuMat;
-        }
+        /// <GPUMAT></GPUMAT>
+        //public virtual Mat GetGpuMat()
+        //{
+        //    return obj as GpuMat;
+        //}
 
         /// <summary>
         /// 
@@ -184,10 +188,11 @@ namespace OpenCvSharp
                 NativeMethods.core_Mat_delete(outMat);
                 */
             }
-            else if (IsGpuMat())
-            {
-                // do nothing
-            }
+            ///< GPUMAT ></ GPUMAT >
+            //else if (IsGpuMat())
+            //{
+            //    // do nothing
+            //}
             else
             {
                 throw new OpenCvSharpException("Not supported OutputArray-compatible type");
@@ -213,7 +218,8 @@ namespace OpenCvSharp
                 ptr != IntPtr.Zero &&
                 !disposed &&
                 obj != null &&
-                (IsMat() || IsGpuMat());
+                //< GPUMAT ></ GPUMAT >
+                IsMat();//(IsMat() || IsGpuMat());
         }
         /// <summary>
         /// 
@@ -240,10 +246,11 @@ namespace OpenCvSharp
         /// </summary>
         /// <param name="mat"></param>
         /// <returns></returns>
-        public static OutputArray Create(GpuMat mat)
-        {
-            return new OutputArray(mat);
-        }
+        /// <GPUMAT></GPUMAT>
+        //public static OutputArray Create(GpuMat mat)
+        //{
+        //    return new OutputArray(mat);
+        //}
 
         /// <summary>
         /// Creates a proxy class of the specified list

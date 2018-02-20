@@ -9,7 +9,7 @@ namespace OpenCvSharp
     /// <summary>
     /// OpenCV C++ n-dimensional dense array class (cv::Mat)
     /// </summary>
-    public partial class Mat : DisposableCvObject, ICloneable
+    public partial class Mat : DisposableCvObject
     {
         private bool disposed;
 
@@ -64,8 +64,6 @@ namespace OpenCvSharp
         {
             if (string.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException(nameof(fileName));
-            if (!File.Exists(fileName))
-                throw new FileNotFoundException("", fileName);
             ptr = NativeMethods.imgcodecs_imread(fileName, (int) flags);
         }
 
@@ -251,6 +249,7 @@ namespace OpenCvSharp
         public Mat(Mat m, Rect roi)
         {
             ptr = NativeMethods.core_Mat_new7(m.ptr, roi);
+            GC.KeepAlive(m);
         }
 
 #if LANG_JP
@@ -1867,11 +1866,6 @@ namespace OpenCvSharp
             return retVal;
         }
 
-        object ICloneable.Clone()
-        {
-            return Clone();
-        }
-
         /// <summary>
         /// Returns the partial Mat of the specified Mat
         /// </summary>
@@ -2549,7 +2543,8 @@ namespace OpenCvSharp
                 try
                 {
                     buf = NativeMethods.core_Mat_dump(ptr, formatStr);
-                    return new string(buf);
+                    GC.KeepAlive(this);
+                    return StringHelper.PtrToStringAnsi(buf);
                 }
                 finally
                 {
@@ -4499,10 +4494,7 @@ namespace OpenCvSharp
             where TMat : Mat, new()
         {
             var type = typeof (TMat);
-            var constructor = type.GetConstructor(new[] {typeof (Mat)});
-            if (constructor == null)
-                throw new OpenCvSharpException("Failed to cast to {0}", type.Name);
-            return (TMat)constructor.Invoke(new object[] {this});
+            return (TMat)Activator.CreateInstance(type, this);
         }
 
         #region ForEach
