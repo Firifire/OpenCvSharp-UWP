@@ -16,12 +16,14 @@ namespace OpenCvSharp.XFeatures2D
 // ReSharper restore InconsistentNaming
 #pragma warning restore 1591
 
-        /// <summary>
-        /// cv::Ptr&lt;T&gt;
-        /// </summary>
-        private Ptr ptrObj;
+        private bool disposed;
 
-        //internal override IntPtr PtrObj => ptrObj.CvPtr;
+        /// <summary>
+        /// cv::Ptr&lt;BriefDescriptorExtractor&gt;
+        /// </summary>
+        private Ptr<BriefDescriptorExtractor> ptrObj;
+
+        internal override IntPtr PtrObj => ptrObj.CvPtr;
 
         /// <summary>
         /// 
@@ -36,7 +38,7 @@ namespace OpenCvSharp.XFeatures2D
         /// <param name="ptr"></param>
         protected BriefDescriptorExtractor(IntPtr ptr)
         {
-            ptrObj = new Ptr(ptr);
+            ptrObj = new Ptr<BriefDescriptorExtractor>(ptr);
             ptr = ptrObj.Get();
         }
 
@@ -51,32 +53,37 @@ namespace OpenCvSharp.XFeatures2D
         }
 
         /// <summary>
-        /// Releases managed resources
+        /// Releases the resources
         /// </summary>
-        protected override void DisposeManaged()
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+        protected override void Dispose(bool disposing)
         {
-            ptrObj?.Dispose();
-            ptrObj = null;
-            base.DisposeManaged();
-        }
-
-        internal new class Ptr : OpenCvSharp.Ptr
-        {
-            public Ptr(IntPtr ptr) : base(ptr)
+            if (!disposed)
             {
-            }
-
-            public override IntPtr Get()
-            {
-                var res =  NativeMethods.xfeatures2d_Ptr_BriefDescriptorExtractor_get(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-
-            protected override void DisposeUnmanaged()
-            {
-                NativeMethods.xfeatures2d_Ptr_BriefDescriptorExtractor_delete(ptr);
-                base.DisposeUnmanaged();
+                try
+                {
+                    // releases managed resources
+                    if (disposing)
+                    {
+                        if (ptrObj != null)
+                        {
+                            ptrObj.Dispose();
+                        }
+                        ptrObj = null;
+                        ptr = IntPtr.Zero;
+                    }
+                    
+                    // releases unmanaged resources
+                    
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
             }
         }
     }

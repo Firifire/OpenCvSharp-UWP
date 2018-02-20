@@ -15,12 +15,12 @@ namespace OpenCvSharp
     /// BRISK implementation
     /// </summary>
 #endif
-    // ReSharper disable once InconsistentNaming
     public class BRISK : Feature2D
     {
-        private Ptr ptrObj;
+        private bool disposed;
+        private Ptr<BRISK> ptrObj;
 
-        //internal override IntPtr PtrObj => ptrObj.CvPtr;
+        internal override IntPtr PtrObj => ptrObj.CvPtr;
 
         #region Init & Disposal
 
@@ -39,7 +39,7 @@ namespace OpenCvSharp
         protected BRISK(IntPtr p)
             : base()
         {
-            ptrObj = new Ptr(p);
+            ptrObj = new Ptr<BRISK>(p);
             ptr = ptrObj.Get();
         }
 
@@ -85,14 +85,46 @@ namespace OpenCvSharp
             return new BRISK(p);
         }
 
+#if LANG_JP
+    /// <summary>
+    /// リソースの解放
+    /// </summary>
+    /// <param name="disposing">
+    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+    ///</param>
+#else
         /// <summary>
-        /// Releases managed resources
+        /// Releases the resources
         /// </summary>
-        protected override void DisposeManaged()
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            ptrObj?.Dispose();
-            ptrObj = null;
-            base.DisposeManaged();
+            if (!disposed)
+            {
+                try
+                {
+                    // releases managed resources
+                    if (disposing)
+                    {
+                        // releases unmanaged resources
+                        if (ptrObj != null)
+                        {
+                            ptrObj.Dispose();
+                            ptrObj = null;
+                        }
+                    }
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
 
         #endregion
@@ -100,25 +132,5 @@ namespace OpenCvSharp
         #region Methods
 
         #endregion
-
-        internal new class Ptr : OpenCvSharp.Ptr
-        {
-            public Ptr(IntPtr ptr) : base(ptr)
-            {
-            }
-
-            public override IntPtr Get()
-            {
-                var res = NativeMethods.features2d_Ptr_BRISK_get(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-
-            protected override void DisposeUnmanaged()
-            {
-                NativeMethods.features2d_Ptr_BRISK_delete(ptr);
-                base.DisposeUnmanaged();
-            }
-        }
     }
 }

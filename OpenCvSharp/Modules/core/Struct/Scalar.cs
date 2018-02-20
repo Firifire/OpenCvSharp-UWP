@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 
 namespace OpenCvSharp
 {
     /// <summary>
-    /// Template class for a 4-element vector derived from Vec.
+    /// 
     /// </summary>
     [Serializable]
-    [StructLayout(LayoutKind.Sequential)]
     public struct Scalar : IEquatable<Scalar>
     {
         #region Field

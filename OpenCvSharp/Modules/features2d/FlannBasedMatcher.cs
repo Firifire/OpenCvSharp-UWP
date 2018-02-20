@@ -13,11 +13,10 @@ namespace OpenCvSharp
     /// </summary>
     public class FlannBasedMatcher : DescriptorMatcher
     {
-        private Ptr detectorPtr;
-        private IndexParams indexParams;
-        private SearchParams searchParams;
+        private bool disposed;
+        private Ptr<FlannBasedMatcher> detectorPtr;
 
-        //internal override IntPtr PtrObj => detectorPtr.CvPtr;
+        internal override IntPtr PtrObj => detectorPtr.CvPtr;
 
         #region Init & Disposal
 
@@ -28,20 +27,14 @@ namespace OpenCvSharp
         /// <param name="searchParams"></param>
         public FlannBasedMatcher(IndexParams indexParams = null, SearchParams searchParams = null)
         {
-            indexParams?.ThrowIfDisposed();
-            searchParams?.ThrowIfDisposed();
-
-            IntPtr indexParamsPtr = indexParams?.PtrObj.CvPtr ?? IntPtr.Zero;
-            IntPtr searchParamsPtr = searchParams?.PtrObj.CvPtr ?? IntPtr.Zero;
-            ptr = NativeMethods.features2d_FlannBasedMatcher_new(indexParamsPtr, searchParamsPtr);
-            this.indexParams = indexParams;
-            this.searchParams = searchParams;
+            ptr = NativeMethods.features2d_FlannBasedMatcher_new(
+                Cv2.ToPtr(indexParams), Cv2.ToPtr(searchParams));
         }
 
         /// <summary>
         /// Creates instance by cv::Ptr&lt;T&gt;
         /// </summary>
-        internal FlannBasedMatcher(Ptr detectorPtr)
+        internal FlannBasedMatcher(Ptr<FlannBasedMatcher> detectorPtr)
         {
             this.detectorPtr = detectorPtr;
             this.ptr = detectorPtr.Get();
@@ -65,35 +58,56 @@ namespace OpenCvSharp
         {
             if (ptr == IntPtr.Zero)
                 throw new OpenCvSharpException("Invalid cv::Ptr<FlannBasedMatcher> pointer");
-            var ptrObj = new Ptr(ptr);
+            var ptrObj = new Ptr<FlannBasedMatcher>(ptr);
             return new FlannBasedMatcher(ptrObj);
         }
 
+#if LANG_JP
+    /// <summary>
+    /// リソースの解放
+    /// </summary>
+    /// <param name="disposing">
+    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+    ///</param>
+#else
         /// <summary>
-        /// Releases managed resources
+        /// Releases the resources
         /// </summary>
-        protected override void DisposeManaged()
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            if (detectorPtr != null)
+            if (!disposed)
             {
-                detectorPtr.Dispose();
-                detectorPtr = null;
-                ptr = IntPtr.Zero;
+                try
+                {
+                    // releases managed resources
+                    if (disposing)
+                    {
+                    }
+                    // releases unmanaged resources
+                    if (detectorPtr != null)
+                    {
+                        detectorPtr.Dispose();
+                        detectorPtr = null;
+                    }
+                    else
+                    {
+                        if (ptr != IntPtr.Zero)
+                            NativeMethods.features2d_FlannBasedMatcher_delete(ptr);
+                        ptr = IntPtr.Zero;
+                    }
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
             }
-            base.DisposeManaged();
-        }
-
-        /// <summary>
-        /// Releases managed resources
-        /// </summary>
-        protected override void DisposeUnmanaged()
-        {
-            if (detectorPtr == null && ptr != IntPtr.Zero)
-                NativeMethods.features2d_FlannBasedMatcher_delete(ptr);
-            indexParams = null;
-            searchParams = null;
-            ptr = IntPtr.Zero;
-            base.DisposeUnmanaged();
         }
 
         #endregion
@@ -107,9 +121,7 @@ namespace OpenCvSharp
         public override bool IsMaskSupported()
         {
             ThrowIfDisposed();
-            var res = NativeMethods.features2d_FlannBasedMatcher_isMaskSupported(ptr) != 0;
-            GC.KeepAlive(this);
-            return res;
+            return NativeMethods.features2d_FlannBasedMatcher_isMaskSupported(ptr) != 0;
         }
 
         /// <summary>
@@ -128,7 +140,6 @@ namespace OpenCvSharp
 
             IntPtr[] descriptorsPtrs = EnumerableEx.SelectPtrs(descriptorsArray);
             NativeMethods.features2d_DescriptorMatcher_add(ptr, descriptorsPtrs, descriptorsPtrs.Length);
-            GC.KeepAlive(descriptorsArray);
         }
 
         /// <summary>
@@ -138,7 +149,6 @@ namespace OpenCvSharp
         {
             ThrowIfDisposed();
             NativeMethods.features2d_FlannBasedMatcher_clear(ptr);
-            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -155,29 +165,8 @@ namespace OpenCvSharp
         {
             ThrowIfDisposed();
             NativeMethods.features2d_FlannBasedMatcher_train(ptr);
-            GC.KeepAlive(this);
         }
 
         #endregion
-
-        internal new class Ptr : OpenCvSharp.Ptr
-        {
-            public Ptr(IntPtr ptr) : base(ptr)
-            {
-            }
-
-            public override IntPtr Get()
-            {
-                var res = NativeMethods.features2d_Ptr_FlannBasedMatcher_get(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-
-            protected override void DisposeUnmanaged()
-            {
-                NativeMethods.features2d_Ptr_FlannBasedMatcher_delete(ptr);
-                base.DisposeUnmanaged();
-            }
-        }
     }
 }

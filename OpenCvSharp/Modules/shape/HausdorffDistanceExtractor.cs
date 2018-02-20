@@ -13,7 +13,8 @@ namespace OpenCvSharp
     /// </remarks>
     public class HausdorffDistanceExtractor : ShapeDistanceExtractor
     {
-        private Ptr ptrObj;
+        private bool disposed;
+        private Ptr<HausdorffDistanceExtractor> ptrObj;
 
         #region Init & Disposal
 
@@ -22,7 +23,7 @@ namespace OpenCvSharp
         /// </summary>
         protected HausdorffDistanceExtractor(IntPtr p)
         {
-            ptrObj = new Ptr(p);
+            ptrObj = new Ptr<HausdorffDistanceExtractor>(p);
             ptr = ptrObj.Get();
         }
 
@@ -39,21 +40,53 @@ namespace OpenCvSharp
                 (int)distanceFlag, rankProp);
             return new HausdorffDistanceExtractor(ptr);
         }
-        
-        /// <summary>
-        /// Releases managed resources
-        /// </summary>
-        protected override void DisposeManaged()
-        {
-            ptrObj?.Dispose();
-            ptrObj = null;
-            base.DisposeManaged();
-        }
 
+#if LANG_JP
+    /// <summary>
+    /// リソースの解放
+    /// </summary>
+    /// <param name="disposing">
+    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+    ///</param>
+#else
+        /// <summary>
+        /// Releases the resources
+        /// </summary>
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                try
+                {
+                    // releases managed resources
+                    if (disposing)
+                    {
+                        if (ptrObj != null)
+                        {
+                            ptrObj.Dispose();
+                            ptrObj = null;
+                        }
+                    }
+                    // releases unmanaged resources
+                    ptr = IntPtr.Zero;
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
+        }
         #endregion
 
         #region Properties
-
+        
         /// <summary>
         /// Flag indicating which norm is used to compute the Hausdorff distance (NORM_L1, NORM_L2).
         /// </summary>
@@ -61,16 +94,15 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = (DistanceTypes)NativeMethods.shape_HausdorffDistanceExtractor_getDistanceFlag(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return (DistanceTypes)NativeMethods.shape_HausdorffDistanceExtractor_getDistanceFlag(ptr);
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.shape_HausdorffDistanceExtractor_setDistanceFlag(ptr, (int)value);
-                GC.KeepAlive(this);
             }
         }
 
@@ -81,39 +113,18 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.shape_HausdorffDistanceExtractor_getRankProportion(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.shape_HausdorffDistanceExtractor_getRankProportion(ptr);
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.shape_HausdorffDistanceExtractor_setRankProportion(ptr, value);
-                GC.KeepAlive(this);
             }
         }
 
         #endregion
-
-        internal class Ptr : OpenCvSharp.Ptr
-        {
-            public Ptr(IntPtr ptr) : base(ptr)
-            {
-            }
-
-            public override IntPtr Get()
-            {
-                var res = NativeMethods.shape_Ptr_HausdorffDistanceExtractor_get(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-
-            protected override void DisposeUnmanaged()
-            {
-                NativeMethods.shape_Ptr_HausdorffDistanceExtractor_delete(ptr);
-                base.DisposeUnmanaged();
-            }
-        }
     }
 }

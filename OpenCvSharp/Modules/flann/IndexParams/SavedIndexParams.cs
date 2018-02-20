@@ -15,49 +15,102 @@ namespace OpenCvSharp.Flann
 #endif
     public class SavedIndexParams : IndexParams
     {
+        private bool disposed = false;
+
+        #region Properties
+        /*
+#if LANG_JP
+        /// <summary>
+        /// インデックスが保存されたファイル名
+        /// </summary>
+#else
+        /// <summary>
+        /// The filename in which the index was saved.
+        /// </summary>
+#endif
+        public string FileName
+        {
+            get
+            {
+                unsafe
+                {
+                    return FlannInvoke.flann_SavedIndexParams_filename_get(ptr);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    FlannInvoke.flann_SavedIndexParams_filename_set(ptr, value);
+                }
+            }
+        }
+        //*/
+        #endregion
+
+        #region Init & Disposal
+#if LANG_JP
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="fileName"></param>
-        public SavedIndexParams(string fileName)
-        {
-            if (string.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException(nameof(fileName));
-
-            IntPtr p = NativeMethods.flann_Ptr_SavedIndexParams_new(fileName);
-            if (p == IntPtr.Zero)
-                throw new OpenCvSharpException($"Failed to create {nameof(SavedIndexParams)}");
-
-            PtrObj = new Ptr(p);
-            ptr = PtrObj.Get();
-        }
-
+        /// <param name="filename">インデックスが保存されたファイル名</param>
+#else
         /// <summary>
         /// 
         /// </summary>
-        protected SavedIndexParams(OpenCvSharp.Ptr ptrObj)
-            : base(ptrObj)
+        /// <param name="filename">インデックスが保存されたファイル名</param>
+#endif
+        public SavedIndexParams(string filename)
         {
+            if (string.IsNullOrEmpty(filename))
+                throw new ArgumentNullException(nameof(filename));
+            ptr = NativeMethods.flann_SavedIndexParams_new(filename);
+            if (ptr == IntPtr.Zero)
+                throw new OpenCvSharpException("Failed to create SavedIndexParams");
         }
 
-        internal new class Ptr : OpenCvSharp.Ptr
+#if LANG_JP
+        /// <summary>
+        /// リソースの解放
+        /// </summary>
+        /// <param name="disposing">
+        /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+        /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+        ///</param>
+#else
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            public Ptr(IntPtr ptr) : base(ptr)
+            if (!disposed)
             {
-            }
-
-            public override IntPtr Get()
-            {
-                var res = NativeMethods.flann_Ptr_SavedIndexParams_get(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-
-            protected override void DisposeUnmanaged()
-            {
-                NativeMethods.flann_Ptr_SavedIndexParams_delete(ptr);
-                base.DisposeUnmanaged();
+                try
+                {
+                    if (disposing)
+                    {
+                    }
+                    if (IsEnabledDispose)
+                    {
+                        if (ptr != IntPtr.Zero)
+                        {
+                            NativeMethods.flann_SavedIndexParams_delete(ptr);
+                        }
+                        ptr = IntPtr.Zero;
+                    }
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
             }
         }
+        #endregion
     }
 }

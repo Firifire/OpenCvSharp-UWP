@@ -1,4 +1,4 @@
-namespace OpenCvSharp.Cuda
+namespace OpenCvSharp.Gpu
 {
     /// <summary>
     /// 

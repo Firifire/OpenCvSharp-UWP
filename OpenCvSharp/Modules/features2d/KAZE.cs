@@ -13,12 +13,12 @@ namespace OpenCvSharp
     /// Class implementing the KAZE keypoint detector and descriptor extractor
     /// </summary>
 #endif
-    // ReSharper disable once InconsistentNaming
     public class KAZE : Feature2D
     {
-        private Ptr ptrObj;
+        private bool disposed;
+        private Ptr<KAZE> ptrObj;
 
-        //internal override IntPtr PtrObj => ptrObj.CvPtr;
+        internal override IntPtr PtrObj => ptrObj.CvPtr;
 
         #region Init & Disposal
 
@@ -27,7 +27,7 @@ namespace OpenCvSharp
         /// </summary>
         protected KAZE(IntPtr p)
         {
-            ptrObj = new Ptr(p);
+            ptrObj = new Ptr<KAZE>(p);
             ptr = ptrObj.Get();
         }
 
@@ -50,16 +50,48 @@ namespace OpenCvSharp
             return new KAZE(ptr);
         }
 
+#if LANG_JP
+    /// <summary>
+    /// リソースの解放
+    /// </summary>
+    /// <param name="disposing">
+    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+    ///</param>
+#else
         /// <summary>
-        /// Releases managed resources
+        /// Releases the resources
         /// </summary>
-        protected override void DisposeManaged()
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            ptrObj?.Dispose();
-            ptrObj = null;
-            base.DisposeManaged();
+            if (!disposed)
+            {
+                try
+                {
+                    // releases managed resources
+                    if (disposing)
+                    {
+                        if (ptrObj != null)
+                        {
+                            ptrObj.Dispose();
+                            ptrObj = null;
+                        }
+                    }
+                    // releases unmanaged resources
+                    ptr = IntPtr.Zero;
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
-
         #endregion
 
         #region Properties
@@ -71,16 +103,15 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.features2d_KAZE_getDiffusivity(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.features2d_KAZE_getDiffusivity(ptr);
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.features2d_KAZE_setDiffusivity(ptr, value);
-                GC.KeepAlive(this);
             }
         }
 
@@ -91,16 +122,15 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.features2d_KAZE_getExtended(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.features2d_KAZE_getExtended(ptr);
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.features2d_KAZE_setExtended(ptr, value);
-                GC.KeepAlive(this);
             }
         }
 
@@ -112,16 +142,15 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.features2d_KAZE_getNOctaveLayers(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.features2d_KAZE_getNOctaveLayers(ptr);
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.features2d_KAZE_setNOctaveLayers(ptr, value);
-                GC.KeepAlive(this);
             }
         }
 
@@ -133,16 +162,15 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.features2d_KAZE_getNOctaves(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.features2d_KAZE_getNOctaves(ptr);
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.features2d_KAZE_setNOctaves(ptr, value);
-                GC.KeepAlive(this);
             }
         }
 
@@ -154,16 +182,15 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.features2d_KAZE_getThreshold(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.features2d_KAZE_getThreshold(ptr);
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.features2d_KAZE_setThreshold(ptr, value);
-                GC.KeepAlive(this);
             }
         }
 
@@ -175,39 +202,22 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.features2d_KAZE_getUpright(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.features2d_KAZE_getUpright(ptr);
             }
             set
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
                 NativeMethods.features2d_KAZE_setUpright(ptr, value);
-                GC.KeepAlive(this);
             }
         }
 
         #endregion
 
-        internal new class Ptr : OpenCvSharp.Ptr
-        {
-            public Ptr(IntPtr ptr) : base(ptr)
-            {
-            }
+        #region Methods
 
-            public override IntPtr Get()
-            {
-                var res = NativeMethods.features2d_Ptr_KAZE_get(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-
-            protected override void DisposeUnmanaged()
-            {
-                NativeMethods.features2d_Ptr_KAZE_delete(ptr);
-                base.DisposeUnmanaged();
-            }
-        }
+        #endregion
     }
 }

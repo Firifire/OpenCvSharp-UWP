@@ -11,15 +11,20 @@ namespace OpenCvSharp
     /// </summary>
     public class CascadeClassifier : DisposableCvObject
     {
+        /// <summary>
+        /// Track whether Dispose has been called
+        /// </summary>
+        private bool disposed;
+
         #region Init and Disposal
 
         /// <summary>
         /// Default constructor
         /// </summary>
         public CascadeClassifier()
-        {
-            ptr = NativeMethods.objdetect_CascadeClassifier_new();
-        }
+	    {
+            ptr = NativeMethods.objdetect_CascadeClassifier_new();               
+	    }
 
         /// <summary>
         /// Loads a classifier from a file.
@@ -29,22 +34,49 @@ namespace OpenCvSharp
         {
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException(nameof(fileName));
-#if !true
             if (!File.Exists(fileName))
                 throw new FileNotFoundException("\""+ fileName + "\"not found", fileName);
-#endif
-            ptr = NativeMethods.objdetect_CascadeClassifier_newFromFile(fileName);
+            ptr = NativeMethods.objdetect_CascadeClassifier_newFromFile(fileName);  
         }
 
+#if LANG_JP
         /// <summary>
-        /// Releases unmanaged resources
+        /// リソースの解放
         /// </summary>
-        protected override void DisposeUnmanaged()
+        /// <param name="disposing">
+        /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+        /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+        ///</param>
+#else
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            NativeMethods.objdetect_CascadeClassifier_delete(ptr);
-            base.DisposeUnmanaged();
+            if (!disposed)
+            {
+                try
+                {
+                    if (disposing)
+                    {
+                    }
+                    if (IsEnabledDispose)
+                    {
+                        NativeMethods.objdetect_CascadeClassifier_delete(ptr);
+                    }
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
-
         #endregion
 
         #region Methods
@@ -55,10 +87,9 @@ namespace OpenCvSharp
         /// <returns></returns>
         public virtual bool Empty()
         {
-            ThrowIfDisposed();
-            var res = NativeMethods.objdetect_CascadeClassifier_empty(ptr) != 0;
-            GC.KeepAlive(this);
-            return res;
+            if (disposed)
+                throw new ObjectDisposedException("CascadeClassifier");
+            return NativeMethods.objdetect_CascadeClassifier_empty(ptr) != 0;
         }
 
         /// <summary>
@@ -70,16 +101,13 @@ namespace OpenCvSharp
         /// <returns></returns>
         public bool Load(string fileName)
         {
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException("CascadeClassifier");
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException(nameof(fileName));
-#if !true
             if (!File.Exists(fileName))
                 throw new FileNotFoundException("\"" + fileName + "\"not found", fileName);
-#endif
-            var res = NativeMethods.objdetect_CascadeClassifier_load(ptr, fileName) != 0;
-            GC.KeepAlive(this);
-            return res;
+            return NativeMethods.objdetect_CascadeClassifier_load(ptr, fileName) != 0;
         }
 
         //public virtual bool read( const FileNode& node );
@@ -103,7 +131,8 @@ namespace OpenCvSharp
             Size? minSize = null,
             Size? maxSize = null)
         {
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException("CascadeClassifier");
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
             image.ThrowIfDisposed();
@@ -116,8 +145,6 @@ namespace OpenCvSharp
                 NativeMethods.objdetect_CascadeClassifier_detectMultiScale1(
                     ptr, image.CvPtr, objectsVec.CvPtr, 
                     scaleFactor, minNeighbors, (int)flags, minSize0, maxSize0);
-                GC.KeepAlive(this);
-                GC.KeepAlive(image);
                 return objectsVec.ToArray();
             }
         }
@@ -147,7 +174,8 @@ namespace OpenCvSharp
             Size? maxSize = null,
             bool outputRejectLevels = false)
         {
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException("CascadeClassifier");
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
             image.ThrowIfDisposed();
@@ -162,8 +190,6 @@ namespace OpenCvSharp
                 NativeMethods.objdetect_CascadeClassifier_detectMultiScale2(
                     ptr, image.CvPtr, objectsVec.CvPtr, rejectLevelsVec.CvPtr, levelWeightsVec.CvPtr,
                     scaleFactor, minNeighbors, (int)flags, minSize0, maxSize0, outputRejectLevels ? 1 : 0);
-                GC.KeepAlive(this);
-                GC.KeepAlive(image);
 
                 rejectLevels = rejectLevelsVec.ToArray();
                 levelWeights = levelWeightsVec.ToArray();
@@ -177,10 +203,9 @@ namespace OpenCvSharp
         /// <returns></returns>
         public bool IsOldFormatCascade()
         {
-            ThrowIfDisposed();
-            var res = NativeMethods.objdetect_CascadeClassifier_isOldFormatCascade(ptr) != 0;
-            GC.KeepAlive(this);
-            return res;
+            if (disposed)
+                throw new ObjectDisposedException("CascadeClassifier");
+            return NativeMethods.objdetect_CascadeClassifier_isOldFormatCascade(ptr) != 0;
         }
 
         /// <summary>
@@ -189,10 +214,9 @@ namespace OpenCvSharp
         /// <returns></returns>
         public virtual Size GetOriginalWindowSize()
         {
-            ThrowIfDisposed();
-            var res = NativeMethods.objdetect_CascadeClassifier_getOriginalWindowSize(ptr);
-            GC.KeepAlive(this);
-            return res;
+            if (disposed)
+                throw new ObjectDisposedException("CascadeClassifier");
+            return NativeMethods.objdetect_CascadeClassifier_getOriginalWindowSize(ptr);
         }
 
         /// <summary>
@@ -201,10 +225,9 @@ namespace OpenCvSharp
         /// <returns></returns>
         public int GetFeatureType()
         {
-            ThrowIfDisposed();
-            var res = NativeMethods.objdetect_CascadeClassifier_getFeatureType(ptr);
-            GC.KeepAlive(this);
-            return res;
+            if (disposed)
+                throw new ObjectDisposedException("CascadeClassifier");
+            return NativeMethods.objdetect_CascadeClassifier_getFeatureType(ptr);
         }
 
         #endregion

@@ -27,6 +27,11 @@ namespace OpenCvSharp
         private readonly Dictionary<string, CvTrackbar> trackbars;
         private ScopedGCHandle callbackHandle;
 
+        /// <summary>
+        /// Track whether Dispose has been called
+        /// </summary>
+        private bool disposed = false;
+
         #endregion
 
         #region Init and Disposal
@@ -177,24 +182,55 @@ namespace OpenCvSharp
             return string.Format("window{0}", windowCount++);
         }
 
+#if LANG_JP
+    /// <summary>
+    /// リソースの解放
+    /// </summary>
+    /// <param name="disposing">
+    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+    ///</param>
+#else
         /// <summary>
-        /// Releases managed resources
+        /// Clean up any resources being used.
         /// </summary>
-        protected override void DisposeManaged()
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            foreach (KeyValuePair<string, CvTrackbar> pair in trackbars)
+            if (!disposed)
             {
-                pair.Value?.Dispose();
+                try
+                {
+                    if (disposing)
+                    {
+                        foreach (KeyValuePair<string, CvTrackbar> pair in trackbars)
+                        {
+                            if (pair.Value != null)
+                            {
+                                pair.Value.Dispose();
+                            }
+                        }
+
+                        if (Windows.ContainsKey("name"))
+                            Windows.Remove(name);
+
+                        if (callbackHandle != null && callbackHandle.IsAllocated)
+                        {
+                            callbackHandle.Dispose();
+                        }
+                    }
+                    NativeMethods.highgui_destroyWindow(name);
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
             }
-            if (Windows.ContainsKey(name))
-            {
-                Windows.Remove(name);
-            }
-            if (callbackHandle != null && callbackHandle.IsAllocated)
-            {
-                callbackHandle.Dispose();
-            }
-            base.DisposeManaged();
         }
 
 #if LANG_JP
@@ -208,7 +244,7 @@ namespace OpenCvSharp
 #endif
         public void Close()
         {
-            Dispose();
+            Dispose(true);
         }
 
 #if LANG_JP
@@ -385,27 +421,6 @@ namespace OpenCvSharp
         /// <param name="callback">the function to be called every time the slider changes the position. This function should be prototyped as void Foo(int);</param>
         /// <returns></returns>
 #endif
-        public CvTrackbar CreateTrackbar(string name, CvTrackbarCallback callback)
-        {
-            CvTrackbar trackbar = new CvTrackbar(name, this.name, callback);
-            trackbars.Add(name, trackbar);
-            return trackbar;
-        }
-
-#if LANG_JP
-    /// <summary>
-    /// ウィンドウにトラックバーを作成し、作成したトラックバーを返す
-    /// </summary>
-    /// <param name="name">トラックバーの名前</param>
-    /// <param name="callback">スライダの位置が変更されるたびに呼び出されるデリゲート</param>
-#else
-        /// <summary>
-        /// Creates the trackbar and attaches it to this window
-        /// </summary>
-        /// <param name="name">Name of created trackbar. </param>
-        /// <param name="callback">the function to be called every time the slider changes the position. This function should be prototyped as void Foo(int);</param>
-        /// <returns></returns>
-#endif
         public CvTrackbar CreateTrackbar(string name, CvTrackbarCallback2 callback)
         {
             CvTrackbar trackbar = new CvTrackbar(name, this.name, callback);
@@ -431,34 +446,9 @@ namespace OpenCvSharp
         /// <param name="callback">the function to be called every time the slider changes the position. This function should be prototyped as void Foo(int);</param>
         /// <returns></returns>
 #endif
-        public CvTrackbar CreateTrackbar(string name, int value, int max, CvTrackbarCallback callback)
-        {
-            CvTrackbar trackbar = new CvTrackbar(name, this.name, value, max, callback);
-            trackbars.Add(name, trackbar);
-            return trackbar;
-        }
-
-#if LANG_JP
-    /// <summary>
-    /// ウィンドウにトラックバーを作成し、作成したトラックバーを返す
-    /// </summary>
-    /// <param name="name">トラックバーの名前</param>
-    /// <param name="value">スライダの初期位置</param>
-    /// <param name="max">スライダの最大値．最小値は常に 0.</param>
-    /// <param name="callback">スライダの位置が変更されるたびに呼び出されるデリゲート</param>
-#else
-        /// <summary>
-        /// Creates the trackbar and attaches it to this window
-        /// </summary>
-        /// <param name="name">Name of created trackbar. </param>
-        /// <param name="value">The position of the slider</param>
-        /// <param name="max">Maximal position of the slider. Minimal position is always 0. </param>
-        /// <param name="callback">the function to be called every time the slider changes the position. This function should be prototyped as void Foo(int);</param>
-        /// <returns></returns>
-#endif
         public CvTrackbar CreateTrackbar(string name, int value, int max, CvTrackbarCallback2 callback)
         {
-            CvTrackbar trackbar = new CvTrackbar(name, this.name, value, max, callback, null);
+            CvTrackbar trackbar = new CvTrackbar(name, this.name, value, max, callback);
             trackbars.Add(name, trackbar);
             return trackbar;
         }
@@ -685,7 +675,6 @@ namespace OpenCvSharp
             {
                 this.image = img;
                 NativeMethods.highgui_imshow(name, img.CvPtr);
-                GC.KeepAlive(img);
             }
         }
 

@@ -20,8 +20,6 @@ namespace OpenCvSharp
                 throw new ArgumentNullException(nameof(fs));
 
             NativeMethods.core_Algorithm_write(ptr, fs.CvPtr);
-            GC.KeepAlive(this);
-            GC.KeepAlive(fs);
         }
 
         /// <summary>
@@ -36,8 +34,6 @@ namespace OpenCvSharp
                 throw new ArgumentNullException(nameof(fn));
 
             NativeMethods.core_Algorithm_read(ptr, fn.CvPtr);
-            GC.KeepAlive(this);
-            GC.KeepAlive(fn);
         }
 
         /// <summary>
@@ -51,9 +47,7 @@ namespace OpenCvSharp
                 if (ptr == IntPtr.Zero)
                     throw new ObjectDisposedException(GetType().Name);
 
-                var res = NativeMethods.core_Algorithm_empty(ptr) != 0;
-                GC.KeepAlive(this);
-                return res;
+                return NativeMethods.core_Algorithm_empty(ptr) != 0;
             }
         }
 
@@ -71,7 +65,6 @@ namespace OpenCvSharp
                 throw new ArgumentNullException(nameof(filename));
 
             NativeMethods.core_Algorithm_save(ptr, filename);
-            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -87,7 +80,6 @@ namespace OpenCvSharp
 
             var buf = new StringBuilder(1024);
             NativeMethods.core_Algorithm_getDefaultName(ptr, buf, buf.Capacity);
-            GC.KeepAlive(this);
             return buf.ToString();
         }
     }

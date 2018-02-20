@@ -7,17 +7,19 @@ namespace OpenCvSharp
     /// </summary>
     public class LineSegmentDetector : Algorithm
     {
+        private bool disposed;
+
         /// <summary>
         /// cv::Ptr&lt;LineSegmentDetector&gt;
         /// </summary>
-        private Ptr ptrObj;
+        private Ptr<LineSegmentDetector> ptrObj;
 
         /// <summary>
         /// 
         /// </summary>
         protected LineSegmentDetector(IntPtr p)
         {
-            ptrObj = new Ptr(p);
+            ptrObj = new Ptr<LineSegmentDetector>(p);
             ptr = ptrObj.Get();
         }
 
@@ -44,14 +46,47 @@ namespace OpenCvSharp
             return new LineSegmentDetector(ptr);
         }
 
+#if LANG_JP
+    /// <summary>
+    /// リソースの解放
+    /// </summary>
+    /// <param name="disposing">
+    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+    ///</param>
+#else
         /// <summary>
-        /// Releases managed resources
+        /// Releases the resources
         /// </summary>
-        protected override void DisposeManaged()
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            ptrObj?.Dispose();
-            ptrObj = null;
-            base.DisposeManaged();
+            if (!disposed)
+            {
+                try
+                {
+                    // releases managed resources
+                    if (disposing)
+                    {
+                    }
+                    // releases unmanaged resources
+                    if (IsEnabledDispose)
+                    {
+                        ptrObj?.Dispose();
+                        ptrObj = null;
+                        ptr = IntPtr.Zero;
+                    }
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
 
         /// <summary>
@@ -68,7 +103,7 @@ namespace OpenCvSharp
         public virtual void Detect(InputArray image, OutputArray lines,
             OutputArray width = null, OutputArray prec = null, OutputArray nfa = null)
         {
-            if (image == null)
+            if (image == null) 
                 throw new ArgumentNullException(nameof(image));
             if (lines == null)
                 throw new ArgumentNullException(nameof(lines));
@@ -80,12 +115,8 @@ namespace OpenCvSharp
 
             NativeMethods.imgproc_LineSegmentDetector_detect_OutputArray(ptr, image.CvPtr, lines.CvPtr,
                 Cv2.ToPtr(width), Cv2.ToPtr(prec), Cv2.ToPtr(nfa));
-            GC.KeepAlive(this);
+
             GC.KeepAlive(image);
-            GC.KeepAlive(lines);
-            GC.KeepAlive(width);
-            GC.KeepAlive(prec);
-            GC.KeepAlive(nfa);
             lines.Fix();
             width?.Fix();
             prec?.Fix();
@@ -123,7 +154,7 @@ namespace OpenCvSharp
                 prec = precVec.ToArray();
                 nfa = nfaVec.ToArray();
             }
-            GC.KeepAlive(this);
+
             GC.KeepAlive(image);
         }
 
@@ -143,8 +174,7 @@ namespace OpenCvSharp
             lines.ThrowIfDisposed();
 
             NativeMethods.imgproc_LineSegmentDetector_drawSegments(ptr, image.CvPtr, lines.CvPtr);
-            GC.KeepAlive(this);
-            GC.KeepAlive(image);
+
             image.Fix();
             GC.KeepAlive(lines);
         }
@@ -162,7 +192,7 @@ namespace OpenCvSharp
         public virtual int CompareSegments(
             Size size, InputArray lines1, InputArray lines2, InputOutputArray image = null)
         {
-            if (lines1 == null)
+            if (lines1 == null) 
                 throw new ArgumentNullException(nameof(lines1));
             if (lines2 == null)
                 throw new ArgumentNullException(nameof(lines2));
@@ -172,32 +202,12 @@ namespace OpenCvSharp
 
             var ret = NativeMethods.imgproc_LineSegmentDetector_compareSegments(
                 ptr, size, lines1.CvPtr, lines2.CvPtr, Cv2.ToPtr(image));
-            GC.KeepAlive(this);
+
             GC.KeepAlive(lines1);
             GC.KeepAlive(lines2);
-            GC.KeepAlive(image);
             image?.Fix();
 
             return ret;
-        }
-        internal class Ptr : OpenCvSharp.Ptr
-        {
-            public Ptr(IntPtr ptr) : base(ptr)
-            {
-            }
-
-            public override IntPtr Get()
-            {
-                var res = NativeMethods.imgproc_Ptr_LineSegmentDetector_get(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-
-            protected override void DisposeUnmanaged()
-            {
-                NativeMethods.imgproc_Ptr_LineSegmentDetector_delete(ptr);
-                base.DisposeUnmanaged();
-            }
         }
     }
 }

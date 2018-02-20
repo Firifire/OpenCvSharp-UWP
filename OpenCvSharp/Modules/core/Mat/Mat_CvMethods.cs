@@ -202,9 +202,9 @@ namespace OpenCvSharp
         /// </summary>
         /// <param name="minIdx"></param>
         /// <param name="maxIdx"></param>
-        public void MinMaxIdx(int[] minIdx, int[] maxIdx)
+        public void MinMaxIdx(out int minIdx, out int maxIdx)
         {
-            Cv2.MinMaxIdx(this, minIdx, maxIdx);
+            Cv2.MinMaxIdx(this, out minIdx, out maxIdx);
         }
 
         /// <summary>
@@ -216,9 +216,9 @@ namespace OpenCvSharp
         /// <param name="maxIdx"></param>
         /// <param name="mask"></param>
         public void MinMaxIdx(out double minVal, out double maxVal,
-            int[] minIdx, int[] maxIdx, InputArray mask = null)
+            out int minIdx, out int maxIdx, InputArray mask = null)
         {
-            Cv2.MinMaxIdx(this, out minVal, out maxVal, minIdx, maxIdx, mask);
+            Cv2.MinMaxIdx(this, out minVal, out maxVal, out minIdx, out maxIdx, mask);
         }
 
         /// <summary>

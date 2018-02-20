@@ -9,19 +9,20 @@ namespace OpenCvSharp
     /// </summary>
     public class Feature2D : Algorithm
     {
+        private bool disposed;
+
         /// <summary>
-        /// cv::Ptr&lt;T&gt;
+        /// cv::Ptr&lt;Feature2D&gt;
         /// </summary>
-        private Ptr ptrObj;
+        private Ptr<Feature2D> ptrObj;
 
-        //internal virtual IntPtr PtrObj => ptrObj.CvPtr;
-
-        #region Init & Disposal
+        internal virtual IntPtr PtrObj => ptrObj.CvPtr;
 
         /// <summary>
         /// 
         /// </summary>
         internal Feature2D()
+            : base()
         {
         }
 
@@ -34,7 +35,7 @@ namespace OpenCvSharp
         {
             if (ptr == IntPtr.Zero)
                 throw new OpenCvSharpException("Invalid cv::Ptr<Feature2D> pointer");
-            var ptrObj = new Ptr(ptr);
+            var ptrObj = new Ptr<Feature2D>(ptr);
             var detector = new Feature2D
             {
                 ptrObj = ptrObj,
@@ -43,20 +44,50 @@ namespace OpenCvSharp
             return detector;
         }
 
+#if LANG_JP
+    /// <summary>
+    /// リソースの解放
+    /// </summary>
+    /// <param name="disposing">
+    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+    ///</param>
+#else
         /// <summary>
-        /// Releases managed resources
+        /// Releases the resources
         /// </summary>
-        protected override void DisposeManaged()
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            ptrObj?.Dispose();
-            ptrObj = null;
-            base.DisposeManaged();
+            if (!disposed)
+            {
+                try
+                {
+                    // releases managed resources
+                    if (disposing)
+                    {
+                    }
+                    // releases unmanaged resources
+                    if (IsEnabledDispose)
+                    {
+                        if (ptrObj != null)
+                            ptrObj.Dispose();
+                        ptrObj = null;
+                        ptr = IntPtr.Zero;
+                    }
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
-
-        #endregion
-
-        #region Properties
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -65,10 +96,9 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.features2d_Feature2D_descriptorSize(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.features2d_Feature2D_descriptorSize(ptr);
             }
         }
 
@@ -80,10 +110,9 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.features2d_Feature2D_descriptorType(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.features2d_Feature2D_descriptorType(ptr);
             }
         }
 
@@ -95,16 +124,11 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.features2d_Feature2D_defaultNorm(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException(GetType().Name);
+                return NativeMethods.features2d_Feature2D_defaultNorm(ptr);
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Return true if detector object is empty
@@ -112,10 +136,9 @@ namespace OpenCvSharp
         /// <returns></returns>
         public new virtual bool Empty()
         {
-            ThrowIfDisposed();
-            var res = NativeMethods.features2d_Feature2D_empty(ptr) != 0;
-            GC.KeepAlive(this);
-            return res;
+            if (disposed)
+                throw new ObjectDisposedException(GetType().Name);
+            return NativeMethods.features2d_Feature2D_empty(ptr) != 0;
         }
 
         /// <summary>
@@ -129,7 +152,8 @@ namespace OpenCvSharp
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException(GetType().Name);
 
             image.ThrowIfDisposed();
             try
@@ -142,7 +166,6 @@ namespace OpenCvSharp
             }
             finally
             {
-                GC.KeepAlive(this);
                 GC.KeepAlive(image);
                 GC.KeepAlive(mask);
             }
@@ -159,7 +182,8 @@ namespace OpenCvSharp
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException(GetType().Name);
 
             image.ThrowIfDisposed();
             try
@@ -173,7 +197,6 @@ namespace OpenCvSharp
             }
             finally
             {
-                GC.KeepAlive(this);
                 GC.KeepAlive(image);
                 GC.KeepAlive(mask);
             }
@@ -189,7 +212,8 @@ namespace OpenCvSharp
         {
             if (images == null)
                 throw new ArgumentNullException(nameof(images));
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException(GetType().Name);
 
             Mat[] imagesArray = EnumerableEx.ToArray(images);
             IntPtr[] imagesPtr = new IntPtr[imagesArray.Length];
@@ -210,10 +234,7 @@ namespace OpenCvSharp
                         throw new ArgumentException("masks.Length != images.Length");
                     NativeMethods.features2d_Feature2D_detect_Mat2(
                         ptr, imagesPtr, imagesArray.Length, keypoints.CvPtr, masksPtr);
-                    GC.KeepAlive(masks);
                 }
-                GC.KeepAlive(this);
-                GC.KeepAlive(imagesArray);
                 return keypoints.ToArray();
             }
         }
@@ -228,16 +249,36 @@ namespace OpenCvSharp
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException(GetType().Name);
 
             using (var keypointsVec = new VectorOfKeyPoint(keypoints))
             {
                 NativeMethods.features2d_Feature2D_compute1(ptr, image.CvPtr, keypointsVec.CvPtr, descriptors.CvPtr);
                 keypoints = keypointsVec.ToArray();
             }
-            GC.KeepAlive(this);
-            GC.KeepAlive(image);
-            GC.KeepAlive(descriptors);
+        }
+
+        /// <summary>
+        /// Compute the descriptors for a set of keypoints in an image.
+        /// </summary>
+        /// <param name="image">The image.</param>
+        /// <param name="inKeypoints">The input keypoints. Keypoints for which a descriptor cannot be computed are removed.</param>
+        /// <param name="outKeypoints"></param>
+        /// <param name="descriptors">Copmputed descriptors. Row i is the descriptor for keypoint i.</param>param>
+        public virtual void Compute(InputArray image, KeyPoint[] inKeypoints, out KeyPoint[] outKeypoints,
+            OutputArray descriptors)
+        {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image));
+            if (disposed)
+                throw new ObjectDisposedException(GetType().Name);
+
+            using (var keypointsVec = new VectorOfKeyPoint(inKeypoints))
+            {
+                NativeMethods.features2d_Feature2D_compute1(ptr, image.CvPtr, keypointsVec.CvPtr, descriptors.CvPtr);
+                outKeypoints = keypointsVec.ToArray();
+            }
         }
 
         /// <summary>
@@ -249,7 +290,8 @@ namespace OpenCvSharp
         /// <param name="descriptors">Descriptor collection. descriptors[i] are descriptors computed for set keypoints[i].</param>
         public virtual void Compute(IEnumerable<Mat> images, ref KeyPoint[][] keypoints, IEnumerable<Mat> descriptors)
         {
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException(GetType().Name);
             if (images == null)
                 throw new ArgumentNullException(nameof(images));
             if (descriptors == null)
@@ -266,9 +308,6 @@ namespace OpenCvSharp
 
                 keypoints = keypointsVec.ToArray();
             }
-            GC.KeepAlive(this);
-            GC.KeepAlive(images);
-            GC.KeepAlive(descriptors);
         }
 
         /// <summary>
@@ -286,7 +325,8 @@ namespace OpenCvSharp
             OutputArray descriptors,
             bool useProvidedKeypoints = false)
         {
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException(GetType().Name);
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
             if (descriptors == null)
@@ -302,33 +342,9 @@ namespace OpenCvSharp
                 keypoints = keypointsVec.ToArray();
             }
 
-            GC.KeepAlive(this);
             GC.KeepAlive(image);
             GC.KeepAlive(mask);
             descriptors.Fix();
-            GC.KeepAlive(descriptors);
-        }
-
-        #endregion
-
-        internal class Ptr : OpenCvSharp.Ptr
-        {
-            public Ptr(IntPtr ptr) : base(ptr)
-            {
-            }
-
-            public override IntPtr Get()
-            {
-                var res = NativeMethods.features2d_Ptr_Feature2D_get(ptr);
-                GC.KeepAlive(this);
-                return res;
-            }
-
-            protected override void DisposeUnmanaged()
-            {
-                NativeMethods.features2d_Ptr_Feature2D_delete(ptr);
-                base.DisposeUnmanaged();
-            }
         }
     }
 }

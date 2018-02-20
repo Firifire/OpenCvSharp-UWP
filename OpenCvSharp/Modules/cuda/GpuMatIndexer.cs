@@ -1,6 +1,6 @@
-using OpenCvSharp.Util;
+using System.Runtime.InteropServices;
 
-namespace OpenCvSharp.Cuda
+namespace OpenCvSharp.Gpu
 {
     /// <summary>
     /// Abstract definition of Mat indexer
@@ -39,7 +39,7 @@ namespace OpenCvSharp.Cuda
         {
             this.parent = parent;
             this.step = parent.Step();
-            this.sizeOfT = MarshalHelper.SizeOf<T>();
+            this.sizeOfT = Marshal.SizeOf(typeof(T));
         }
     }
 }

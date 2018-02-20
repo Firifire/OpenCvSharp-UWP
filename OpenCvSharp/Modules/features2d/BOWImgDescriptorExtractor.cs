@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace OpenCvSharp
 {
@@ -22,11 +21,7 @@ namespace OpenCvSharp
                 throw new ArgumentNullException(nameof(dextractor));
             if (dmatcher == null)
                 throw new ArgumentNullException(nameof(dmatcher));
-
-            ptr = NativeMethods.features2d_BOWImgDescriptorExtractor_new1_RawPtr(dextractor.CvPtr, dmatcher.CvPtr);
-
-            GC.KeepAlive(dextractor);
-            GC.KeepAlive(dmatcher);
+            ptr = NativeMethods.features2d_BOWImgDescriptorExtractor_new1(dextractor.PtrObj, dmatcher.PtrObj);
         }
 
         /// <summary>
@@ -37,18 +32,48 @@ namespace OpenCvSharp
         {
             if (dmatcher == null)
                 throw new ArgumentNullException(nameof(dmatcher));
-
-            ptr = NativeMethods.features2d_BOWImgDescriptorExtractor_new2_RawPtr(dmatcher.CvPtr);
-            GC.KeepAlive(dmatcher);
+            ptr = NativeMethods.features2d_BOWImgDescriptorExtractor_new2(dmatcher.PtrObj);
         }
 
+#if LANG_JP
+/// <summary>
+/// リソースの解放
+/// </summary>
+/// <param name="disposing">
+/// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
+/// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
+///</param>
+#else
         /// <summary>
-        /// Releases unmanaged resources
+        /// Releases the resources
         /// </summary>
-        protected override void DisposeUnmanaged()
+        /// <param name="disposing">
+        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
+        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
+        /// </param>
+#endif
+        protected override void Dispose(bool disposing)
         {
-            NativeMethods.features2d_BOWImgDescriptorExtractor_delete(ptr);
-            base.DisposeUnmanaged();
+            if (!IsDisposed)
+            {
+                try
+                {
+                    // releases managed resources
+                    if (disposing)
+                    {
+                    }
+                    else
+                    {
+                        if (ptr != IntPtr.Zero)
+                            NativeMethods.features2d_BOWImgDescriptorExtractor_delete(ptr);
+                        ptr = IntPtr.Zero;
+                    }
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
 
         /// <summary>
@@ -58,11 +83,11 @@ namespace OpenCvSharp
         /// Each row of the vocabulary is a visual word(cluster center).</param>
         public void SetVocabulary(Mat vocabulary)
         {
-            ThrowIfDisposed();
+            if (IsDisposed)
+                throw new ObjectDisposedException(GetType().Name);
             if (vocabulary == null)
                 throw new ArgumentNullException(nameof(vocabulary));
             NativeMethods.features2d_BOWImgDescriptorExtractor_setVocabulary(ptr, vocabulary.CvPtr);
-            GC.KeepAlive(this);
             GC.KeepAlive(vocabulary);
         }
 
@@ -72,9 +97,9 @@ namespace OpenCvSharp
         /// <returns></returns>
         public Mat GetVocabulary()
         {
-            ThrowIfDisposed();
+            if (IsDisposed)
+                throw new ObjectDisposedException(GetType().Name);
             IntPtr p = NativeMethods.features2d_BOWImgDescriptorExtractor_getVocabulary(ptr);
-            GC.KeepAlive(this);
             return new Mat(p);
         }
 
@@ -87,16 +112,17 @@ namespace OpenCvSharp
         /// <param name="pointIdxsOfClusters">pointIdxsOfClusters Indices of keypoints that belong to the cluster. 
         /// This means that pointIdxsOfClusters[i] are keypoint indices that belong to the i -th cluster(word of vocabulary) returned if it is non-zero.</param>
         /// <param name="descriptors">Descriptors of the image keypoints that are returned if they are non-zero.</param>
-        public void Compute(InputArray image, ref KeyPoint[] keypoints, OutputArray imgDescriptor,
+        public void Compute(InputArray image, out KeyPoint[] keypoints, OutputArray imgDescriptor,
             out int[][] pointIdxsOfClusters, Mat descriptors = null)
         {
-            ThrowIfDisposed();
+            if (IsDisposed)
+                throw new ObjectDisposedException(GetType().Name);
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
             if (imgDescriptor == null)
                 throw new ArgumentNullException(nameof(imgDescriptor));
 
-            using (var keypointsVec = new VectorOfKeyPoint(keypoints))
+            using (var keypointsVec = new VectorOfKeyPoint())
             using (var pointIdxsOfClustersVec = new VectorOfVectorInt())
             {
                 NativeMethods.features2d_BOWImgDescriptorExtractor_compute11(ptr, image.CvPtr, keypointsVec.CvPtr, 
@@ -104,7 +130,6 @@ namespace OpenCvSharp
                 keypoints = keypointsVec.ToArray();
                 pointIdxsOfClusters = pointIdxsOfClustersVec.ToArray();
             }
-            GC.KeepAlive(this);
             GC.KeepAlive(image);
             GC.KeepAlive(imgDescriptor);
             GC.KeepAlive(descriptors);
@@ -119,7 +144,8 @@ namespace OpenCvSharp
         /// This means that pointIdxsOfClusters[i] are keypoint indices that belong to the i -th cluster(word of vocabulary) returned if it is non-zero.</param>
         public void Compute(InputArray keypointDescriptors, OutputArray imgDescriptor, out int[][] pointIdxsOfClusters)
         {
-            ThrowIfDisposed();
+            if (IsDisposed)
+                throw new ObjectDisposedException(GetType().Name);
             if (keypointDescriptors == null)
                 throw new ArgumentNullException(nameof(keypointDescriptors));
             if (imgDescriptor == null)
@@ -131,7 +157,6 @@ namespace OpenCvSharp
                     ptr, keypointDescriptors.CvPtr, imgDescriptor.CvPtr, pointIdxsOfClustersVec.CvPtr);
                 pointIdxsOfClusters = pointIdxsOfClustersVec.ToArray();
             }
-            GC.KeepAlive(this);
             GC.KeepAlive(keypointDescriptors);
             GC.KeepAlive(imgDescriptor);
         }
@@ -142,21 +167,21 @@ namespace OpenCvSharp
         /// <param name="image">Image, for which the descriptor is computed.</param>
         /// <param name="keypoints">Keypoints detected in the input image.</param>
         /// <param name="imgDescriptor">Computed output image descriptor.</param>
-        public void Compute2(Mat image, ref KeyPoint[] keypoints, Mat imgDescriptor)
+        public void Compute2(Mat image, out KeyPoint[] keypoints, Mat imgDescriptor)
         {
-            ThrowIfDisposed();
+            if (IsDisposed)
+                throw new ObjectDisposedException(GetType().Name);
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
             if (imgDescriptor == null)
                 throw new ArgumentNullException(nameof(imgDescriptor));
 
-            using (var keypointsVec = new VectorOfKeyPoint(keypoints))
+            using (var keypointsVec = new VectorOfKeyPoint())
             {
                 NativeMethods.features2d_BOWImgDescriptorExtractor_compute2(
                     ptr, image.CvPtr, keypointsVec.CvPtr, imgDescriptor.CvPtr);
                 keypoints = keypointsVec.ToArray();
             }
-            GC.KeepAlive(this);
             GC.KeepAlive(image);
             GC.KeepAlive(imgDescriptor);
         }
@@ -167,10 +192,9 @@ namespace OpenCvSharp
         /// <returns></returns>
         public int DescriptorSize()
         {
-            ThrowIfDisposed();
-            var res = NativeMethods.features2d_BOWImgDescriptorExtractor_descriptorSize(ptr);
-            GC.KeepAlive(this);
-            return res;
+            if (IsDisposed)
+                throw new ObjectDisposedException(GetType().Name);
+            return NativeMethods.features2d_BOWImgDescriptorExtractor_descriptorSize(ptr);
         }
 
         /// <summary>
@@ -179,10 +203,9 @@ namespace OpenCvSharp
         /// <returns></returns>
         public int DescriptorType()
         {
-            ThrowIfDisposed();
-            var res = NativeMethods.features2d_BOWImgDescriptorExtractor_descriptorType(ptr);
-            GC.KeepAlive(this);
-            return res;
+            if (IsDisposed)
+                throw new ObjectDisposedException(GetType().Name);
+            return NativeMethods.features2d_BOWImgDescriptorExtractor_descriptorType(ptr);
         }
     }
 }

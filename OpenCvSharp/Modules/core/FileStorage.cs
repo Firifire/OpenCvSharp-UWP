@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using OpenCvSharp.Util;
 
 namespace OpenCvSharp
 {
@@ -12,6 +11,8 @@ namespace OpenCvSharp
     /// </summary>
     public class FileStorage : DisposableCvObject
     {
+        private bool disposed;
+
         #region Init & Disposal
 
         /// <summary>
@@ -44,18 +45,36 @@ namespace OpenCvSharp
         }
 
         /// <summary>
-        /// Releases unmanaged resources
+        /// 
         /// </summary>
-        protected override void DisposeUnmanaged()
+        /// <param name="disposing"></param>
+        protected override void Dispose(bool disposing)
         {
-            NativeMethods.core_FileStorage_delete(ptr);
-            base.DisposeUnmanaged();
+            if (!disposed)
+            {
+                try
+                {
+                    if (disposing)
+                    {
+                    }
+                    if (ptr != IntPtr.Zero)
+                    {
+                        NativeMethods.core_FileStorage_delete(ptr);
+                        ptr = IntPtr.Zero;
+                    }
+                    disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
         }
 
         #endregion
 
         #region Properties
-
+        
         /// <summary>
         /// Returns the specified element of the top-level mapping
         /// </summary>
@@ -65,11 +84,11 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException("FileStorage");
                 if (nodeName == null)
                     throw new ArgumentNullException(nameof(nodeName));
                 IntPtr node = NativeMethods.core_FileStorage_indexer(ptr, nodeName);
-                GC.KeepAlive(this);
                 if (node == IntPtr.Zero)
                     return null;
                 return new FileNode(node);
@@ -83,15 +102,14 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException("FileStorage");
                 unsafe
                 {
                     sbyte* buf = NativeMethods.core_FileStorage_elname(ptr);
                     if (buf == null)
                         return null;
-                    var res = StringHelper.PtrToStringAnsi(buf); ;
-                    GC.KeepAlive(this);
-                    return res;
+                    return new string(buf);
                 }
             }
         }
@@ -103,13 +121,13 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
+                if (disposed)
+                    throw new ObjectDisposedException("FileStorage");
 
                 IntPtr length;
                 IntPtr buf = NativeMethods.core_FileStorage_structs(ptr, out length);
                 byte[] result = new byte[length.ToInt32()];
                 Marshal.Copy(buf, result, 0, result.Length);
-                GC.KeepAlive(this);
                 return result;
             }
         }
@@ -121,10 +139,9 @@ namespace OpenCvSharp
         {
             get
             {
-                ThrowIfDisposed();
-                var res = NativeMethods.core_FileStorage_state(ptr);
-                GC.KeepAlive(this);
-                return res;
+                if (disposed)
+                    throw new ObjectDisposedException("FileStorage");
+                return NativeMethods.core_FileStorage_state(ptr);
             }
         }
 
@@ -142,11 +159,11 @@ namespace OpenCvSharp
         /// <returns></returns>
         public virtual bool Open(string fileName, Mode flags, string encoding = null)
         {
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException("FileStorage");
             if (fileName == null)
                 throw new ArgumentNullException(nameof(fileName));
             int ret = NativeMethods.core_FileStorage_open(ptr, fileName, (int)flags, encoding);
-            GC.KeepAlive(this);
             return ret != 0;
         }
 
@@ -156,10 +173,9 @@ namespace OpenCvSharp
         /// <returns></returns>
         public virtual bool IsOpened()
         {
-            ThrowIfDisposed();
-            var res = NativeMethods.core_FileStorage_isOpened(ptr) != 0;
-            GC.KeepAlive(this);
-            return res;
+            if (disposed)
+                throw new ObjectDisposedException("FileStorage");
+            return NativeMethods.core_FileStorage_isOpened(ptr) != 0;
         }
 
         /// <summary>
@@ -167,7 +183,8 @@ namespace OpenCvSharp
         /// </summary>
         public virtual void Release()
         {
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException("FileStorage");
             Dispose();
         }
 
@@ -177,7 +194,8 @@ namespace OpenCvSharp
         /// <returns></returns>
         public string ReleaseAndGetString()
         {
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException("FileStorage");
             var buf = new StringBuilder(1 << 16);
             NativeMethods.core_FileStorage_releaseAndGetString(ptr, buf, buf.Capacity);
             ptr = IntPtr.Zero;
@@ -191,9 +209,9 @@ namespace OpenCvSharp
         /// <returns></returns>
         public FileNode GetFirstTopLevelNode()
         {
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException("FileStorage");
             IntPtr node = NativeMethods.core_FileStorage_getFirstTopLevelNode(ptr);
-            GC.KeepAlive(this);
             if (node == IntPtr.Zero)
                 return null;
             return new FileNode(node);
@@ -206,9 +224,9 @@ namespace OpenCvSharp
         /// <returns></returns>
         public FileNode Root(int streamidx = 0)
         {
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException("FileStorage");
             IntPtr node = NativeMethods.core_FileStorage_root(ptr, streamidx);
-            GC.KeepAlive(this);
             if (node == IntPtr.Zero)
                 return null;
             return new FileNode(node);
@@ -222,8 +240,8 @@ namespace OpenCvSharp
         /// <param name="len"></param>
         public void WriteRaw(string fmt, IntPtr vec, long len)
         {
-            ThrowIfDisposed();
-            throw new NotImplementedException();
+            if (disposed)
+                throw new ObjectDisposedException("FileStorage");
         }
 
         /// <summary>
@@ -233,11 +251,11 @@ namespace OpenCvSharp
         /// <param name="obj"></param>
         public void WriteObj(string name, IntPtr obj)
         {
-            ThrowIfDisposed();
+            if (disposed)
+                throw new ObjectDisposedException("FileStorage");
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
             NativeMethods.core_FileStorage_writeObj(ptr, name, obj);
-            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -249,10 +267,8 @@ namespace OpenCvSharp
         {
             if (fileName == null)
                 throw new ArgumentNullException(nameof(fileName));
-#if !true
             if (!File.Exists(fileName))
                 throw new FileNotFoundException("", fileName);
-#endif
 
             var buf = new StringBuilder(1 << 16);
             NativeMethods.core_FileStorage_getDefaultObjectName(fileName, buf, buf.Capacity);
@@ -268,11 +284,9 @@ namespace OpenCvSharp
         /// <param name="value"></param>
         public void Write(string name, int value)
         {
-            ThrowIfDisposed();
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
             NativeMethods.core_FileStorage_write_int(ptr, name, value);
-            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -282,11 +296,9 @@ namespace OpenCvSharp
         /// <param name="value"></param>
         public void Write(string name, float value)
         {
-            ThrowIfDisposed();
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
             NativeMethods.core_FileStorage_write_float(ptr, name, value);
-            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -296,11 +308,9 @@ namespace OpenCvSharp
         /// <param name="value"></param>
         public void Write(string name, double value)
         {
-            ThrowIfDisposed();
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
             NativeMethods.core_FileStorage_write_double(ptr, name, value);
-            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -310,13 +320,11 @@ namespace OpenCvSharp
         /// <param name="value"></param>
         public void Write(string name, string value)
         {
-            ThrowIfDisposed();
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
             NativeMethods.core_FileStorage_write_String(ptr, name, value);
-            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -326,13 +334,11 @@ namespace OpenCvSharp
         /// <param name="value"></param>
         public void Write(string name, Mat value)
         {
-            ThrowIfDisposed();
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
             NativeMethods.core_FileStorage_write_Mat(ptr, name, value.CvPtr);
-            GC.KeepAlive(this);
             GC.KeepAlive(value);
         }
 
@@ -343,13 +349,11 @@ namespace OpenCvSharp
         /// <param name="value"></param>
         public void Write(string name, SparseMat value)
         {
-            ThrowIfDisposed();
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
             NativeMethods.core_FileStorage_write_SparseMat(ptr, name, value.CvPtr);
-            GC.KeepAlive(this);
             GC.KeepAlive(value);
         }
 
@@ -360,7 +364,6 @@ namespace OpenCvSharp
         /// <param name="value"></param>
         public void Write(string name, IEnumerable<KeyPoint> value)
         {
-            ThrowIfDisposed();
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
             if (value == null)
@@ -368,7 +371,6 @@ namespace OpenCvSharp
             using (var valueVector = new VectorOfKeyPoint(value))
             {
                 NativeMethods.core_FileStorage_write_vectorOfKeyPoint(ptr, name, valueVector.CvPtr);
-                GC.KeepAlive(this);
             }
         }
 
@@ -379,7 +381,6 @@ namespace OpenCvSharp
         /// <param name="value"></param>
         public void Write(string name, IEnumerable<DMatch> value)
         {
-            ThrowIfDisposed();
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
             if (value == null)
@@ -387,7 +388,6 @@ namespace OpenCvSharp
             using (var valueVector = new VectorOfDMatch(value))
             {
                 NativeMethods.core_FileStorage_write_vectorOfDMatch(ptr, name, valueVector.CvPtr);
-                GC.KeepAlive(this);
             }
         }
 
@@ -397,9 +397,7 @@ namespace OpenCvSharp
         /// <param name="value"></param>
         public void WriteScalar(int value)
         {
-            ThrowIfDisposed();
             NativeMethods.core_FileStorage_writeScalar_int(ptr, value);
-            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -408,9 +406,7 @@ namespace OpenCvSharp
         /// <param name="value"></param>
         public void WriteScalar(float value)
         {
-            ThrowIfDisposed();
             NativeMethods.core_FileStorage_writeScalar_float(ptr, value);
-            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -419,9 +415,7 @@ namespace OpenCvSharp
         /// <param name="value"></param>
         public void WriteScalar(double value)
         {
-            ThrowIfDisposed();
             NativeMethods.core_FileStorage_writeScalar_double(ptr, value);
-            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -430,11 +424,9 @@ namespace OpenCvSharp
         /// <param name="value"></param>
         public void WriteScalar(string value)
         {
-            ThrowIfDisposed();
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
             NativeMethods.core_FileStorage_writeScalar_String(ptr, value);
-            GC.KeepAlive(this);
         }
 
         #endregion
