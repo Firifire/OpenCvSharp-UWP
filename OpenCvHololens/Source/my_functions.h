@@ -35,7 +35,7 @@ static int p(T obj, const std::string &caption = "MessageBox")
 #endif
 
 #ifndef CVAPI
-#  define CVAPI(rettype) CV_EXTERN_C CV_EXPORTS rettype CV_CDECL
+#  define CVAPI(rettype) CV_EXTERN_C CV_EXPORTS rettype CV_STDCALL
 #endif
 
 

@@ -604,6 +604,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Source.cpp" />
     <ClCompile Include="Source\bgsegm.cpp" />
     <ClCompile Include="Source\calib3d.cpp" />
     <ClCompile Include="Source\core.cpp" />
