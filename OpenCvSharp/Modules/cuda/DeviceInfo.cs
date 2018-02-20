@@ -16,7 +16,8 @@ namespace OpenCvSharp.Gpu
         /// </summary>
         public DeviceInfo()
         {
-            Cv2Gpu.ThrowIfGpuNotAvailable();
+            //<GPUMAT>
+            //Cv2Gpu.ThrowIfGpuNotAvailable();
             ptr = NativeMethods.cuda_DeviceInfo_new1();
         }
 
@@ -26,7 +27,8 @@ namespace OpenCvSharp.Gpu
         /// <param name="deviceId"></param>
         public DeviceInfo(int deviceId)
         {
-            Cv2Gpu.ThrowIfGpuNotAvailable();
+            //<GPUMAT>
+            //Cv2Gpu.ThrowIfGpuNotAvailable();
             ptr = NativeMethods.cuda_DeviceInfo_new2(deviceId);
         }
 

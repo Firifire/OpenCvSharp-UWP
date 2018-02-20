@@ -89,8 +89,9 @@ namespace OpenCvSharp.Util
                 throw new PlatformNotSupportedException("This method is for only Windows");
             }
 
-            if (!typeof(T).IsSubclassOf(typeof(Delegate)))
-                throw new OpenCvSharpException("The type argument must be Delegate.");
+            //<NEW>
+            //if (!typeof(T).IsSubclassOf(typeof(Delegate)))
+            //    throw new OpenCvSharpException("The type argument must be Delegate.");
             if (string.IsNullOrEmpty(dllName))
                 throw new ArgumentNullException(nameof(dllName));
             if (string.IsNullOrEmpty(functionName))
