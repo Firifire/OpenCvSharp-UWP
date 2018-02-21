@@ -1,4 +1,4 @@
-﻿namespace OpenCvSharp
+﻿namespace OpenCvHololens
 {
     /// <summary>
     /// class of the pixel in GrabCut algorithm

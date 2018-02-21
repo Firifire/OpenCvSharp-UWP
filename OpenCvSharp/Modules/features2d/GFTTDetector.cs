@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     // ReSharper disable once InconsistentNaming
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvSharp.ML
+namespace OpenCvHololens.ML
 {
     /// <summary>
     /// The structure represents the logarithmic grid range of statmodel parameters.

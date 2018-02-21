@@ -1,4 +1,4 @@
-﻿namespace OpenCvSharp
+﻿namespace OpenCvHololens
 {
     /// <summary>
     /// Edge preserving filters

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OpenCvSharp.Gpu
+namespace OpenCvHololens.Gpu
 {
 //    / <summary>
 //    / Functions of OpenCV GPU module

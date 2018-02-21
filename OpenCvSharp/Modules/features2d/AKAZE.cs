@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     // ReSharper disable once InconsistentNaming
 
@@ -50,7 +50,7 @@ namespace OpenCvSharp
         /// <param name="nOctaveLayers"></param>
         /// <param name="diffusivity"></param>
         public static AKAZE Create(
-            OpenCvSharp.AKAZEDescriptorType descriptorType = OpenCvSharp.AKAZEDescriptorType.MLDB,
+            OpenCvHololens.AKAZEDescriptorType descriptorType = OpenCvHololens.AKAZEDescriptorType.MLDB,
             int descriptorSize = 0,
             int descriptorChannels = 3,
             float threshold = 0.001f,

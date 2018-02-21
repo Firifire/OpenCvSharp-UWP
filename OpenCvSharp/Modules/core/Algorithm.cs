@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// Base class for high-level OpenCV algorithms

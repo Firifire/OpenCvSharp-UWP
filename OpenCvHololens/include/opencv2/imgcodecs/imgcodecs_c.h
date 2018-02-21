@@ -125,10 +125,10 @@ enum
 };
 
 /* utility function: convert one image to another with optional vertical flip */
-OldAPI(void) cvConvertImage( const CvArr* src, CvArr* dst, int flags CV_DEFAULT(0));
+CVAPI(void) cvConvertImage( const CvArr* src, CvArr* dst, int flags CV_DEFAULT(0));
 
-OldAPI(int) cvHaveImageReader(const char* filename);
-OldAPI(int) cvHaveImageWriter(const char* filename);
+CVAPI(int) cvHaveImageReader(const char* filename);
+CVAPI(int) cvHaveImageWriter(const char* filename);
 
 
 /****************************************************************************************\

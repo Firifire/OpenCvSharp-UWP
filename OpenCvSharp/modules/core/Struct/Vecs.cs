@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// 2-Tuple of short (System.Int16)

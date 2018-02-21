@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// The base class for camera response calibration algorithms.

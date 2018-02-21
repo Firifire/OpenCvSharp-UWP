@@ -387,8 +387,7 @@ std::ostream& operator << (std::ostream& out, const TickMeter& tm)
 
 /** @brief Returns the number of CPU ticks.
 
-The function returns the current number of CPU ticks on some architectures (such as 
-, x64,
+The function returns the current number of CPU ticks on some architectures (such as x86, x64,
 PowerPC). On other platforms the function is equivalent to getTickCount. It can also be used for
 very accurate time measurements, as well as for RNG initialization. Note that in case of multi-CPU
 systems a thread, from which getCPUTickCount is called, can be suspended and resumed at another CPU

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvSharp.ML
+namespace OpenCvHololens.ML
 {
     // ReSharper disable InconsistentNaming
 

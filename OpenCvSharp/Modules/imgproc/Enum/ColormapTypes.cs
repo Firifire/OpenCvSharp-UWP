@@ -2,7 +2,7 @@
 
 #pragma warning disable 1591
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// GNU Octave/MATLAB equivalent colormaps

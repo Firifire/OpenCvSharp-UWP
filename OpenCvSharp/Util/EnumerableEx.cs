@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OpenCvSharp.Util
+namespace OpenCvHololens.Util
 {
     internal delegate TResult Func<in T1, out TResult>(T1 t1);
 

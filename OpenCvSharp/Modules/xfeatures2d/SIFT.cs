@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OpenCvSharp.XFeatures2D
+namespace OpenCvHololens.XFeatures2D
 {
     // ReSharper disable InconsistentNaming
 

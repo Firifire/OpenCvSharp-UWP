@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
 #if LANG_JP
     /// <summary>
@@ -8,7 +8,7 @@ namespace OpenCvSharp
     /// </summary>
 #else
     /// <summary>
-    /// The exception that is thrown by OpenCvSharp. 
+    /// The exception that is thrown by OpenCvHololens. 
     /// </summary>
 #endif
     public class OpenCvSharpException : Exception

@@ -127,7 +127,7 @@ CVAPI(void) cvCorrectMatches(CvMat* F, CvMat* points1, CvMat* points2,
    alpha=0 - only valid pixels will be retained in the undistorted image
    alpha=1 - all the source image pixels will be retained in the undistorted image
 */
-OldAPI(void) cvGetOptimalNewCameraMatrix( const CvMat* camera_matrix,
+CVAPI(void) cvGetOptimalNewCameraMatrix( const CvMat* camera_matrix,
                                          const CvMat* dist_coeffs,
                                          CvSize image_size, double alpha,
                                          CvMat* new_camera_matrix,

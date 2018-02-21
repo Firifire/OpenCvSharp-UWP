@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenCvSharp.Gpu
+namespace OpenCvHololens.Gpu
 {
 #pragma warning disable 1591
 

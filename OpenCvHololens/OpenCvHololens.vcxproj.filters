@@ -5,143 +5,143 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="include">
-      <UniqueIdentifier>{11946b2f-276f-4121-8a7b-3f55e50e9019}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv">
-      <UniqueIdentifier>{f04c191a-52ed-444b-8ebc-7a62e1cf4674}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2">
-      <UniqueIdentifier>{81b739e7-da35-4e3f-950a-ddf9d2695666}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\xphoto">
-      <UniqueIdentifier>{12e0a8d9-77f3-4990-bfef-9b24b31a66c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\ximgproc">
-      <UniqueIdentifier>{b08fdb8a-8ffe-48ac-8491-b5801c862298}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\xfeatures2d">
-      <UniqueIdentifier>{1bf36d05-7fdc-4fe7-9117-ce2ea3953a9a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\video">
-      <UniqueIdentifier>{99bbfe3a-4f2f-429f-bddf-5335fe0c9658}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\videostab">
-      <UniqueIdentifier>{7ca0e0d3-da20-40ad-ab09-958a536a657b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\videoio">
-      <UniqueIdentifier>{6682d33c-1eec-4f45-b581-9cc1c4ce18c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\tracking">
-      <UniqueIdentifier>{e194fee4-a77f-4046-b4b9-ac2336291ef0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\text">
-      <UniqueIdentifier>{851bed70-94d4-4677-8ecc-1b4fa9af62ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\surface_matching">
-      <UniqueIdentifier>{949f0f99-a398-4918-bd9d-536b562ed776}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\structured_light">
-      <UniqueIdentifier>{5da58060-5e94-49a7-a119-4da873739a24}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\stitching">
-      <UniqueIdentifier>{8179d98e-3ff9-425e-a425-6bab58c9341a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\stitching\detail">
-      <UniqueIdentifier>{022a60ff-ea8f-4a2e-8b02-e06e5235be8f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\stereo">
-      <UniqueIdentifier>{43bcbefe-377d-4eb2-9902-52e59928be62}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\shape">
-      <UniqueIdentifier>{c6eacd03-928a-4701-9394-565c01f09650}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\saliency">
-      <UniqueIdentifier>{37f3b068-bca8-4e6e-b0da-f3889c74f6b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\rgbd">
-      <UniqueIdentifier>{3395ba2d-34ac-4916-a8c5-a8251dd0b933}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\reg">
-      <UniqueIdentifier>{55c791c3-ee9f-4c90-b921-d1eda95a4e3e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\photo">
-      <UniqueIdentifier>{a7853d66-dd35-43bb-bc20-447e296c94bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\phase_unwrapping">
-      <UniqueIdentifier>{b38c6335-8b5d-46e4-8beb-450d5c7daa2d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\optflow">
-      <UniqueIdentifier>{79d7666a-9e61-494e-bd23-5b41e79ae097}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\objdetect">
-      <UniqueIdentifier>{b905fd34-4b69-4ee0-ad16-06df27d66387}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\ml">
-      <UniqueIdentifier>{77941c5c-d5e1-45aa-9870-92787c601314}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\line_descriptor">
-      <UniqueIdentifier>{0424efba-bad6-4a59-a246-695638ef4180}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\imgproc">
-      <UniqueIdentifier>{e150307e-1a83-4018-8564-84dc9ab4d843}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\imgproc\hal">
-      <UniqueIdentifier>{b495eea4-c402-4077-8a98-23799eeb49e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\imgproc\detail">
-      <UniqueIdentifier>{0b853ea7-1cb7-4a16-ad86-740fd2854640}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\imgcodecs">
-      <UniqueIdentifier>{2778d03f-fb17-4da9-ac3b-6d5230173562}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\highgui">
-      <UniqueIdentifier>{033ffb0e-778c-4bfc-827e-cef58acbdb70}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\fuzzy">
-      <UniqueIdentifier>{a1c97980-3ac2-4f6d-b451-73cf31abff9a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\flann">
-      <UniqueIdentifier>{a911fe59-3b13-44cb-91e6-23f82a275e38}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\features2d">
-      <UniqueIdentifier>{9b809e3f-5f38-406e-a4a8-1512e4392e87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\face">
-      <UniqueIdentifier>{c75a58a4-f561-45c5-9033-ce1e6ee18153}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\datasets">
-      <UniqueIdentifier>{bd121f98-bad2-411b-a0a8-f801d43d98a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\core">
-      <UniqueIdentifier>{131da8a6-5321-46ba-a6c5-e8193951b584}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\core\hal">
-      <UniqueIdentifier>{c44041c5-fae0-4815-a0be-631d5885c685}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\core\cuda">
-      <UniqueIdentifier>{a625f9a8-662f-476a-978c-799d485a8739}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\core\cuda\detail">
-      <UniqueIdentifier>{9d4fd943-c018-445f-8865-d7892d8d83a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\ccalib">
-      <UniqueIdentifier>{57434083-4160-4407-98b0-76ac15b03889}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\calib3d">
-      <UniqueIdentifier>{856c3990-c4b1-4296-b1fd-1194dd4e5aa4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\bioinspired">
-      <UniqueIdentifier>{55afe2da-f764-4b11-99ea-61dc98985f9a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\aruco">
-      <UniqueIdentifier>{5d5176ea-c932-4803-a092-b7cc5f148e2c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header">
       <UniqueIdentifier>{d1b8fae1-74b9-4a41-808b-e8d8428d63bc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source">
       <UniqueIdentifier>{ac0639dd-9f7f-4d05-8cbf-15c6fee5d775}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{6cbbefde-afcc-4aa4-8dfb-75eadf9098cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv">
+      <UniqueIdentifier>{1a745813-a204-4352-9ab1-c04d7e391cc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2">
+      <UniqueIdentifier>{db11c435-01ca-4355-ac2d-e368cf3edf59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\xphoto">
+      <UniqueIdentifier>{4fbc73e6-334c-4147-96e8-ff9a0e0aca7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\ximgproc">
+      <UniqueIdentifier>{5c2925db-d915-45c6-800c-6c505aa016a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\xfeatures2d">
+      <UniqueIdentifier>{704e5bc9-27c0-40bb-acef-dd3aa3fa27ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\video">
+      <UniqueIdentifier>{d237caa9-a88b-4030-ac5b-3d43550a5275}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\videostab">
+      <UniqueIdentifier>{2831d069-55a8-4ee8-939e-9421daa0c484}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\videoio">
+      <UniqueIdentifier>{1f1e5a3d-4bf5-474e-9553-cc9e643cb74c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\tracking">
+      <UniqueIdentifier>{94d96bae-6d25-4f06-8ccc-ece075db29f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\text">
+      <UniqueIdentifier>{4d99c08a-4961-45b9-8b3f-0c97c07db468}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\surface_matching">
+      <UniqueIdentifier>{2ebfcc76-6ea8-43f2-9849-2d6db80a8b9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\structured_light">
+      <UniqueIdentifier>{33d52336-8c07-4eeb-8589-f35a26d5b9eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\stitching">
+      <UniqueIdentifier>{1a6c3197-c905-426d-93bc-8d1bd3b4a928}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\stitching\detail">
+      <UniqueIdentifier>{78d7beee-dfbd-4ceb-b5d9-545aeba9e1f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\stereo">
+      <UniqueIdentifier>{dee69b34-9b33-4e89-986c-88dfe7745d81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\shape">
+      <UniqueIdentifier>{9d79e7d2-446f-43fa-9c61-f7d68752f458}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\saliency">
+      <UniqueIdentifier>{4f0b5808-bd06-40cf-819b-e9a03226f3d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\rgbd">
+      <UniqueIdentifier>{5a179f92-9633-4b9c-831d-23cde7032fac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\reg">
+      <UniqueIdentifier>{b5193175-8f4a-474a-a045-7a3652115068}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\photo">
+      <UniqueIdentifier>{dccedc33-f13d-463f-a174-a1421f60a8fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\phase_unwrapping">
+      <UniqueIdentifier>{0557e277-cf38-484e-b796-2e2fd882ca1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\optflow">
+      <UniqueIdentifier>{9719c8cf-3df2-4a16-bf70-1c492f0e825f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\objdetect">
+      <UniqueIdentifier>{a8c7dd7a-3eb5-4ea0-acd3-da08fbce1a2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\ml">
+      <UniqueIdentifier>{5dd98252-60c4-425f-b9a2-7653bb7bc12c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\line_descriptor">
+      <UniqueIdentifier>{69cfc861-5925-4aad-90f0-dd6730b81d5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\imgproc">
+      <UniqueIdentifier>{6a766a54-81a7-4347-bd8f-a508c51eac21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\imgproc\hal">
+      <UniqueIdentifier>{b7e236df-986d-48b9-9039-081c0c592e43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\imgproc\detail">
+      <UniqueIdentifier>{f520a3e2-d249-4d9e-9288-f71995747240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\imgcodecs">
+      <UniqueIdentifier>{a198521e-f8d5-4028-a6cb-667e03f59b91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\highgui">
+      <UniqueIdentifier>{861afec4-4836-4418-b064-d3cb17dd0ca0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\fuzzy">
+      <UniqueIdentifier>{abdc567d-2ac7-47d6-b878-9d5316832064}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\flann">
+      <UniqueIdentifier>{588948bb-3e32-461a-98d4-3ff2ae525609}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\features2d">
+      <UniqueIdentifier>{23f1d7cd-10e2-4bb3-9810-25e73d533363}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\face">
+      <UniqueIdentifier>{f9faf58e-80aa-4afc-9600-0a7c7b788f12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\datasets">
+      <UniqueIdentifier>{95ec90ae-7721-4afd-9bc5-a3def2070842}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\core">
+      <UniqueIdentifier>{ac39ebe3-69c5-48f9-a934-bc75f14e056e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\core\hal">
+      <UniqueIdentifier>{fd9681df-afd9-48ae-907b-caac4456244d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\core\cuda">
+      <UniqueIdentifier>{6dc750ab-9e39-415e-9f27-27d755945c0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\core\cuda\detail">
+      <UniqueIdentifier>{e933d427-188f-4441-a7dc-00eef942da71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\ccalib">
+      <UniqueIdentifier>{686d7b6b-fb59-46fa-9700-92f0cd0999a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\calib3d">
+      <UniqueIdentifier>{361accf4-1756-403e-8cd7-39616923b81c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\bioinspired">
+      <UniqueIdentifier>{da1c3fb0-733f-4175-8b8c-ea73a16a892c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\aruco">
+      <UniqueIdentifier>{cd6dfe86-4320-4dbf-b16b-ef216450bb9b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -212,6 +212,216 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Source\core.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\calib3d_StereoMatcher.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\calib3d.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\bgsegm.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\xfeatures2d.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\videoio.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\video_tracking.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\video_background_segm.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\video.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\superres.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\stitching_detail_Matchers.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\stitching.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\std_vector.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\shape_ShapeDistanceExtractor.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\photo_HDR.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\photo.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\optflow_motempl.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\optflow.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\objdetect_HOGDescriptor.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\objdetect.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\my_types.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\my_functions.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ml_SVM.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ml_StatModel.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ml_RTrees.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ml_NormalBayesClassifier.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ml_LogisticRegressionh.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ml_KNearest.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ml_EM.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ml_DTree.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ml_Boost.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ml_ANN_MLP.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ml.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\include_opencv.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imgproc_Subdiv2D.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imgproc_LineSegmentDetector.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imgproc_LineIterator.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imgproc_GeneralizedHough.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imgproc_CLAHE.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imgproc.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imgcodecs.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\highgui.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\flann.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\features2d_SimpleBlobDetector.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\features2d_ORB.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\features2d_MSER.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\features2d_KeyPointsFilter.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\features2d_KAZE.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\features2d_GFTTDetector.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\features2d_FeatureDetector.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\features2d_FastFeatureDetector.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\features2d_DescriptorMatcher.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\features2d_BRISK.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\features2d_BOW.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\features2d_AKAZE.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\features2d_AgastFeatureDetector.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\features2d.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\face.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\cuda_GpuMat.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\cuda.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\core_SVD.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\core_SparseMat.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\core_RNG.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\core_PCA.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\core_OutputArray.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\core_MatExpr.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\core_Mat.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\core_InputArray.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\core_FileStorage.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\core_Algorithm.h">
+      <Filter>Header</Filter>
+    </ClInclude>
     <ClInclude Include="include\opencv\ml.h">
       <Filter>include\opencv</Filter>
     </ClInclude>
@@ -1189,216 +1399,6 @@
     </ClInclude>
     <ClInclude Include="include\opencv2\aruco.hpp">
       <Filter>include\opencv2</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\core.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\calib3d_StereoMatcher.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\calib3d.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\bgsegm.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\xfeatures2d.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\videoio.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\video_tracking.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\video_background_segm.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\video.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\superres.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\stitching_detail_Matchers.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\stitching.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\std_vector.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\shape_ShapeDistanceExtractor.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\photo_HDR.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\photo.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\optflow_motempl.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\optflow.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\objdetect_HOGDescriptor.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\objdetect.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\my_types.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\my_functions.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ml_SVM.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ml_StatModel.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ml_RTrees.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ml_NormalBayesClassifier.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ml_LogisticRegressionh.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ml_KNearest.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ml_EM.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ml_DTree.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ml_Boost.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ml_ANN_MLP.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ml.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\include_opencv.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\imgproc_Subdiv2D.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\imgproc_LineSegmentDetector.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\imgproc_LineIterator.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\imgproc_GeneralizedHough.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\imgproc_CLAHE.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\imgproc.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\imgcodecs.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\highgui.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\flann.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\features2d_SimpleBlobDetector.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\features2d_ORB.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\features2d_MSER.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\features2d_KeyPointsFilter.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\features2d_KAZE.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\features2d_GFTTDetector.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\features2d_FeatureDetector.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\features2d_FastFeatureDetector.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\features2d_DescriptorMatcher.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\features2d_BRISK.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\features2d_BOW.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\features2d_AKAZE.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\features2d_AgastFeatureDetector.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\features2d.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\face.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\cuda_GpuMat.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\cuda.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\core_SVD.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\core_SparseMat.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\core_RNG.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\core_PCA.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\core_OutputArray.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\core_MatExpr.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\core_Mat.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\core_InputArray.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\core_FileStorage.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\core_Algorithm.h">
-      <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

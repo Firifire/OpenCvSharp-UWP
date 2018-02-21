@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// DebuggrVisualizerにおいて、シリアライズ不可能なクラスをやり取りするために使うプロキシ。

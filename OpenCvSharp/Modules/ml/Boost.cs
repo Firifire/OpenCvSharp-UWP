@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvSharp.ML
+namespace OpenCvHololens.ML
 {
 	/// <summary>
     /// Boosted tree classifier derived from DTrees

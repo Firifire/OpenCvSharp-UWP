@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvSharp.ML
+namespace OpenCvHololens.ML
 {
 #if LANG_JP
     /// <summary>

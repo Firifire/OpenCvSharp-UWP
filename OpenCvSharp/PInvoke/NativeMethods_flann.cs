@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Text;
-using OpenCvSharp.Flann;
+using OpenCvHololens.Flann;
 
 #pragma warning disable 1591
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     static partial class NativeMethods
     {
