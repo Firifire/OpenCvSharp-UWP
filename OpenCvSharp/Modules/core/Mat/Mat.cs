@@ -3237,36 +3237,8 @@ namespace OpenCvHololens
 
         #region GetArray
 
-        private void CheckArgumentsForConvert(int row, int col, Array data,
-            params MatType[] acceptableTypes)
-        {
-            ThrowIfDisposed();
-            if (row < 0 || row >= Rows)
-                throw new ArgumentOutOfRangeException(nameof(row));
-            if (col < 0 || col >= Cols)
-                throw new ArgumentOutOfRangeException(nameof(col));
-            if (data == null)
-                throw new ArgumentNullException(nameof(data));
-
-            MatType t = Type();
-            if (data == null || data.Length%t.Channels != 0)
-                throw new OpenCvSharpException(
-                    "Provided data element number ({0}) should be multiple of the Mat channels count ({1})",
-                    data.Length, t.Channels);
-
-            if (acceptableTypes != null && acceptableTypes.Length > 0)
-            {
-                bool isValidDepth = EnumerableEx.Any(acceptableTypes, delegate(MatType type)
-                {
-                    return type == t;
-                });
-                if (!isValidDepth)
-                    throw new OpenCvSharpException("Mat data type is not compatible: " + t);
-            }
-        }
-
         private void CheckArgumentsForConvert(int row, int col, Array data, int dataDimension,
-          params MatType[] acceptableTypes)
+            MatType[] acceptableTypes)
         {
             ThrowIfDisposed();
             if (row < 0 || row >= Rows)
@@ -3277,14 +3249,14 @@ namespace OpenCvHololens
                 throw new ArgumentNullException(nameof(data));
 
             MatType t = Type();
-            if (data == null || (data.Length*dataDimension)%t.Channels != 0)
+            if (data == null || (data.Length * dataDimension) % t.Channels != 0)
                 throw new OpenCvSharpException(
                     "Provided data element number ({0}) should be multiple of the Mat channels count ({1})",
                     data.Length, t.Channels);
 
             if (acceptableTypes != null && acceptableTypes.Length > 0)
             {
-                bool isValidDepth = EnumerableEx.Any(acceptableTypes, delegate(MatType type)
+                bool isValidDepth = EnumerableEx.Any(acceptableTypes, delegate (MatType type)
                 {
                     return type == t;
                 });
@@ -3301,8 +3273,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, byte[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_8S, MatType.CV_8U);
-            NativeMethods.core_Mat_nGetB(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_8SC1, MatType.CV_8UC1 });
+            unsafe
+            {
+                fixed (byte* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetB(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3313,8 +3292,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, byte[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_8S, MatType.CV_8U);
-            NativeMethods.core_Mat_nGetB(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_8SC1, MatType.CV_8UC1 });
+            unsafe
+            {
+                fixed (byte* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetB(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3325,8 +3311,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, short[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_16S, MatType.CV_16U);
-            NativeMethods.core_Mat_nGetS(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_16SC1, MatType.CV_16UC1 });
+            unsafe
+            {
+                fixed (short* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetS(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3337,8 +3330,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, short[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_16S, MatType.CV_16U);
-            NativeMethods.core_Mat_nGetS(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_16SC1, MatType.CV_16UC1 });
+            unsafe
+            {
+                fixed (short* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetS(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3349,8 +3349,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, ushort[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_16S, MatType.CV_16U);
-            NativeMethods.core_Mat_nGetS(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_16SC1, MatType.CV_16UC1 });
+            unsafe
+            {
+                fixed (ushort* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetS(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3361,8 +3368,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, ushort[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_16S, MatType.CV_16U);
-            NativeMethods.core_Mat_nGetS(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_16SC1, MatType.CV_16UC1 });
+            unsafe
+            {
+                fixed (ushort* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetS(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3373,8 +3387,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, int[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32S);
-            NativeMethods.core_Mat_nGetI(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, MatType.CV_32S, null);
+            unsafe
+            {
+                fixed (int* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetI(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3385,8 +3406,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, int[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32S);
-            NativeMethods.core_Mat_nGetI(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_32SC1 });
+            unsafe
+            {
+                fixed (int* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetI(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3397,8 +3425,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, float[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32F);
-            NativeMethods.core_Mat_nGetF(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_32FC1 });
+            unsafe
+            {
+                fixed (float* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetF(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3409,8 +3444,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, float[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32F);
-            NativeMethods.core_Mat_nGetF(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_32FC1 });
+            unsafe
+            {
+                fixed (float* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetF(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3421,8 +3463,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, double[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_64F);
-            NativeMethods.core_Mat_nGetD(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_64FC1 });
+            unsafe
+            {
+                fixed (double* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetD(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3433,8 +3482,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, double[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_64F);
-            NativeMethods.core_Mat_nGetD(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_64FC1 });
+            unsafe
+            {
+                fixed (double* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetD(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3452,8 +3508,15 @@ namespace OpenCvHololens
                 throw new ArgumentOutOfRangeException(nameof(col));
 
             double[] ret = new double[Channels()];
-            NativeMethods.core_Mat_nGetD(ptr, row, col, ret, ret.Length);
-            return ret;
+            unsafe
+            {
+                fixed (double* pData = ret)
+                {
+                    NativeMethods.core_Mat_nGetD(ptr, row, col, pData, ret.Length);
+                    GC.KeepAlive(this);
+                    return ret;
+                }
+            }
         }
 
         /// <summary>
@@ -3464,8 +3527,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Vec3b[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_8UC3);
-            NativeMethods.core_Mat_nGetVec3b(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_8UC3 });
+            unsafe
+            {
+                fixed (Vec3b* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetVec3b(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3476,8 +3546,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Vec3b[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_8UC3);
-            NativeMethods.core_Mat_nGetVec3b(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_8UC3 });
+            unsafe
+            {
+                fixed (Vec3b* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetVec3b(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3488,8 +3565,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Vec3d[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_64FC3);
-            NativeMethods.core_Mat_nGetVec3d(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_64FC3 });
+            unsafe
+            {
+                fixed (Vec3d* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetVec3d(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3500,8 +3584,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Vec3d[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_64FC3);
-            NativeMethods.core_Mat_nGetVec3d(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_64FC3 });
+            unsafe
+            {
+                fixed (Vec3d* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetVec3d(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3512,8 +3603,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Vec4f[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32FC4);
-            NativeMethods.core_Mat_nGetVec4f(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 4, new[] { MatType.CV_32FC4 });
+            unsafe
+            {
+                fixed (Vec4f* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetVec4f(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3524,8 +3622,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Vec4f[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32FC4);
-            NativeMethods.core_Mat_nGetVec4f(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 4, new[] { MatType.CV_32FC4 });
+            unsafe
+            {
+                fixed (Vec4f* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetVec4f(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3536,8 +3641,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Vec6f[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32FC(6));
-            NativeMethods.core_Mat_nGetVec6f(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 6, new[] { MatType.CV_32FC(6) });
+            unsafe
+            {
+                fixed (Vec6f* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetVec6f(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3548,8 +3660,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Vec6f[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32FC(6));
-            NativeMethods.core_Mat_nGetVec6f(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 6, new[] { MatType.CV_32FC(6) });
+            unsafe
+            {
+                fixed (Vec6f* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetVec6f(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3560,8 +3679,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Vec4i[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32SC4);
-            NativeMethods.core_Mat_nGetVec4i(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 4, new[] { MatType.CV_32SC4 });
+            unsafe
+            {
+                fixed (Vec4i* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetVec4i(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3572,8 +3698,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Vec4i[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32SC4);
-            NativeMethods.core_Mat_nGetVec4i(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 4, new[] { MatType.CV_32SC4 });
+            unsafe
+            {
+                fixed (Vec4i* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetVec4i(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3584,8 +3717,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Point[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32SC2);
-            NativeMethods.core_Mat_nGetPoint(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 2, new[] { MatType.CV_32SC2 });
+            unsafe
+            {
+                fixed (Point* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetPoint(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3596,8 +3736,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Point[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32SC2);
-            NativeMethods.core_Mat_nGetPoint(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 2, new[] { MatType.CV_32SC2 });
+            unsafe
+            {
+                fixed (Point* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetPoint(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3608,8 +3755,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Point2f[] data)
         {
-            CheckArgumentsForConvert(row, col, data, 2, MatType.CV_32FC2);
-            NativeMethods.core_Mat_nGetPoint2f(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 2, new[] { MatType.CV_32FC2 });
+            unsafe
+            {
+                fixed (Point2f* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetPoint2f(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3620,8 +3774,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Point2f[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, 2, MatType.CV_32FC2);
-            NativeMethods.core_Mat_nGetPoint2f(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 2, new[] { MatType.CV_32FC2 });
+            unsafe
+            {
+                fixed (Point2f* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetPoint2f(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3632,8 +3793,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Point2d[] data)
         {
-            CheckArgumentsForConvert(row, col, data,2, MatType.CV_64FC2);
-            NativeMethods.core_Mat_nGetPoint2d(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 2, new[] { MatType.CV_64FC2 });
+            unsafe
+            {
+                fixed (Point2d* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetPoint2d(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3644,8 +3812,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Point2d[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, 2, MatType.CV_64FC2);
-            NativeMethods.core_Mat_nGetPoint2d(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 2, new[] { MatType.CV_64FC2 });
+            unsafe
+            {
+                fixed (Point2d* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetPoint2d(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3656,8 +3831,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Point3i[] data)
         {
-            CheckArgumentsForConvert(row, col, data, 3, MatType.CV_32SC3);
-            NativeMethods.core_Mat_nGetPoint3i(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_32SC3 });
+            unsafe
+            {
+                fixed (Point3i* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetPoint3i(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3668,8 +3850,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Point3i[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, 3, MatType.CV_32SC3);
-            NativeMethods.core_Mat_nGetPoint3i(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_32SC3 });
+            unsafe
+            {
+                fixed (Point3i* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetPoint3i(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
 
@@ -3681,8 +3870,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Point3f[] data)
         {
-            CheckArgumentsForConvert(row, col, data, 3, MatType.CV_32FC3);
-            NativeMethods.core_Mat_nGetPoint3f(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_32FC3 });
+            unsafe
+            {
+                fixed (Point3f* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetPoint3f(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3693,8 +3889,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Point3f[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, 3, MatType.CV_32FC3);
-            NativeMethods.core_Mat_nGetPoint3f(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_32FC3 });
+            unsafe
+            {
+                fixed (Point3f* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetPoint3f(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3705,8 +3908,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Point3d[] data)
         {
-            CheckArgumentsForConvert(row, col, data, 3, MatType.CV_64FC3);
-            NativeMethods.core_Mat_nGetPoint3d(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_64FC3 });
+            unsafe
+            {
+                fixed (Point3d* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetPoint3d(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3717,8 +3927,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Point3d[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, 3, MatType.CV_64FC3);
-            NativeMethods.core_Mat_nGetPoint3d(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_64FC3 });
+            unsafe
+            {
+                fixed (Point3d* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetPoint3d(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3729,8 +3946,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Rect[] data)
         {
-            CheckArgumentsForConvert(row, col, data, 4, MatType.CV_32SC4);
-            NativeMethods.core_Mat_nGetRect(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 4, new[] { MatType.CV_32SC4 });
+            unsafe
+            {
+                fixed (Rect* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetRect(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3741,8 +3965,15 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, Rect[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, 4, MatType.CV_32SC4);
-            NativeMethods.core_Mat_nGetRect(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 4, new[] { MatType.CV_32SC4 });
+            unsafe
+            {
+                fixed (Rect* pData = data)
+                {
+                    NativeMethods.core_Mat_nGetRect(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3753,12 +3984,19 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, DMatch[] data)
         {
-            CheckArgumentsForConvert(row, col, data);
-            Vec4f[] dataV = new Vec4f[data.Length];
-            NativeMethods.core_Mat_nGetVec4f(ptr, row, col, dataV, dataV.Length);
-            for (int i = 0; i < data.Length; i++)
+            CheckArgumentsForConvert(row, col, data, 4, null);
+            unsafe
             {
-                data[i] = (DMatch) dataV[i];
+                Vec4f[] dataV = new Vec4f[data.Length];
+                fixed (Vec4f* pData = dataV)
+                {
+                    NativeMethods.core_Mat_nGetVec4f(ptr, row, col, pData, dataV.Length);
+                    GC.KeepAlive(this);
+                    for (int i = 0; i < data.Length; i++)
+                    {
+                        data[i] = (DMatch)dataV[i];
+                    }
+                }
             }
         }
 
@@ -3770,16 +4008,23 @@ namespace OpenCvHololens
         /// <param name="data"></param>
         public void GetArray(int row, int col, DMatch[,] data)
         {
-            CheckArgumentsForConvert(row, col, data);
+            CheckArgumentsForConvert(row, col, data, 4, null);
             int dim0 = data.GetLength(0);
             int dim1 = data.GetLength(1);
-            Vec4f[,] dataV = new Vec4f[dim0, dim1];
-            NativeMethods.core_Mat_nGetVec4f(ptr, row, col, dataV, dataV.Length);
-            for (int i = 0; i < dim0; i++)
+            unsafe
             {
-                for (int j = 0; j < dim1; j++)
+                Vec4f[,] dataV = new Vec4f[dim0, dim1];
+                fixed (Vec4f* pData = dataV)
                 {
-                    data[i, j] = (DMatch) dataV[i, j];
+                    NativeMethods.core_Mat_nGetVec4f(ptr, row, col, pData, dataV.Length);
+                    GC.KeepAlive(this);
+                    for (int i = 0; i < dim0; i++)
+                    {
+                        for (int j = 0; j < dim1; j++)
+                        {
+                            data[i, j] = (DMatch)dataV[i, j];
+                        }
+                    }
                 }
             }
         }
