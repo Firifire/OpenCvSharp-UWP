@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
 #pragma warning disable 1591
 // ReSharper disable InconsistentNaming

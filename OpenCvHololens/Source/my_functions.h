@@ -26,7 +26,7 @@ static int p(T obj, const std::string &caption = "MessageBox")
 
 
 
-#if defined WIN32 || defined false
+#if defined WIN32 || defined _WIN32
 #  define CV_CDECL __cdecl
 #  define CV_STDCALL __stdcall
 #else

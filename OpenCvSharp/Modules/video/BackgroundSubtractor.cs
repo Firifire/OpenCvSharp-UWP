@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// The Base Class for Background/Foreground Segmentation.

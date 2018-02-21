@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
-using OpenCvSharp.Util;
+using OpenCvHololens.Util;
 
 // ReSharper disable InconsistentNaming
 #pragma warning disable 1591
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// P/Invoke methods of OpenCV 2.x C++ interface

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvSharp.Gpu
+namespace OpenCvHololens.Gpu
 {
     /// <summary>
     /// An abstract class in GPU module that implements DisposableCvObject

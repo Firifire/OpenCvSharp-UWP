@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// Contrast Limited Adaptive Histogram Equalization

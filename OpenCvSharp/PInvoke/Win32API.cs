@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 #pragma warning disable 1591
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// Win32API Wrapper

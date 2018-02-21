@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvSharp.Util;
+using OpenCvHololens.Util;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// A matrix whose element is cv::Point3d [CV_64FC3] (cv::Mat_&lt;cv::Point3d&gt;)

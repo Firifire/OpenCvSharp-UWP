@@ -2,7 +2,7 @@
 
 // ReSharper disable InconsistentNaming
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// OpenCV Functions of C++ I/F (cv::xxx) 

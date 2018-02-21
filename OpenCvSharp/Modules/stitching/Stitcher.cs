@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using OpenCvSharp.Detail;
-using OpenCvSharp.Util;
+using OpenCvHololens.Detail;
+using OpenCvHololens.Util;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
 #pragma warning disable 1591
     // ReSharper disable InconsistentNaming

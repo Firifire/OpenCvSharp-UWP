@@ -1,4 +1,4 @@
-namespace OpenCvSharp.Gpu
+namespace OpenCvHololens.Gpu
 {
     /// <summary>
     /// 

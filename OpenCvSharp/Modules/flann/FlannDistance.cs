@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenCvSharp.Flann
+namespace OpenCvHololens.Flann
 {
 #pragma warning disable 1591
 // ReSharper disable InconsistentNaming

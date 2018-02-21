@@ -2,7 +2,7 @@
 
 #pragma warning disable 1591
 
-namespace OpenCvSharp.Util
+namespace OpenCvHololens.Util
 {
     internal enum OS
     {

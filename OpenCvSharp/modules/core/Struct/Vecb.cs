@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// 2-Tuple of byte (System.Byte)

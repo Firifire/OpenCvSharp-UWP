@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// Ballard, D.H. (1981). Generalizing the Hough transform to detect arbitrary shapes. 

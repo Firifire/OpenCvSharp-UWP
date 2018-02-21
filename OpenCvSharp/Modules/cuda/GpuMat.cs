@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace OpenCvSharp.Gpu
+namespace OpenCvHololens.Gpu
 {
 //#if LANG_JP
 //    /// <summary>

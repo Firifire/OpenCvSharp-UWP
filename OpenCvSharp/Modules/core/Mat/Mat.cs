@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
-using OpenCvSharp.Util;
+using OpenCvHololens.Util;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// OpenCV C++ n-dimensional dense array class (cv::Mat)
@@ -3796,8 +3796,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params byte[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_8U);
-            NativeMethods.core_Mat_nSetB(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_8UC1 });
+            unsafe
+            {
+                fixed (byte* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetB(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3808,8 +3815,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, byte[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_8U);
-            NativeMethods.core_Mat_nSetB(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_8UC1 });
+            unsafe
+            {
+                fixed (byte* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetB(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3820,8 +3834,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params short[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_16S, MatType.CV_16U);
-            NativeMethods.core_Mat_nSetS(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_16SC1, MatType.CV_16UC1 });
+            unsafe
+            {
+                fixed (short* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetS(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3832,8 +3853,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, short[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_16S, MatType.CV_16U);
-            NativeMethods.core_Mat_nSetS(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_16SC1, MatType.CV_16UC1 });
+            unsafe
+            {
+                fixed (short* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetS(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3844,8 +3872,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params ushort[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_16S, MatType.CV_16U);
-            NativeMethods.core_Mat_nSetS(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_16SC1, MatType.CV_16UC1 });
+            unsafe
+            {
+                fixed (ushort* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetS(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3856,8 +3891,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, ushort[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_16S, MatType.CV_16U);
-            NativeMethods.core_Mat_nSetS(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_16SC1, MatType.CV_16UC1 });
+            unsafe
+            {
+                fixed (ushort* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetS(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3868,8 +3910,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params int[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32S);
-            NativeMethods.core_Mat_nSetI(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_32SC1 });
+            unsafe
+            {
+                fixed (int* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetI(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3880,8 +3929,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, int[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32S);
-            NativeMethods.core_Mat_nSetI(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_32SC1 });
+            unsafe
+            {
+                fixed (int* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetI(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3892,8 +3948,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params float[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32F);
-            NativeMethods.core_Mat_nSetF(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_32FC1 });
+            unsafe
+            {
+                fixed (float* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetF(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3904,8 +3967,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, float[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32F);
-            NativeMethods.core_Mat_nSetF(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_32FC1 });
+            unsafe
+            {
+                fixed (float* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetF(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3916,8 +3986,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params double[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_64F);
-            NativeMethods.core_Mat_nSetD(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_64FC1 });
+            unsafe
+            {
+                fixed (double* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetD(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3928,8 +4005,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, double[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_64F);
-            NativeMethods.core_Mat_nSetD(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 1, new[] { MatType.CV_64FC1 });
+            unsafe
+            {
+                fixed (double* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetD(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3940,8 +4024,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params Vec3b[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_8UC3);
-            NativeMethods.core_Mat_nSetVec3b(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_8UC3 });
+            unsafe
+            {
+                fixed (Vec3b* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetVec3b(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3952,8 +4043,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, Vec3b[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_8UC3);
-            NativeMethods.core_Mat_nSetVec3b(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_8UC3 });
+            unsafe
+            {
+                fixed (Vec3b* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetVec3b(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3964,8 +4062,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params Vec3d[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_64FC3);
-            NativeMethods.core_Mat_nSetVec3d(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_64FC3 });
+            unsafe
+            {
+                fixed (Vec3d* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetVec3d(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3976,8 +4081,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, Vec3d[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_64FC3);
-            NativeMethods.core_Mat_nSetVec3d(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_64FC3 });
+            unsafe
+            {
+                fixed (Vec3d* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetVec3d(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -3988,8 +4100,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params Vec4f[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32FC4);
-            NativeMethods.core_Mat_nSetVec4f(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 4, new[] { MatType.CV_32FC4 });
+            unsafe
+            {
+                fixed (Vec4f* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetVec4f(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4000,8 +4119,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, Vec4f[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32FC4);
-            NativeMethods.core_Mat_nSetVec4f(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 4, new[] { MatType.CV_32FC4 });
+            unsafe
+            {
+                fixed (Vec4f* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetVec4f(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4012,8 +4138,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params Vec6f[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32FC(6));
-            NativeMethods.core_Mat_nSetVec6f(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 6, new[] { MatType.CV_32FC(6) });
+            unsafe
+            {
+                fixed (Vec6f* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetVec6f(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4024,8 +4157,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, Vec6f[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32FC(6));
-            NativeMethods.core_Mat_nSetVec6f(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 6, new[] { MatType.CV_32FC(6) });
+            unsafe
+            {
+                fixed (Vec6f* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetVec6f(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4036,8 +4176,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params Vec4i[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32SC4);
-            NativeMethods.core_Mat_nSetVec4i(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 4, new[] { MatType.CV_32SC4 });
+            unsafe
+            {
+                fixed (Vec4i* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetVec4i(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4048,8 +4195,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, Vec4i[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32SC4);
-            NativeMethods.core_Mat_nSetVec4i(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 2, new[] { MatType.CV_32SC4 });
+            unsafe
+            {
+                fixed (Vec4i* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetVec4i(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4060,8 +4214,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params Point[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32SC2);
-            NativeMethods.core_Mat_nSetPoint(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 2, new[] { MatType.CV_32SC2 });
+            unsafe
+            {
+                fixed (Point* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetPoint(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4072,8 +4233,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, Point[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32SC2);
-            NativeMethods.core_Mat_nSetPoint(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 2, new[] { MatType.CV_32SC2 });
+            unsafe
+            {
+                fixed (Point* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetPoint(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4084,8 +4252,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params Point2f[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32FC2);
-            NativeMethods.core_Mat_nSetPoint2f(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 2, new[] { MatType.CV_32FC2 });
+            unsafe
+            {
+                fixed (Point2f* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetPoint2f(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4096,8 +4271,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, Point2f[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32FC2);
-            NativeMethods.core_Mat_nSetPoint2f(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 2, new[] { MatType.CV_32FC2 });
+            unsafe
+            {
+                fixed (Point2f* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetPoint2f(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4108,8 +4290,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params Point2d[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_64FC2);
-            NativeMethods.core_Mat_nSetPoint2d(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 2, new[] { MatType.CV_64FC2 });
+            unsafe
+            {
+                fixed (Point2d* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetPoint2d(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4120,8 +4309,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, Point2d[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_64FC2);
-            NativeMethods.core_Mat_nSetPoint2d(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 2, new[] { MatType.CV_64FC2 });
+            unsafe
+            {
+                fixed (Point2d* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetPoint2d(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4132,8 +4328,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params Point3i[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32SC3);
-            NativeMethods.core_Mat_nSetPoint3i(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_32SC3 });
+            unsafe
+            {
+                fixed (Point3i* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetPoint3i(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4144,8 +4347,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, Point3i[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32SC3);
-            NativeMethods.core_Mat_nSetPoint3i(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_32SC3 });
+            unsafe
+            {
+                fixed (Point3i* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetPoint3i(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4156,8 +4366,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params Point3f[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32FC3);
-            NativeMethods.core_Mat_nSetPoint3f(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_32FC3 });
+            unsafe
+            {
+                fixed (Point3f* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetPoint3f(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4168,8 +4385,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, Point3f[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32FC3);
-            NativeMethods.core_Mat_nSetPoint3f(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_32FC3 });
+            unsafe
+            {
+                fixed (Point3f* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetPoint3f(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4180,8 +4404,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params Point3d[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_64FC3);
-            NativeMethods.core_Mat_nSetPoint3d(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_64FC3 });
+            unsafe
+            {
+                fixed (Point3d* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetPoint3d(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4192,10 +4423,16 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, Point3d[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_64FC3);
-            NativeMethods.core_Mat_nSetPoint3d(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 3, new[] { MatType.CV_64FC3 });
+            unsafe
+            {
+                fixed (Point3d* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetPoint3d(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
-
 
         /// <summary>
         /// Set the specified array data to this matrix
@@ -4205,8 +4442,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params Rect[] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32SC4);
-            NativeMethods.core_Mat_nSetRect(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 4, new[] { MatType.CV_32SC4 });
+            unsafe
+            {
+                fixed (Rect* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetRect(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4217,8 +4461,15 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, Rect[,] data)
         {
-            CheckArgumentsForConvert(row, col, data, MatType.CV_32SC4);
-            NativeMethods.core_Mat_nSetRect(ptr, row, col, data, data.Length);
+            CheckArgumentsForConvert(row, col, data, 4, new[] { MatType.CV_32SC4 });
+            unsafe
+            {
+                fixed (Rect* pData = data)
+                {
+                    NativeMethods.core_Mat_nSetRect(ptr, row, col, pData, data.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4229,12 +4480,16 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, params DMatch[] data)
         {
-            CheckArgumentsForConvert(row, col, data);
-            Vec4f[] dataV = EnumerableEx.SelectToArray(data, delegate(DMatch d)
+            CheckArgumentsForConvert(row, col, data, 4, null);
+            Vec4f[] dataV = EnumerableEx.SelectToArray(data, d => (Vec4f)d);
+            unsafe
             {
-                return (Vec4f) d;
-            });
-            NativeMethods.core_Mat_nSetVec4f(ptr, row, col, dataV, dataV.Length);
+                fixed (Vec4f* pData = dataV)
+                {
+                    NativeMethods.core_Mat_nSetVec4f(ptr, row, col, pData, dataV.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         /// <summary>
@@ -4245,12 +4500,16 @@ namespace OpenCvSharp
         /// <param name="data"></param>
         public void SetArray(int row, int col, DMatch[,] data)
         {
-            CheckArgumentsForConvert(row, col, data);
-            Vec4f[] dataV = EnumerableEx.SelectToArray(data, delegate(DMatch d)
+            CheckArgumentsForConvert(row, col, data, 4, null);
+            Vec4f[] dataV = EnumerableEx.SelectToArray(data, (DMatch d) => (Vec4f)d);
+            unsafe
             {
-                return (Vec4f) d;
-            });
-            NativeMethods.core_Mat_nSetVec4f(ptr, row, col, dataV, dataV.Length);
+                fixed (Vec4f* pData = dataV)
+                {
+                    NativeMethods.core_Mat_nSetVec4f(ptr, row, col, pData, dataV.Length);
+                    GC.KeepAlive(this);
+                }
+            }
         }
 
         #endregion

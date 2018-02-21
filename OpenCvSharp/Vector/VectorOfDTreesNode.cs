@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using OpenCvSharp.Util;
-using OpenCvSharp.ML;
+using OpenCvHololens.Util;
+using OpenCvHololens.ML;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// 

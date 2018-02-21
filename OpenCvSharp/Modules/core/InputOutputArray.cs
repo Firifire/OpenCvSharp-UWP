@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
-using OpenCvSharp;
+using OpenCvHololens;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// Proxy datatype for passing Mat's and vector&lt;&gt;'s as input parameters.

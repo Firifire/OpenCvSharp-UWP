@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvSharp.Face;
-using OpenCvSharp.ML;
-using OpenCvSharp.XFeatures2D;
+using OpenCvHololens.Face;
+using OpenCvHololens.ML;
+using OpenCvHololens.XFeatures2D;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// Template class for smart reference-counting pointers

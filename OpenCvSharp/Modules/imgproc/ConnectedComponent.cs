@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using OpenCvSharp.Util;
+using OpenCvHololens.Util;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// connected components that is returned from Cv2.ConnectedComponentsEx

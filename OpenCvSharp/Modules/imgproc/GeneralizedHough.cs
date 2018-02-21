@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// finds arbitrary template in the grayscale image using Generalized Hough Transform

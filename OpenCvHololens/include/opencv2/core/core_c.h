@@ -122,7 +122,7 @@ This function call is equivalent to the following code:
 @param channels Number of channels per pixel. See IplImage for details. This function only creates
 images with interleaved channels.
  */
-OldAPI(IplImage*)  cvCreateImage( CvSize size, int depth, int channels );
+CVAPI(IplImage*)  cvCreateImage( CvSize size, int depth, int channels );
 
 /** @brief Deallocates an image header.
 

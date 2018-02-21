@@ -1,7 +1,7 @@
 ﻿using System;
-using OpenCvSharp.Util;
+using OpenCvHololens.Util;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// 

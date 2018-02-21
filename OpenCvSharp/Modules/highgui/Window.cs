@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using OpenCvSharp.Util;
+using OpenCvHololens.Util;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
 #if LANG_JP
     /// <summary>
@@ -327,7 +327,7 @@ namespace OpenCvSharp
             get
             {
                 throw new NotImplementedException();
-                //return OpenCvSharp.NativeMethods.cvGetWindowHandle(name);
+                //return OpenCvHololens.NativeMethods.cvGetWindowHandle(name);
             }
         }
 
@@ -397,7 +397,7 @@ namespace OpenCvSharp
             get
             {
                 throw new NotImplementedException();
-                //return OpenCvSharp.NativeMethods.HasQt;
+                //return OpenCvHololens.NativeMethods.HasQt;
             }
         }
 

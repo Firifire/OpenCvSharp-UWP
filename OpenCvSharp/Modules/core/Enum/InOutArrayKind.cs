@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
 #pragma warning disable 1591
 

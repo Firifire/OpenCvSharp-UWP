@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvSharp.Gpu;
+using OpenCvHololens.Gpu;
 using System.Reflection;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// Proxy datatype for passing Mat's and vector&lt;&gt;'s as input parameters

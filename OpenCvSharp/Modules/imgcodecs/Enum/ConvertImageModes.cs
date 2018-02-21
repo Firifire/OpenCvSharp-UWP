@@ -1,5 +1,5 @@
 ﻿
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// 

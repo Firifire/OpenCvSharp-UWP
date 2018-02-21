@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvSharp.Flann;
-using OpenCvSharp.Util;
+using OpenCvHololens.Flann;
+using OpenCvHololens.Util;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     // ReSharper disable once InconsistentNaming
 

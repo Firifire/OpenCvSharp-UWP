@@ -1,5 +1,5 @@
 ﻿
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     // ReSharper disable InconsistentNaming
 

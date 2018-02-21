@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// Guil, N., González-Linares, J.M. and Zapata, E.L. (1999). 

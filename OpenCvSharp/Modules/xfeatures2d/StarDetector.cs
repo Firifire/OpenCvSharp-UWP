@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvSharp.XFeatures2D
+namespace OpenCvHololens.XFeatures2D
 {
 #if LANG_JP
     /// <summary>

@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using OpenCvSharp.Util;
+using OpenCvHololens.Util;
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// A matrix whose element is 32FC6 (cv::Mat_&lt;cv::Vec6f&gt;)

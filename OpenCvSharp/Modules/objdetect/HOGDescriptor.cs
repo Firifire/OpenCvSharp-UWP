@@ -2,7 +2,7 @@
 
 // ReSharper disable InconsistentNaming
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
 #if LANG_JP
     /// <summary>

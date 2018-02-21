@@ -1,9 +1,9 @@
 ﻿using System;
-using OpenCvSharp.ML;
+using OpenCvHololens.ML;
 
 // ReSharper disable once InconsistentNaming
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
 #if LANG_JP
     /// <summary>

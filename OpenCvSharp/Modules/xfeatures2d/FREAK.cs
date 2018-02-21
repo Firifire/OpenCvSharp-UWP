@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvSharp.Util;
+using OpenCvHololens.Util;
 
 // ReSharper disable once InconsistentNaming
 
-namespace OpenCvSharp.XFeatures2D
+namespace OpenCvHololens.XFeatures2D
 {
 #if LANG_JP
     /// <summary>

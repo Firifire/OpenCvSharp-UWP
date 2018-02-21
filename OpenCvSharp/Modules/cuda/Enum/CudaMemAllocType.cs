@@ -1,6 +1,6 @@
 using System;
 
-namespace OpenCvSharp.Gpu
+namespace OpenCvHololens.Gpu
 {
 #pragma warning disable 1591
 

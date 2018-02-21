@@ -2,7 +2,7 @@
 
 // ReSharper disable InconsistentNaming
 
-namespace OpenCvSharp
+namespace OpenCvHololens
 {
     /// <summary>
     /// Class for grouping object candidates, detected by Cascade Classifier, HOG etc.
