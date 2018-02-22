@@ -13,6 +13,7 @@ I have not tried it, but it may be compatible with UWP in general.
 When installing the Nuget: **Dont Overwrite anything**
 [Microsoft.NETCore.UniversalWindowsPlatform Nuget](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/5.0.0)  (v5.0.0 recommended for Unity compatiblity)  
 
+For Unity, copy all the built dll to the plugins folder
 
 ## Usage
 Plese refer to [OpenCvSharp](https://github.com/shimat/opencvsharp/)
