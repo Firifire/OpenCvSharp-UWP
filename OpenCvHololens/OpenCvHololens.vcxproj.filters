@@ -14,134 +14,134 @@
     <Filter Include="include">
       <UniqueIdentifier>{6cbbefde-afcc-4aa4-8dfb-75eadf9098cb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\opencv">
-      <UniqueIdentifier>{1a745813-a204-4352-9ab1-c04d7e391cc3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="include\opencv2">
       <UniqueIdentifier>{db11c435-01ca-4355-ac2d-e368cf3edf59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\xphoto">
-      <UniqueIdentifier>{4fbc73e6-334c-4147-96e8-ff9a0e0aca7e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\ximgproc">
-      <UniqueIdentifier>{5c2925db-d915-45c6-800c-6c505aa016a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\xfeatures2d">
-      <UniqueIdentifier>{704e5bc9-27c0-40bb-acef-dd3aa3fa27ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\video">
-      <UniqueIdentifier>{d237caa9-a88b-4030-ac5b-3d43550a5275}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\videostab">
-      <UniqueIdentifier>{2831d069-55a8-4ee8-939e-9421daa0c484}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\videoio">
-      <UniqueIdentifier>{1f1e5a3d-4bf5-474e-9553-cc9e643cb74c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\tracking">
-      <UniqueIdentifier>{94d96bae-6d25-4f06-8ccc-ece075db29f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\text">
-      <UniqueIdentifier>{4d99c08a-4961-45b9-8b3f-0c97c07db468}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\surface_matching">
-      <UniqueIdentifier>{2ebfcc76-6ea8-43f2-9849-2d6db80a8b9c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\structured_light">
-      <UniqueIdentifier>{33d52336-8c07-4eeb-8589-f35a26d5b9eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\stitching">
-      <UniqueIdentifier>{1a6c3197-c905-426d-93bc-8d1bd3b4a928}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\stitching\detail">
-      <UniqueIdentifier>{78d7beee-dfbd-4ceb-b5d9-545aeba9e1f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\stereo">
-      <UniqueIdentifier>{dee69b34-9b33-4e89-986c-88dfe7745d81}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\shape">
-      <UniqueIdentifier>{9d79e7d2-446f-43fa-9c61-f7d68752f458}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\saliency">
-      <UniqueIdentifier>{4f0b5808-bd06-40cf-819b-e9a03226f3d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\rgbd">
-      <UniqueIdentifier>{5a179f92-9633-4b9c-831d-23cde7032fac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\reg">
-      <UniqueIdentifier>{b5193175-8f4a-474a-a045-7a3652115068}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\photo">
-      <UniqueIdentifier>{dccedc33-f13d-463f-a174-a1421f60a8fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\phase_unwrapping">
-      <UniqueIdentifier>{0557e277-cf38-484e-b796-2e2fd882ca1d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\optflow">
-      <UniqueIdentifier>{9719c8cf-3df2-4a16-bf70-1c492f0e825f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\objdetect">
-      <UniqueIdentifier>{a8c7dd7a-3eb5-4ea0-acd3-da08fbce1a2b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\ml">
-      <UniqueIdentifier>{5dd98252-60c4-425f-b9a2-7653bb7bc12c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\line_descriptor">
-      <UniqueIdentifier>{69cfc861-5925-4aad-90f0-dd6730b81d5b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\imgproc">
-      <UniqueIdentifier>{6a766a54-81a7-4347-bd8f-a508c51eac21}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\imgproc\hal">
-      <UniqueIdentifier>{b7e236df-986d-48b9-9039-081c0c592e43}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\imgproc\detail">
-      <UniqueIdentifier>{f520a3e2-d249-4d9e-9288-f71995747240}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\imgcodecs">
-      <UniqueIdentifier>{a198521e-f8d5-4028-a6cb-667e03f59b91}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\highgui">
-      <UniqueIdentifier>{861afec4-4836-4418-b064-d3cb17dd0ca0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\fuzzy">
-      <UniqueIdentifier>{abdc567d-2ac7-47d6-b878-9d5316832064}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\flann">
-      <UniqueIdentifier>{588948bb-3e32-461a-98d4-3ff2ae525609}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\features2d">
-      <UniqueIdentifier>{23f1d7cd-10e2-4bb3-9810-25e73d533363}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\face">
-      <UniqueIdentifier>{f9faf58e-80aa-4afc-9600-0a7c7b788f12}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\opencv2\datasets">
-      <UniqueIdentifier>{95ec90ae-7721-4afd-9bc5-a3def2070842}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\opencv2\core">
       <UniqueIdentifier>{ac39ebe3-69c5-48f9-a934-bc75f14e056e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\opencv">
+      <UniqueIdentifier>{d3552b03-5dd4-47aa-b35c-7f8f6e0c958a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\xphoto">
+      <UniqueIdentifier>{59219d41-0ce4-408d-9519-03228eee74b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\ximgproc">
+      <UniqueIdentifier>{506e0ac3-eb97-48f7-81d1-c17bf323c277}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\xfeatures2d">
+      <UniqueIdentifier>{6ac91dd8-ba74-4466-8fd0-7c2f42e5ec2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\video">
+      <UniqueIdentifier>{4739f06b-82f2-4be8-8907-16a5b0cb13d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\videostab">
+      <UniqueIdentifier>{f67fb157-a1cd-4ceb-802c-71511651f29e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\videoio">
+      <UniqueIdentifier>{60a2d8aa-4495-4b60-91b9-e284deb867bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\tracking">
+      <UniqueIdentifier>{d8cebde1-86fe-4ff0-a0f3-8fcf6f963108}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\text">
+      <UniqueIdentifier>{dff7809c-1a90-4ffc-b4f5-f52d4c6f1180}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\surface_matching">
+      <UniqueIdentifier>{29f30f3f-8886-4708-9324-96dbbd1f0132}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\structured_light">
+      <UniqueIdentifier>{1625579a-9256-4445-9c11-2a7af2642bbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\stitching">
+      <UniqueIdentifier>{6ff29cae-5114-4f46-bc2e-aae089451a8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\stitching\detail">
+      <UniqueIdentifier>{a62c3b30-6fb6-45ca-b0c0-5143446e9f5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\stereo">
+      <UniqueIdentifier>{919802e3-cd83-4bd3-b06e-0b5b67c19f62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\shape">
+      <UniqueIdentifier>{096d899b-a819-4ac6-992e-4206a5d8b2ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\saliency">
+      <UniqueIdentifier>{4b28c4a8-5026-4d26-93c6-c567372ff195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\rgbd">
+      <UniqueIdentifier>{5d0aaadb-f3c1-4c3e-89f5-171fd3bd723f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\reg">
+      <UniqueIdentifier>{c7627ece-2f12-4a08-a316-5a202f519c49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\photo">
+      <UniqueIdentifier>{ea0a4d55-4457-4701-b595-a259b85bfafe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\phase_unwrapping">
+      <UniqueIdentifier>{6544f7ce-d221-47a8-bd0b-e6187bef5ec5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\optflow">
+      <UniqueIdentifier>{12ef908d-a84a-4af1-b0fa-51028b421507}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\objdetect">
+      <UniqueIdentifier>{08fc9fb5-be2d-4696-97ae-c70b2619d2dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\ml">
+      <UniqueIdentifier>{e012a81d-7808-484d-8f57-d0ab38e82dd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\line_descriptor">
+      <UniqueIdentifier>{ce1169d1-c373-410b-8b9b-ed629082b61c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\imgproc">
+      <UniqueIdentifier>{86045c1b-2081-4ac5-a73c-2a81ffd3201c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\imgproc\hal">
+      <UniqueIdentifier>{ddd80ae9-2a3c-40b0-aad5-0854a99ee3ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\imgproc\detail">
+      <UniqueIdentifier>{6367442a-3b3d-4461-984c-3093b1cffec9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\imgcodecs">
+      <UniqueIdentifier>{18842d71-a9f9-40df-bcc6-7b88bbfbbd46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\highgui">
+      <UniqueIdentifier>{e0ceebc5-5c04-4a2d-b882-faf33df27490}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\fuzzy">
+      <UniqueIdentifier>{0d44660e-1703-4aae-b177-b9180fe9c445}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\flann">
+      <UniqueIdentifier>{3eaa1999-5647-46f0-a68b-053239872cce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\features2d">
+      <UniqueIdentifier>{0e29480e-8c65-45d5-85a2-81d79c4cdafb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\face">
+      <UniqueIdentifier>{c6fcb64e-4b87-4a34-9b57-fa90b5ad85fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\opencv2\datasets">
+      <UniqueIdentifier>{cb44b61b-3265-49bf-931a-712a0476e1d5}</UniqueIdentifier>
+    </Filter>
     <Filter Include="include\opencv2\core\hal">
-      <UniqueIdentifier>{fd9681df-afd9-48ae-907b-caac4456244d}</UniqueIdentifier>
+      <UniqueIdentifier>{2ae64e5c-6bcc-4651-9d3c-cbac80246505}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\opencv2\core\cuda">
-      <UniqueIdentifier>{6dc750ab-9e39-415e-9f27-27d755945c0b}</UniqueIdentifier>
+      <UniqueIdentifier>{084851f6-c3ba-4e2c-9255-785454828c1b}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\opencv2\core\cuda\detail">
-      <UniqueIdentifier>{e933d427-188f-4441-a7dc-00eef942da71}</UniqueIdentifier>
+      <UniqueIdentifier>{263933f4-8f29-4565-b5fd-fab4b4e8bd8c}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\opencv2\ccalib">
-      <UniqueIdentifier>{686d7b6b-fb59-46fa-9700-92f0cd0999a0}</UniqueIdentifier>
+      <UniqueIdentifier>{25223e39-704c-40af-b5a0-b5c910cf65a3}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\opencv2\calib3d">
-      <UniqueIdentifier>{361accf4-1756-403e-8cd7-39616923b81c}</UniqueIdentifier>
+      <UniqueIdentifier>{d407e3bd-ef3f-4b0f-9ebd-ccce915ee383}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\opencv2\bioinspired">
-      <UniqueIdentifier>{da1c3fb0-733f-4175-8b8c-ea73a16a892c}</UniqueIdentifier>
+      <UniqueIdentifier>{0fc589cb-0ce9-46f4-b50f-6de0d83edd25}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\opencv2\aruco">
-      <UniqueIdentifier>{cd6dfe86-4320-4dbf-b16b-ef216450bb9b}</UniqueIdentifier>
+      <UniqueIdentifier>{c2bbbd91-d741-4c06-8f6c-423f12988f1f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -421,6 +421,9 @@
     </ClInclude>
     <ClInclude Include="Source\core_Algorithm.h">
       <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\opencv2\core\types_c.h">
+      <Filter>include\opencv2\core</Filter>
     </ClInclude>
     <ClInclude Include="include\opencv\ml.h">
       <Filter>include\opencv</Filter>
@@ -1134,9 +1137,6 @@
       <Filter>include\opencv2\core</Filter>
     </ClInclude>
     <ClInclude Include="include\opencv2\core\utility.hpp">
-      <Filter>include\opencv2\core</Filter>
-    </ClInclude>
-    <ClInclude Include="include\opencv2\core\types_c.h">
       <Filter>include\opencv2\core</Filter>
     </ClInclude>
     <ClInclude Include="include\opencv2\core\types.hpp">
