@@ -10,7 +10,7 @@ I have not tried it, but it may be compatible with UWP in general.
 
 ## Dependencies
 [OpenCV-Hololens Nuget](https://www.nuget.org/packages/OpenCV-Hololens/)
-
+When installing the Nuget: **Dont Overwrite anything**
 [Microsoft.NETCore.UniversalWindowsPlatform Nuget](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/5.0.0)  (v5.0.0 recommended for Unity compatiblity)  
 
 
