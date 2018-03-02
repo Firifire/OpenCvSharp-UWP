@@ -70,5 +70,12 @@ namespace OpenCvHololens
         
         [DllImport(DllExtern)]
         public static extern IntPtr ml_Ptr_DTrees_get(IntPtr obj);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr ml_DTrees_load(string filePath);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr ml_DTrees_loadFromString(string strModel);
+
     }
 }

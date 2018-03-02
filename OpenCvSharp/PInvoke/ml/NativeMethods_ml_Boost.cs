@@ -30,5 +30,11 @@ namespace OpenCvHololens
 
         [DllImport(DllExtern)]
         public static extern IntPtr ml_Ptr_Boost_get(IntPtr obj);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr ml_Boost_load(string filePath);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr ml_Boost_loadFromString(string strModel);
     }
 }

@@ -92,8 +92,6 @@ namespace OpenCvHololens
             IntPtr obj, IntPtr i0, IntPtr i1, IntPtr flow);
         [DllImport(DllExtern)]
         public static extern void video_DenseOpticalFlow_collectGarbage(IntPtr obj);
-        [DllImport(DllExtern)]
-        public static extern IntPtr video_DenseOpticalFlow_info(IntPtr obj);
 
         // TODO
         [DllImport(DllExtern)]

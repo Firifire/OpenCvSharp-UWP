@@ -47,7 +47,7 @@ namespace OpenCvHololens
         /// <returns>Filtered image.</returns>
         public Mat FilterByLabel(Mat src, Mat dst, int labelValue)
         {
-            return FilterByLabels(src, dst, new[] {labelValue});
+            return FilterByLabels(src, dst, new[] { labelValue });
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace OpenCvHololens
         /// <returns>Filtered image.</returns>
         public Mat FilterByBlob(Mat src, Mat dst, Blob blob)
         {
-            return FilterByLabels(src, dst, new[] {blob.Label});
+            return FilterByLabels(src, dst, new[] { blob.Label });
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace OpenCvHololens
         /// <param name="img">The target image to be drawn.</param>
         public void RenderBlobs(Mat img)
         {
-            if (img == null) 
+            if (img == null)
                 throw new ArgumentNullException(nameof(img));
             /*
             if (img.Empty())
@@ -128,9 +128,9 @@ namespace OpenCvHololens
             if (img.Type() != MatType.CV_8UC3)
                 throw new ArgumentException("img must be CV_8UC3");*/
             if (Blobs == null || Blobs.Count == 0)
-                throw new OpenCvSharpException("Blobs is empty");
+                throw new OpenCvHololensException("Blobs is empty");
             if (Labels == null)
-                throw new OpenCvSharpException("Labels is empty");
+                throw new OpenCvHololensException("Labels is empty");
 
             int height = Labels.GetLength(0);
             int width = Labels.GetLength(1);
@@ -142,7 +142,7 @@ namespace OpenCvHololens
             {
                 colors[i] = Scalar.RandomColor();
             }
-            
+
             using (var imgt = new MatOfByte3(img))
             {
                 var indexer = imgt.GetIndexer();
@@ -164,7 +164,7 @@ namespace OpenCvHololens
         public Blob GetLargestBlob()
         {
             if (Blobs == null || Blobs.Count <= 1)
-                throw new OpenCvSharpException("Blobs is empty");
+                throw new OpenCvHololensException("Blobs is empty");
 
             Blob max = Blobs[1];
             for (int i = 2; i < Blobs.Count; i++)

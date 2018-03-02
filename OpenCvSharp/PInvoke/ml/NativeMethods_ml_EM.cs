@@ -50,5 +50,11 @@ namespace OpenCvHololens
         public static extern IntPtr ml_Ptr_EM_get(IntPtr ptr);
         [DllImport(DllExtern)]
         public static extern void ml_Ptr_EM_delete(IntPtr ptr);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr ml_EM_load(string filePath);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr ml_EM_loadFromString(string strModel);
     }
 }

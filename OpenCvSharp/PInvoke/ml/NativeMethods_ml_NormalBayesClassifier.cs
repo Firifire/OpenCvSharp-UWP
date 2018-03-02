@@ -20,5 +20,11 @@ namespace OpenCvHololens
         
         [DllImport(DllExtern)]
         public static extern IntPtr ml_Ptr_NormalBayesClassifier_get(IntPtr obj);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr ml_NormalBayesClassifier_load(string filePath);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr ml_NormalBayesClassifier_loadFromString(string strModel);
     }
 }

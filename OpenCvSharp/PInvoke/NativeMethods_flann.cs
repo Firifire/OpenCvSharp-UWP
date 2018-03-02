@@ -26,7 +26,7 @@ namespace OpenCvHololens
         public static extern void flann_Index_radiusSearch2(IntPtr obj, IntPtr queries, IntPtr indices, IntPtr dists, float radius, int maxResults, IntPtr @params);
         [DllImport(DllExtern)]
         public static extern void flann_Index_radiusSearch3(IntPtr obj, IntPtr queries, [Out] int[] indices, int indicesLength, [Out] float[] dists, int distsLength, float radius, int maxResults, IntPtr @params);
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern void flann_Index_save(IntPtr obj, [MarshalAs(UnmanagedType.LPStr)] string filename);
         //[DllImport(DllExtern)]
         //public static extern int flann_Index_veclen(IntPtr obj);
@@ -39,103 +39,160 @@ namespace OpenCvHololens
         public static extern IntPtr flann_IndexParams_new();
         [DllImport(DllExtern)]
         public static extern void flann_IndexParams_delete(IntPtr obj);
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_IndexParams_new();
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_IndexParams_get(IntPtr ptr);
+        [DllImport(DllExtern)]
+        public static extern void flann_Ptr_IndexParams_delete(IntPtr obj);
+
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern void flann_IndexParams_getString(IntPtr obj, [MarshalAs(UnmanagedType.LPStr)] string key, [MarshalAs(UnmanagedType.LPStr)] string defaultVal, [MarshalAs(UnmanagedType.LPStr)] StringBuilder result);
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern int flann_IndexParams_getInt(IntPtr obj, [MarshalAs(UnmanagedType.LPStr)] string key, int defaultVal);
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern double flann_IndexParams_getDouble(IntPtr obj, [MarshalAs(UnmanagedType.LPStr)] string key, double defaultVal);
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern void flann_IndexParams_setString(IntPtr obj, [MarshalAs(UnmanagedType.LPStr)] string key, [MarshalAs(UnmanagedType.LPStr)] string value);
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern void flann_IndexParams_setInt(IntPtr obj, [MarshalAs(UnmanagedType.LPStr)] string key, int value);
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern void flann_IndexParams_setDouble(IntPtr obj, [MarshalAs(UnmanagedType.LPStr)] string key, double value);
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern void flann_IndexParams_setFloat(IntPtr obj, [MarshalAs(UnmanagedType.LPStr)] string key, float value);
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern void flann_IndexParams_setBool(IntPtr obj, [MarshalAs(UnmanagedType.LPStr)] string key, int value);
         [DllImport(DllExtern)]
         public static extern void flann_IndexParams_setAlgorithm(IntPtr obj, int value);
         #endregion
         #region LinearIndexParams
+
         [DllImport(DllExtern)]
         public static extern IntPtr flann_LinearIndexParams_new();
         [DllImport(DllExtern)]
         public static extern void flann_LinearIndexParams_delete(IntPtr obj);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_LinearIndexParams_new();
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_LinearIndexParams_get(IntPtr ptr);
+        [DllImport(DllExtern)]
+        public static extern void flann_Ptr_LinearIndexParams_delete(IntPtr obj);
+
         #endregion
         #region KDTreeIndexParams
+
         [DllImport(DllExtern)]
         public static extern IntPtr flann_KDTreeIndexParams_new(int trees);
         [DllImport(DllExtern)]
         public static extern void flann_KDTreeIndexParams_delete(IntPtr obj);
-        //[DllImport(DllExtern)]
-        //public static extern unsafe int* flann_KDTreeIndexParams_trees(IntPtr obj);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_KDTreeIndexParams_new(int trees);
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_KDTreeIndexParams_get(IntPtr ptr);
+        [DllImport(DllExtern)]
+        public static extern void flann_Ptr_KDTreeIndexParams_delete(IntPtr obj);
+
         #endregion
         #region KMeansIndexParams
+
         [DllImport(DllExtern)]
         public static extern IntPtr flann_KMeansIndexParams_new(
-            int branching, int iterations, [MarshalAs(UnmanagedType.I4)] FlannCentersInit centers_init, float cb_index);
+            int branching, int iterations, [MarshalAs(UnmanagedType.I4)] FlannCentersInit centersInit, float cbIndex);
         [DllImport(DllExtern)]
         public static extern void flann_KMeansIndexParams_delete(IntPtr obj);
-        //[DllImport(DllExtern)]
-        //public static extern unsafe int* flann_KMeansIndexParams_branching(IntPtr obj);
-        //[DllImport(DllExtern)]
-        //public static extern unsafe int* flann_KMeansIndexParams_iterations(IntPtr obj);
-        //[DllImport(DllExtern)]
-        //public static extern unsafe FlannCentersInit* flann_KMeansIndexParams_centers_init(IntPtr obj);
-        //[DllImport(DllExtern)]
-        //public static extern unsafe float* flann_KMeansIndexParams_cb_index(IntPtr obj);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_KMeansIndexParams_new(
+            int branching, int iterations, [MarshalAs(UnmanagedType.I4)] FlannCentersInit centersInit, float cbIndex);
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_KMeansIndexParams_get(IntPtr ptr);
+        [DllImport(DllExtern)]
+        public static extern void flann_Ptr_KMeansIndexParams_delete(IntPtr obj);
+
+        #endregion
+        #region LshIndexParams
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_LshIndexParams_new(
+            int tableNumber, int keySize, int multiProbeLevel);
+        [DllImport(DllExtern)]
+        public static extern void flann_LshIndexParams_delete(IntPtr obj);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_LshIndexParams_new(
+            int tableNumber, int keySize, int multiProbeLevel);
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_LshIndexParams_get(IntPtr ptr);
+        [DllImport(DllExtern)]
+        public static extern void flann_Ptr_LshIndexParams_delete(IntPtr obj);
+
         #endregion
         #region CompositeIndexParams
+
         [DllImport(DllExtern)]
-        public static extern IntPtr flann_CompositeIndexParams_new(int trees, int branching, int iterations, FlannCentersInit centers_init, float cb_index);
+        public static extern IntPtr flann_CompositeIndexParams_new(int trees, int branching, int iterations, FlannCentersInit centersInit, float cbIndex);
         [DllImport(DllExtern)]
         public static extern void flann_CompositeIndexParams_delete(IntPtr obj);
-        //[DllImport(DllExtern)]
-        //public static extern unsafe int* flann_CompositeIndexParams_trees(IntPtr obj);
-        //[DllImport(DllExtern)]
-        //public static extern unsafe int* flann_CompositeIndexParams_branching(IntPtr obj);
-        //[DllImport(DllExtern)]
-        //public static extern unsafe int* flann_CompositeIndexParams_iterations(IntPtr obj);
-        //[DllImport(DllExtern)]
-        //public static extern unsafe FlannCentersInit* flann_CompositeIndexParams_centers_init(IntPtr obj);
-        //[DllImport(DllExtern)]
-        //public static extern unsafe float* flann_CompositeIndexParams_cb_index(IntPtr obj);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_CompositeIndexParams_new(int trees, int branching, int iterations, FlannCentersInit centersInit, float cbIndex);
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_CompositeIndexParams_get(IntPtr ptr);
+        [DllImport(DllExtern)]
+        public static extern void flann_Ptr_CompositeIndexParams_delete(IntPtr obj);
+
         #endregion
         #region AutotunedIndexParams
+
         [DllImport(DllExtern)]
-        public static extern IntPtr flann_AutotunedIndexParams_new(float targetPrecision, float build_weight, float memory_weight, float sample_fraction);
+        public static extern IntPtr flann_AutotunedIndexParams_new(float targetPrecision, float buildWeight, float memoryWeight, float sampleFraction);
         [DllImport(DllExtern)]
         public static extern void flann_AutotunedIndexParams_delete(IntPtr obj);
-        //[DllImport(DllExtern)]
-        //public static extern unsafe float* flann_AutotunedIndexParams_target_precision(IntPtr obj);
-        //[DllImport(DllExtern)]
-        //public static extern unsafe float* flann_AutotunedIndexParams_build_weight(IntPtr obj);
-        //[DllImport(DllExtern)]
-        //public static extern unsafe float* flann_AutotunedIndexParams_memory_weight(IntPtr obj);
-        //[DllImport(DllExtern)]
-        //public static extern unsafe float* flann_AutotunedIndexParams_sample_fraction(IntPtr obj);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_AutotunedIndexParams_new(float targetPrecision, float buildWeight, float memoryWeight, float sampleFraction);
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_AutotunedIndexParams_get(IntPtr ptr);
+        [DllImport(DllExtern)]
+        public static extern void flann_Ptr_AutotunedIndexParams_delete(IntPtr obj);
+
         #endregion
         #region SavedIndexParams
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern IntPtr flann_SavedIndexParams_new([MarshalAs(UnmanagedType.LPStr)] string filename);
         [DllImport(DllExtern)]
         public static extern void flann_SavedIndexParams_delete(IntPtr obj);
-        //[DllImport(DllExtern)]
-        //[return: MarshalAs(UnmanagedType.LPStr)]
-        //public static extern string flann_SavedIndexParams_filename_get(IntPtr obj);
-        //[DllImport(DllExtern)]
-        //public static extern void flann_SavedIndexParams_filename_set(IntPtr obj, [MarshalAs(UnmanagedType.LPStr)] string filename);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_SavedIndexParams_new([MarshalAs(UnmanagedType.LPStr)] string filename);
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_SavedIndexParams_get(IntPtr ptr);
+        [DllImport(DllExtern)]
+        public static extern void flann_Ptr_SavedIndexParams_delete(IntPtr obj);
+
         #endregion
         #region SearchParams
+
         [DllImport(DllExtern)]
         public static extern IntPtr flann_SearchParams_new(int checks, float eps, int sorted);
         [DllImport(DllExtern)]
         public static extern void flann_SearchParams_delete(IntPtr obj);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_SearchParams_new(int checks, float eps, int sorted);
+        [DllImport(DllExtern)]
+        public static extern IntPtr flann_Ptr_SearchParams_get(IntPtr ptr);
+        [DllImport(DllExtern)]
+        public static extern void flann_Ptr_SearchParams_delete(IntPtr obj);
+
         #endregion
 
         #endregion
+
         //[DllImport(DllExtern)]
         //public static extern int flann_hierarchicalClustering(IntPtr features, IntPtr centers, IntPtr @params);
     }

@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+#if !net20
 using System.Linq;
+#endif
+using System.Reflection;
 
 namespace OpenCvHololens.Util
 {
+#if net20
     internal delegate TResult Func<in T1, out TResult>(T1 t1);
+#endif
 
     /// <summary>
     /// IEnumerable&lt;T&gt; extension methods for .NET Framework 2.0 
@@ -23,6 +28,7 @@ namespace OpenCvHololens.Util
         public static IEnumerable<TResult> Select<TSource, TResult>(
             IEnumerable<TSource> enumerable, Func<TSource, TResult> selector)
         {
+#if net20
             if (enumerable == null)
                 throw new ArgumentNullException(nameof(enumerable));
             if (selector == null)
@@ -31,6 +37,9 @@ namespace OpenCvHololens.Util
             {
                 yield return selector(elem);
             }
+#else
+            return enumerable.Select(selector);
+#endif
         }
 
         /// <summary>
@@ -44,7 +53,11 @@ namespace OpenCvHololens.Util
         public static TResult[] SelectToArray<TSource, TResult>(
             IEnumerable<TSource> enumerable, Func<TSource, TResult> selector)
         {
+#if net20
             return ToArray(Select(enumerable, selector));
+#else
+            return enumerable.Select(selector).ToArray();
+#endif
         }
 
         /// <summary>
@@ -58,12 +71,16 @@ namespace OpenCvHololens.Util
         public static TResult[] SelectToArray<TSource, TResult>(
             IEnumerable enumerable, Func<TSource, TResult> selector)
         {
+#if net20
             var result = new List<TResult>();
             foreach (TSource source in enumerable)
             {
                 result.Add(selector(source));
             }
             return result.ToArray();
+#else
+            return enumerable.Cast<TSource>().Select(selector).ToArray();
+#endif
         }
 
         /// <summary>
@@ -108,6 +125,7 @@ namespace OpenCvHololens.Util
         public static IEnumerable<TSource> Where<TSource>(
             IEnumerable<TSource> enumerable, Func<TSource, bool> predicate)
         {
+#if net20
             if (enumerable == null)
                 throw new ArgumentNullException(nameof(enumerable));
             if (predicate == null)
@@ -117,6 +135,9 @@ namespace OpenCvHololens.Util
                 if (predicate(elem))
                     yield return elem;
             }
+#else
+            return enumerable.Where(predicate);
+#endif
         }
 
         /// <summary>
@@ -129,7 +150,11 @@ namespace OpenCvHololens.Util
         public static TSource[] WhereToArray<TSource>(
             IEnumerable<TSource> enumerable, Func<TSource, bool> predicate)
         {
+#if net20
             return ToArray(Where(enumerable, predicate));
+#else
+            return enumerable.Where(predicate).ToArray();
+#endif
         }
 
         /// <summary>
@@ -140,12 +165,16 @@ namespace OpenCvHololens.Util
         /// <returns></returns>
         public static TSource[] ToArray<TSource>(IEnumerable<TSource> enumerable)
         {
+#if net20
             if (enumerable == null)
                 return null;
             var arr = enumerable as TSource[];
             if (arr != null)
                 return arr;
             return new List<TSource>(enumerable).ToArray();
+#else
+            return enumerable?.ToArray();
+#endif
         }
 
         /// <summary>
@@ -158,6 +187,7 @@ namespace OpenCvHololens.Util
         public static bool Any<TSource>(
             IEnumerable<TSource> enumerable, Func<TSource, bool> predicate)
         {
+#if net20
             if (enumerable == null)
                 throw new ArgumentNullException(nameof(enumerable));
             foreach (TSource elem in enumerable)
@@ -166,6 +196,9 @@ namespace OpenCvHololens.Util
                     return true;
             }
             return false;
+#else
+            return enumerable.Any(predicate);
+#endif
         }
 
         /// <summary>
@@ -180,7 +213,16 @@ namespace OpenCvHololens.Util
             if (enumerable == null)
                 throw new ArgumentNullException(nameof(enumerable));
 
+#if net20
+            foreach (TSource elem in enumerable)
+            {
+                if (elem == null)
+                    return true;
+            }
+            return false;
+#else
             return enumerable.Any(e => e == null);
+#endif
         }
 
         /// <summary>
@@ -193,6 +235,7 @@ namespace OpenCvHololens.Util
         public static bool All<TSource>(
             IEnumerable<TSource> enumerable, Func<TSource, bool> predicate)
         {
+#if net20
             if (enumerable == null)
                 throw new ArgumentNullException(nameof(enumerable));
             foreach (TSource elem in enumerable)
@@ -201,6 +244,9 @@ namespace OpenCvHololens.Util
                     return false;
             }
             return true;
+#else
+            return enumerable.All(predicate);
+#endif
         }
 
         /// <summary>
@@ -213,9 +259,9 @@ namespace OpenCvHololens.Util
         public static int Count<TSource>(
             IEnumerable<TSource> enumerable, Func<TSource, bool> predicate)
         {
+#if net20
             if (enumerable == null)
                 throw new ArgumentNullException(nameof(enumerable));
-
             int count = 0;
             foreach (TSource elem in enumerable)
             {
@@ -223,6 +269,9 @@ namespace OpenCvHololens.Util
                     count++;
             }
             return count;
+#else
+            return enumerable.Count(predicate);
+#endif
         }
 
         /// <summary>
@@ -233,6 +282,7 @@ namespace OpenCvHololens.Util
         /// <returns></returns>
         public static int Count<TSource>(IEnumerable<TSource> enumerable)
         {
+#if net20
             if (enumerable == null)
                 throw new ArgumentNullException(nameof(enumerable));
 
@@ -250,6 +300,9 @@ namespace OpenCvHololens.Util
                 count++;
             }
             return count;
+#else
+            return enumerable.Count();
+#endif
         }
 
         /// <summary>
@@ -260,6 +313,7 @@ namespace OpenCvHololens.Util
         /// <returns></returns>
         public static bool IsEmpty<TSource>(IEnumerable<TSource> enumerable)
         {
+#if net20
             if (enumerable == null)
                 throw new ArgumentNullException(nameof(enumerable));
 
@@ -268,6 +322,9 @@ namespace OpenCvHololens.Util
                 return false;
             }
             return true;
+#else
+            return !enumerable.Any();
+#endif
         }
     }
 }

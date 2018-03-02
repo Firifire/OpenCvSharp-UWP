@@ -18,8 +18,6 @@ namespace OpenCvHololens
         public static extern IntPtr features2d_FastFeatureDetector_create(int threshold, int nonmaxSuppression);
         [DllImport(DllExtern)]
         public static extern void features2d_Ptr_FastFeatureDetector_delete(IntPtr ptr);
-        [DllImport(DllExtern)]
-        public static extern IntPtr features2d_FastFeatureDetector_info(IntPtr obj);
 
         [DllImport(DllExtern)]
         public static extern IntPtr features2d_Ptr_FastFeatureDetector_get(IntPtr ptr);

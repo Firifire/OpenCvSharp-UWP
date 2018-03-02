@@ -6,15 +6,8 @@ namespace OpenCvHololens
     /// <summary>
     /// 
     /// </summary>
-    internal class VectorOfString : DisposableCvObject, IStdVector<string>
+    public class VectorOfString : DisposableCvObject, IStdVector<string>
     {
-        /// <summary>
-        /// Track whether Dispose has been called
-        /// </summary>
-        private bool disposed;
-
-        #region Init and Dispose
-
         /// <summary>
         /// 
         /// </summary>
@@ -44,41 +37,25 @@ namespace OpenCvHololens
         }
 
         /// <summary>
-        /// Clean up any resources being used.
+        /// Releases unmanaged resources
         /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-        protected override void Dispose(bool disposing)
+        protected override void DisposeUnmanaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    if (IsEnabledDispose)
-                    {
-                        NativeMethods.vector_string_delete(ptr);
-                    }
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            NativeMethods.vector_string_delete(ptr);
+            base.DisposeUnmanaged();
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// vector.size()
         /// </summary>
         public int Size
         {
-            get { return NativeMethods.vector_string_getSize(ptr).ToInt32(); }
+            get
+            {
+                var res = NativeMethods.vector_string_getSize(ptr).ToInt32();
+                GC.KeepAlive(this);
+                return res;
+            }
         }
 
         /// <summary>
@@ -86,12 +63,13 @@ namespace OpenCvHololens
         /// </summary>
         public IntPtr ElemPtr
         {
-            get { return NativeMethods.vector_string_getPointer(ptr); }
+            get
+            {
+                var res = NativeMethods.vector_string_getPointer(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Converts std::vector to managed array
@@ -115,7 +93,5 @@ namespace OpenCvHololens
             GC.KeepAlive(this);
             return ret;
         }
-
-        #endregion
     }
 }

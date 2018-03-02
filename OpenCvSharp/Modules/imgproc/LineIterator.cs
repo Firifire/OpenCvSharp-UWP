@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using OpenCvHololens.Util;
 
 namespace OpenCvHololens
 {
@@ -10,13 +11,11 @@ namespace OpenCvHololens
     /// </summary>
     public sealed class LineIterator : DisposableCvObject, IEnumerable<LineIterator.Pixel>
     {
-        private bool disposed;
-
-        private Mat img;
-        private Point pt1;
-        private Point pt2;
-        private PixelConnectivity connectivity;
-        private bool leftToRight;
+        private readonly Mat img;
+        private readonly Point pt1;
+        private readonly Point pt2;
+        private readonly PixelConnectivity connectivity;
+        private readonly bool leftToRight;
 
         /// <summary>
         /// Constructor
@@ -50,55 +49,20 @@ namespace OpenCvHololens
         private void Initialize()
         {
             if (ptr != IntPtr.Zero)
-                throw new OpenCvSharpException("invalid state");
+                throw new OpenCvHololensException("invalid state");
             img.ThrowIfDisposed();
 
             ptr = NativeMethods.imgproc_LineIterator_new(
                 img.CvPtr, pt1, pt2, (int)connectivity, leftToRight ? 1 : 0);
-            disposed = false;
         }
 
-#if LANG_JP
-    /// <summary>
-    /// リソースの解放
-    /// </summary>
-    /// <param name="disposing">
-    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-    ///</param>
-#else
         /// <summary>
-        /// Releases the resources
+        /// Releases unmanaged resources
         /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
+        protected override void DisposeUnmanaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    // releases managed resources
-                    if (disposing)
-                    {
-                    }
-                    // releases unmanaged resources
-                    if (IsEnabledDispose)
-                    {
-                        if (ptr != IntPtr.Zero)
-                            NativeMethods.imgproc_LineIterator_delete(ptr);
-                        ptr = IntPtr.Zero;
-                    }
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            NativeMethods.imgproc_LineIterator_delete(ptr);
+            base.DisposeUnmanaged();
         }
 
         /// <summary>
@@ -117,9 +81,11 @@ namespace OpenCvHololens
             {
                 Point pos = NativeMethods.imgproc_LineIterator_pos(ptr);
                 IntPtr value = NativeMethods.imgproc_LineIterator_operatorEntity(ptr);
+                GC.KeepAlive(this);
                 yield return new Pixel(pos, value);
 
                 NativeMethods.imgproc_LineIterator_operatorPP(ptr);
+                GC.KeepAlive(this);
             }
         }
 
@@ -133,14 +99,15 @@ namespace OpenCvHololens
         /// <summary>
         /// 
         /// </summary>
-        public IntPtr Ptr 
+        public IntPtr Ptr
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.imgproc_LineIterator_ptr_get(ptr);
-            } 
+                ThrowIfDisposed();
+                var res = NativeMethods.imgproc_LineIterator_ptr_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
         }
 
         /// <summary>
@@ -150,9 +117,10 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.imgproc_LineIterator_ptr0_get(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.imgproc_LineIterator_ptr0_get(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -163,9 +131,10 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.imgproc_LineIterator_step_get(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.imgproc_LineIterator_step_get(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -176,9 +145,10 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.imgproc_LineIterator_elemSize_get(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.imgproc_LineIterator_elemSize_get(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -189,9 +159,10 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.imgproc_LineIterator_err_get(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.imgproc_LineIterator_err_get(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -202,9 +173,10 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.imgproc_LineIterator_count_get(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.imgproc_LineIterator_count_get(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -215,9 +187,10 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.imgproc_LineIterator_minusDelta_get(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.imgproc_LineIterator_minusDelta_get(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -228,9 +201,10 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.imgproc_LineIterator_plusDelta_get(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.imgproc_LineIterator_plusDelta_get(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -241,9 +215,10 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.imgproc_LineIterator_minusStep_get(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.imgproc_LineIterator_minusStep_get(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -254,9 +229,10 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.imgproc_LineIterator_plusStep_get(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.imgproc_LineIterator_plusStep_get(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -270,7 +246,7 @@ namespace OpenCvHololens
             /// <summary>
             /// 
             /// </summary>
-            public unsafe byte* ValuePointer { get; private set; }
+            public unsafe byte* ValuePointer { get; }
 
             /// <summary>
             /// 
@@ -298,7 +274,7 @@ namespace OpenCvHololens
             /// <returns></returns>
             public T GetValue<T>() where T : struct
             {
-                return (T)Marshal.PtrToStructure(Value, typeof (T));
+                return MarshalHelper.PtrToStructure<T>(Value);
             }
 
             /// <summary>

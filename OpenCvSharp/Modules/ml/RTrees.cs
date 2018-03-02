@@ -8,19 +8,15 @@ namespace OpenCvHololens.ML
     /// ランダムツリークラス
     /// </summary>
 #else
-	/// <summary>
+    /// <summary>
     /// The class implements the random forest predictor.
     /// </summary>
 #endif
-	public class RTrees : DTrees
-	{
-        /// <summary>
-        /// Track whether Dispose has been called
-        /// </summary>
-        private bool disposed;
-        private Ptr<RTrees> ptrObj;
+    public class RTrees : DTrees
+    {
+        private Ptr ptrObj;
 
-		#region Init and Disposal
+        #region Init and Disposal
 
         /// <summary>
         /// Creates instance by raw pointer cv::ml::RTrees*
@@ -28,7 +24,7 @@ namespace OpenCvHololens.ML
         protected RTrees(IntPtr p)
             : base()
         {
-            ptrObj = new Ptr<RTrees>(p);
+            ptrObj = new Ptr(p);
             ptr = ptrObj.Get();
         }
 
@@ -36,55 +32,51 @@ namespace OpenCvHololens.ML
         /// Creates the empty model.
         /// </summary>
         /// <returns></returns>
-        public static new RTrees Create()
-	    {
+        public new static RTrees Create()
+        {
             IntPtr ptr = NativeMethods.ml_RTrees_create();
             return new RTrees(ptr);
-	    }
-
-#if LANG_JP
-        /// <summary>
-        /// リソースの解放
-        /// </summary>
-        /// <param name="disposing">
-        /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-        /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-        ///</param>
-#else
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                try
-                {
-                    if (disposing)
-                    {
-                        if (ptrObj != null)
-                        {
-                            ptrObj.Dispose();
-                            ptrObj = null;
-                        }
-                    }
-                    ptr = IntPtr.Zero;
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
         }
+
+        /// <summary>
+        /// Loads and creates a serialized model from a file.
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public new static RTrees Load(string filePath)
+        {
+            if (filePath == null)
+                throw new ArgumentNullException(nameof(filePath));
+            IntPtr ptr = NativeMethods.ml_RTrees_load(filePath);
+            return new RTrees(ptr);
+        }
+
+        /// <summary>
+        /// Loads algorithm from a String.
+        /// </summary>
+        /// <param name="strModel">he string variable containing the model you want to load.</param>
+        /// <returns></returns>
+        public new static RTrees LoadFromString(string strModel)
+        {
+            if (strModel == null)
+                throw new ArgumentNullException(nameof(strModel));
+            IntPtr ptr = NativeMethods.ml_RTrees_loadFromString(strModel);
+            return new RTrees(ptr);
+        }
+
+        /// <summary>
+        /// Releases managed resources
+        /// </summary>
+        protected override void DisposeManaged()
+        {
+            ptrObj?.Dispose();
+            ptrObj = null;
+            base.DisposeManaged();
+        }
+
         #endregion
 
-		#region Properties
+        #region Properties
 
         /// <summary>
         /// If true then variable importance will be calculated and then 
@@ -92,8 +84,19 @@ namespace OpenCvHololens.ML
         /// </summary>
         public bool CalculateVarImportance
         {
-            get { return NativeMethods.ml_RTrees_getCalculateVarImportance(ptr) != 0; }
-            set { NativeMethods.ml_RTrees_setCalculateVarImportance(ptr, value ? 1 : 0); }
+            get
+            {
+                ThrowIfDisposed();
+                var res = NativeMethods.ml_RTrees_getCalculateVarImportance(ptr) != 0;
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                ThrowIfDisposed();
+                NativeMethods.ml_RTrees_setCalculateVarImportance(ptr, value ? 1 : 0);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -102,8 +105,19 @@ namespace OpenCvHololens.ML
         /// </summary>
         public bool ActiveVarCount
         {
-            get { return NativeMethods.ml_RTrees_getActiveVarCount(ptr) != 0; }
-            set { NativeMethods.ml_RTrees_setActiveVarCount(ptr, value ? 1 : 0); }
+            get
+            {
+                ThrowIfDisposed();
+                var res =NativeMethods.ml_RTrees_getActiveVarCount(ptr) != 0;
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                ThrowIfDisposed();
+                NativeMethods.ml_RTrees_setActiveVarCount(ptr, value ? 1 : 0);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -111,14 +125,25 @@ namespace OpenCvHololens.ML
         /// </summary>
         public TermCriteria TermCriteria
         {
-            get { return NativeMethods.ml_RTrees_getTermCriteria(ptr); }
-            set { NativeMethods.ml_RTrees_setTermCriteria(ptr, value); }
+            get
+            {
+                ThrowIfDisposed();
+                var res = NativeMethods.ml_RTrees_getTermCriteria(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                ThrowIfDisposed();
+                NativeMethods.ml_RTrees_setTermCriteria(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         #endregion
 
-		#region Methods
-		
+        #region Methods
+
         /// <summary>
         /// Returns the variable importance array. 
         /// The method returns the variable importance vector, computed at the training 
@@ -126,15 +151,34 @@ namespace OpenCvHololens.ML
         /// the empty matrix is returned.
         /// </summary>
         /// <returns></returns>
-	    public Mat GetVarImportance()
-	    {
-	        if (disposed)
-	            throw new NotImplementedException(GetType().Name);
-
+        public Mat GetVarImportance()
+        {
+            ThrowIfDisposed();
             IntPtr p = NativeMethods.ml_RTrees_getVarImportance(ptr);
+            GC.KeepAlive(this);
             return new Mat(p);
-	    }
+        }
 
         #endregion
-	}
+
+        internal new class Ptr : OpenCvHololens.Ptr
+        {
+            public Ptr(IntPtr ptr) : base(ptr)
+            {
+            }
+
+            public override IntPtr Get()
+            {
+                var res = NativeMethods.ml_Ptr_RTrees_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+
+            protected override void DisposeUnmanaged()
+            {
+                NativeMethods.ml_Ptr_RTrees_delete(ptr);
+                base.DisposeUnmanaged();
+            }
+        }
+    }
 }

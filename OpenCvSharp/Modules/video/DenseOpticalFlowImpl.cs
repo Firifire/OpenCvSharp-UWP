@@ -10,12 +10,10 @@ namespace OpenCvHololens
     /// </summary>
     internal sealed class DenseOpticalFlowImpl : DenseOpticalFlow
     {
-        private bool disposed;
-
         /// <summary>
         /// 
         /// </summary>
-        private Ptr<DenseOpticalFlow> detectorPtr;
+        private Ptr detectorPtr;
 
         #region Init & Disposal
 
@@ -36,9 +34,9 @@ namespace OpenCvHololens
         internal static DenseOpticalFlowImpl FromPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvSharpException("Invalid DenseOpticalFlow pointer");
+                throw new OpenCvHololensException("Invalid DenseOpticalFlow pointer");
 
-            var ptrObj = new Ptr<DenseOpticalFlow>(ptr);
+            var ptrObj = new Ptr(ptr);
             var obj = new DenseOpticalFlowImpl
             {
                 detectorPtr = ptrObj,
@@ -54,7 +52,7 @@ namespace OpenCvHololens
         internal static DenseOpticalFlowImpl FromRawPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvSharpException("Invalid DenseOpticalFlow pointer");
+                throw new OpenCvHololensException("Invalid DenseOpticalFlow pointer");
             var obj = new DenseOpticalFlowImpl
             {
                 detectorPtr = null,
@@ -63,49 +61,14 @@ namespace OpenCvHololens
             return obj;
         }
 
-
-#if LANG_JP
-    /// <summary>
-    /// リソースの解放
-    /// </summary>
-    /// <param name="disposing">
-    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-    ///</param>
-#else
         /// <summary>
-        /// Releases the resources
+        /// Releases managed resources
         /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
+        protected override void DisposeManaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    // releases managed resources
-                    if (disposing)
-                    {
-                    }
-                    // releases unmanaged resources
-                    if (IsEnabledDispose)
-                    {
-                        if (detectorPtr != null)
-                            detectorPtr.Dispose();
-                        detectorPtr = null;
-                        ptr = IntPtr.Zero;
-                    }
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            detectorPtr?.Dispose();
+            detectorPtr = null;
+            base.DisposeManaged();
         }
 
         #endregion
@@ -121,8 +84,7 @@ namespace OpenCvHololens
         public override void Calc(
             InputArray frame0, InputArray frame1, InputOutputArray flow)
         {
-            if (disposed)
-                throw new ObjectDisposedException("DenseOpticalFlowImpl");
+            ThrowIfDisposed();
             if (frame0 == null)
                 throw new ArgumentNullException(nameof(frame0));
             if (frame1 == null)
@@ -135,7 +97,10 @@ namespace OpenCvHololens
 
             NativeMethods.video_DenseOpticalFlow_calc(
                 ptr, frame0.CvPtr, frame1.CvPtr, flow.CvPtr);
-
+            GC.KeepAlive(this);
+            GC.KeepAlive(frame0);
+            GC.KeepAlive(frame1);
+            GC.KeepAlive(flow);
             flow.Fix();
         }
 
@@ -144,11 +109,31 @@ namespace OpenCvHololens
         /// </summary>
         public override void CollectGarbage()
         {
-            if (disposed)
-                throw new ObjectDisposedException("DenseOpticalFlowImpl");
+            ThrowIfDisposed();
             NativeMethods.video_DenseOpticalFlow_collectGarbage(ptr);
+            GC.KeepAlive(this);
         }
 
         #endregion
+
+        internal class Ptr : OpenCvHololens.Ptr
+        {
+            public Ptr(IntPtr ptr) : base(ptr)
+            {
+            }
+
+            public override IntPtr Get()
+            {
+                var res = NativeMethods.superres_Ptr_DenseOpticalFlowExt_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+
+            protected override void DisposeUnmanaged()
+            {
+                NativeMethods.superres_Ptr_DenseOpticalFlowExt_delete(ptr);
+                base.DisposeUnmanaged();
+            }
+        }
     }
 }

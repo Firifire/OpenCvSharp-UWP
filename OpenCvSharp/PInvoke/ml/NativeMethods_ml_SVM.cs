@@ -65,6 +65,8 @@ namespace OpenCvHololens
         public static extern double ml_SVM_getDecisionFunction(
             IntPtr obj, int i, IntPtr alpha, IntPtr svidx);
 
+        // static
+
         [DllImport(DllExtern)]
         public static extern ParamGrid ml_SVM_getDefaultGrid(int paramId);
 
@@ -76,5 +78,11 @@ namespace OpenCvHololens
 
         [DllImport(DllExtern)]
         public static extern IntPtr ml_Ptr_SVM_get(IntPtr obj);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr ml_SVM_load(string filePath);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr ml_SVM_loadFromString(string strModel);
     }
 }

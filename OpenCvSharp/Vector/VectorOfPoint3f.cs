@@ -10,13 +10,6 @@ namespace OpenCvHololens
     public class VectorOfPoint3f : DisposableCvObject, IStdVector<Point3f>
     {
         /// <summary>
-        /// Track whether Dispose has been called
-        /// </summary>
-        private bool disposed = false;
-
-        #region Init and Dispose
-
-        /// <summary>
         /// 
         /// </summary>
         public VectorOfPoint3f()
@@ -48,41 +41,25 @@ namespace OpenCvHololens
         }
 
         /// <summary>
-        /// Clean up any resources being used.
+        /// Releases unmanaged resources
         /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-        protected override void Dispose(bool disposing)
+        protected override void DisposeUnmanaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    if (IsEnabledDispose)
-                    {
-                        NativeMethods.vector_Point3f_delete(ptr);
-                    }
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            NativeMethods.vector_Point3f_delete(ptr);
+            base.DisposeUnmanaged();
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// vector.size()
         /// </summary>
         public int Size
         {
-            get { return NativeMethods.vector_Point3f_getSize(ptr).ToInt32(); }
+            get
+            {
+                var res = NativeMethods.vector_Point3f_getSize(ptr).ToInt32();
+                GC.KeepAlive(this);
+                return res;
+            }
         }
 
         /// <summary>
@@ -90,12 +67,13 @@ namespace OpenCvHololens
         /// </summary>
         public IntPtr ElemPtr
         {
-            get { return NativeMethods.vector_Point3f_getPointer(ptr); }
+            get
+            {
+                var res = NativeMethods.vector_Point3f_getPointer(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Converts std::vector to managed array
@@ -109,13 +87,13 @@ namespace OpenCvHololens
                 return new Point3f[0];
             }
             Point3f[] dst = new Point3f[size];
-            using (ArrayAddress1<Point3f> dstPtr = new ArrayAddress1<Point3f>(dst))
+            using (var dstPtr = new ArrayAddress1<Point3f>(dst))
             {
-                Util.Utility.CopyMemory(dstPtr, ElemPtr, Point3f.SizeOf*dst.Length);
+                MemoryHelper.CopyMemory(dstPtr, ElemPtr, Point3f.SizeOf*dst.Length);
             }
+            GC.KeepAlive(this); // ElemPtr is IntPtr to memory held by this object, so
+                                // make sure we are not disposed until finished with copy.
             return dst;
         }
-
-        #endregion
     }
 }

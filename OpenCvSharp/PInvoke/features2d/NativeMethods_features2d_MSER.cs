@@ -17,8 +17,6 @@ namespace OpenCvHololens
         public static extern void features2d_Ptr_MSER_delete(IntPtr ptr);
         [DllImport(DllExtern)]
         public static extern void features2d_MSER_detect(IntPtr obj, IntPtr image, out IntPtr msers, IntPtr mask);
-        [DllImport(DllExtern)]
-        public static extern IntPtr features2d_MSER_info(IntPtr obj);
 
         [DllImport(DllExtern)]
         public static extern IntPtr features2d_Ptr_MSER_get(IntPtr ptr);

@@ -14,8 +14,7 @@ namespace OpenCvHololens
     /// </remarks>
     public class ShapeContextDistanceExtractor : ShapeDistanceExtractor
     {
-        private bool disposed;
-        private Ptr<ShapeContextDistanceExtractor> ptrObj;
+        private Ptr ptrObj;
 
         #region Init & Disposal
 
@@ -24,7 +23,7 @@ namespace OpenCvHololens
         /// </summary>
         protected ShapeContextDistanceExtractor(IntPtr p)
         {
-            ptrObj = new Ptr<ShapeContextDistanceExtractor>(p);
+            ptrObj = new Ptr(p);
             ptr = ptrObj.Get();
         }
 
@@ -46,52 +45,20 @@ namespace OpenCvHololens
             return new ShapeContextDistanceExtractor(ptr);
         }
 
-#if LANG_JP
-    /// <summary>
-    /// リソースの解放
-    /// </summary>
-    /// <param name="disposing">
-    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-    ///</param>
-#else
         /// <summary>
-        /// Releases the resources
+        /// Releases managed resources
         /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
+        protected override void DisposeManaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    // releases managed resources
-                    if (disposing)
-                    {
-                        if (ptrObj != null)
-                        {
-                            ptrObj.Dispose();
-                            ptrObj = null;
-                        }
-                    }
-                    // releases unmanaged resources
-                    ptr = IntPtr.Zero;
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            ptrObj?.Dispose();
+            ptrObj = null;
+            base.DisposeManaged();
         }
+
         #endregion
 
         #region Properties
-        
+
         /// <summary>
         /// The number of angular bins in the shape context descriptor.
         /// </summary>
@@ -99,15 +66,16 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.shape_ShapeContextDistanceExtractor_getAngularBins(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.shape_ShapeContextDistanceExtractor_getAngularBins(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.shape_ShapeContextDistanceExtractor_setAngularBins(ptr, value);
+                GC.KeepAlive(this);
             }
         }
 
@@ -118,15 +86,16 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.shape_ShapeContextDistanceExtractor_getRadialBins(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.shape_ShapeContextDistanceExtractor_getRadialBins(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.shape_ShapeContextDistanceExtractor_setRadialBins(ptr, value);
+                GC.KeepAlive(this);
             }
         }
 
@@ -137,15 +106,16 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.shape_ShapeContextDistanceExtractor_getInnerRadius(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.shape_ShapeContextDistanceExtractor_getInnerRadius(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.shape_ShapeContextDistanceExtractor_setInnerRadius(ptr, value);
+                GC.KeepAlive(this);
             }
         }
 
@@ -156,15 +126,16 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.shape_ShapeContextDistanceExtractor_getOuterRadius(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.shape_ShapeContextDistanceExtractor_getOuterRadius(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.shape_ShapeContextDistanceExtractor_setOuterRadius(ptr, value);
+                GC.KeepAlive(this);
             }
         }
         
@@ -175,15 +146,16 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.shape_ShapeContextDistanceExtractor_getRotationInvariant(ptr) != 0;
+                ThrowIfDisposed();
+                var res = NativeMethods.shape_ShapeContextDistanceExtractor_getRotationInvariant(ptr) != 0;
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.shape_ShapeContextDistanceExtractor_setRotationInvariant(ptr, value ? 1 : 0);
+                GC.KeepAlive(this);
             }
         }
 
@@ -194,15 +166,16 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.shape_ShapeContextDistanceExtractor_getShapeContextWeight(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.shape_ShapeContextDistanceExtractor_getShapeContextWeight(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.shape_ShapeContextDistanceExtractor_setShapeContextWeight(ptr, value);
+                GC.KeepAlive(this);
             }
         }
 
@@ -213,15 +186,16 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.shape_ShapeContextDistanceExtractor_getImageAppearanceWeight(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.shape_ShapeContextDistanceExtractor_getImageAppearanceWeight(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.shape_ShapeContextDistanceExtractor_setImageAppearanceWeight(ptr, value);
+                GC.KeepAlive(this);
             }
         }
 
@@ -232,15 +206,16 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.shape_ShapeContextDistanceExtractor_getBendingEnergyWeight(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.shape_ShapeContextDistanceExtractor_getBendingEnergyWeight(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.shape_ShapeContextDistanceExtractor_setBendingEnergyWeight(ptr, value);
+                GC.KeepAlive(this);
             }
         }
 
@@ -251,15 +226,16 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.shape_ShapeContextDistanceExtractor_getIterations(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.shape_ShapeContextDistanceExtractor_getIterations(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.shape_ShapeContextDistanceExtractor_setIterations(ptr, value);
+                GC.KeepAlive(this);
             }
         }
 
@@ -270,15 +246,16 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.shape_ShapeContextDistanceExtractor_getStdDev(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.shape_ShapeContextDistanceExtractor_getStdDev(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.shape_ShapeContextDistanceExtractor_setStdDev(ptr, value);
+                GC.KeepAlive(this);
             }
         }
 
@@ -294,8 +271,7 @@ namespace OpenCvHololens
         /// <param name="image2">Image corresponding to the shape defined by contours2.</param>
         public void SetImages(InputArray image1, InputArray image2)
         {
-            if (disposed)
-                throw new ObjectDisposedException(GetType().Name);
+            ThrowIfDisposed();
             if (image1 == null)
                 throw new ArgumentNullException(nameof(image1));
             if (image2 == null)
@@ -303,6 +279,7 @@ namespace OpenCvHololens
             image1.ThrowIfDisposed();
             image2.ThrowIfDisposed();
             NativeMethods.shape_ShapeContextDistanceExtractor_setImages(ptr, image1.CvPtr, image2.CvPtr);
+            GC.KeepAlive(this);
             GC.KeepAlive(image1);
             GC.KeepAlive(image2);
         }
@@ -315,8 +292,7 @@ namespace OpenCvHololens
         /// <param name="image2">Image corresponding to the shape defined by contours2.</param>
         public void GetImages(OutputArray image1, OutputArray image2)
         {
-            if (disposed)
-                throw new ObjectDisposedException(GetType().Name);
+            ThrowIfDisposed();
             if (image1 == null)
                 throw new ArgumentNullException(nameof(image1));
             if (image2 == null)
@@ -326,8 +302,31 @@ namespace OpenCvHololens
             NativeMethods.shape_ShapeContextDistanceExtractor_getImages(ptr, image1.CvPtr, image2.CvPtr);
             image1.Fix();
             image2.Fix();
+            GC.KeepAlive(this);
+            GC.KeepAlive(image1);
+            GC.KeepAlive(image2);
         }
 
         #endregion
+
+        internal class Ptr : OpenCvHololens.Ptr
+        {
+            public Ptr(IntPtr ptr) : base(ptr)
+            {
+            }
+
+            public override IntPtr Get()
+            {
+                var res = NativeMethods.shape_Ptr_HausdorffDistanceExtractor_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+
+            protected override void DisposeUnmanaged()
+            {
+                NativeMethods.shape_Ptr_ShapeContextDistanceExtractor_delete(ptr);
+                base.DisposeUnmanaged();
+            }
+        }
     }
 }

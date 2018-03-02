@@ -6,15 +6,8 @@ namespace OpenCvHololens
     /// <summary>
     /// 
     /// </summary>
-    internal class VectorOfVectorPoint2f : DisposableCvObject, IStdVector<Point2f[]>
+    public class VectorOfVectorPoint2f : DisposableCvObject, IStdVector<Point2f[]>
     {
-        /// <summary>
-        /// Track whether Dispose has been called
-        /// </summary>
-        private bool disposed;
-
-        #region Init and Dispose
-
         /// <summary>
         /// 
         /// </summary>
@@ -44,43 +37,30 @@ namespace OpenCvHololens
         }
 
         /// <summary>
-        /// Clean up any resources being used.
+        /// Releases unmanaged resources
         /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-        protected override void Dispose(bool disposing)
+        protected override void DisposeUnmanaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    if (IsEnabledDispose)
-                    {
-                        NativeMethods.vector_vector_Point2f_delete(ptr);
-                    }
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            NativeMethods.vector_vector_Point2f_delete(ptr);
+            base.DisposeUnmanaged();
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// vector.size()
         /// </summary>
         public int Size1
         {
-            get { return NativeMethods.vector_vector_Point2f_getSize1(ptr).ToInt32(); }
+            get
+            {
+                var res = NativeMethods.vector_vector_Point2f_getSize1(ptr).ToInt32();
+                GC.KeepAlive(this);
+                return res;
+            }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int Size
         {
             get { return Size1; }
@@ -96,6 +76,7 @@ namespace OpenCvHololens
                 int size1 = Size1;
                 var size2Org = new IntPtr[size1];
                 NativeMethods.vector_vector_Point2f_getSize2(ptr, size2Org);
+                GC.KeepAlive(this);
                 var size2 = new long[size1];
                 for (int i = 0; i < size1; i++)
                 {
@@ -110,12 +91,13 @@ namespace OpenCvHololens
         /// </summary>
         public IntPtr ElemPtr
         {
-            get { return NativeMethods.vector_vector_Point2f_getPointer(ptr); }
+            get
+            {
+                var  res = NativeMethods.vector_vector_Point2f_getPointer(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Converts std::vector to managed array
@@ -136,10 +118,9 @@ namespace OpenCvHololens
             using (var retPtr = new ArrayAddress2<Point2f>(ret))
             {
                 NativeMethods.vector_vector_Point2f_copy(ptr, retPtr);
+                GC.KeepAlive(this);
             }
             return ret;
         }
-
-        #endregion
     }
 }

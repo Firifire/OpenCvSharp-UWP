@@ -28,7 +28,7 @@ namespace OpenCvHololens
         public static extern void ml_KNearest_setAlgorithmType(IntPtr obj, int val);
 
         [DllImport(DllExtern)]
-        public static extern float ml_KNearest_findNearest(IntPtr samples, int k,
+        public static extern float ml_KNearest_findNearest(IntPtr obj, IntPtr samples, int k,
             IntPtr results, IntPtr neighborResponses, IntPtr dist);
 
         [DllImport(DllExtern)]
@@ -39,5 +39,11 @@ namespace OpenCvHololens
 
         [DllImport(DllExtern)]
         public static extern IntPtr ml_Ptr_KNearest_get(IntPtr obj);
+        
+        [DllImport(DllExtern)]
+        public static extern IntPtr ml_KNearest_load(string filePath);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr ml_KNearest_loadFromString(string strModel);
     }
 }

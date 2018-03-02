@@ -206,12 +206,12 @@ namespace OpenCvHololens
         [DllImport(DllExtern)]
         public static extern void imgproc_distanceTransform(IntPtr src, IntPtr dst,
                                                     int distanceType, int maskSize);
-        [DllImport(DllExtern, EntryPoint = "imgproc_floodFill1")]
-        public static extern int imgproc_floodFill(IntPtr image,
+        [DllImport(DllExtern)]
+        public static extern int imgproc_floodFill1(IntPtr image,
                                                     Point seedPoint, Scalar newVal, out Rect rect,
                                                     Scalar loDiff, Scalar upDiff, int flags);
-        [DllImport(DllExtern, EntryPoint = "imgproc_floodFill2")]
-        public static extern int imgproc_floodFill(IntPtr image, IntPtr mask,
+        [DllImport(DllExtern)]
+        public static extern int imgproc_floodFill2(IntPtr image, IntPtr mask,
                                                     Point seedPoint, Scalar newVal, out Rect rect,
                                                     Scalar loDiff, Scalar upDiff, int flags);
         [DllImport(DllExtern)]
@@ -445,12 +445,12 @@ namespace OpenCvHololens
         public static extern void imgproc_ellipse2Poly(
             Point center, Size axes, int angle, int arcStart, int arcEnd, int delta, IntPtr pts);
 
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern void core_putText(IntPtr img, [MarshalAs(UnmanagedType.LPStr)] string text, Point org,
             int fontFace, double fontScale, Scalar color,
             int thickness, int lineType, int bottomLeftOrigin);
 
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern Size core_getTextSize([MarshalAs(UnmanagedType.LPStr)] string text, int fontFace,
             double fontScale, int thickness, out int baseLine);
 

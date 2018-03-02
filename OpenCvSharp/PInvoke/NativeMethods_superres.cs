@@ -16,10 +16,10 @@ namespace OpenCvHololens
 
         [DllImport(DllExtern)]
         public static extern IntPtr superres_createFrameSource_Empty();
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern IntPtr superres_createFrameSource_Video(
             [MarshalAs(UnmanagedType.LPStr)] string fileName);
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern IntPtr superres_createFrameSource_Video_CUDA(
             [MarshalAs(UnmanagedType.LPStr)] string fileName);
         [DllImport(DllExtern)]
@@ -38,8 +38,6 @@ namespace OpenCvHololens
         public static extern void superres_SuperResolution_reset(IntPtr obj);
         [DllImport(DllExtern)]
         public static extern void superres_SuperResolution_collectGarbage(IntPtr obj);
-        [DllImport(DllExtern)]
-        public static extern IntPtr superres_SuperResolution_info(IntPtr obj);
 
         [DllImport(DllExtern)]
         public static extern IntPtr superres_createSuperResolution_BTVL1();
@@ -59,8 +57,6 @@ namespace OpenCvHololens
             IntPtr obj, IntPtr frame0, IntPtr frame1, IntPtr flow1, IntPtr flow2);
         [DllImport(DllExtern)]
         public static extern void superres_DenseOpticalFlowExt_collectGarbage(IntPtr obj);
-        [DllImport(DllExtern)]
-        public static extern IntPtr superres_DenseOpticalFlowExt_info(IntPtr obj);
 
         [DllImport(DllExtern)]
         public static extern IntPtr superres_Ptr_DenseOpticalFlowExt_get(IntPtr ptr);

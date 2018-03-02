@@ -8,7 +8,6 @@ namespace OpenCvHololens
     /// </summary>
     public sealed class OutputArrayOfMatList : OutputArray
     {
-        private bool disposed;
         private List<Mat> list;
 
         /// <summary>
@@ -44,23 +43,19 @@ namespace OpenCvHololens
             using (var vectorOfMat = new VectorOfMat())
             {
                 NativeMethods.core_OutputArray_getVectorOfMat(ptr, vectorOfMat.CvPtr);
+                GC.KeepAlive(this);
                 list.Clear();
                 list.AddRange(vectorOfMat.ToArray());
             }
         }
 
         /// <summary>
-        /// 
+        /// Releases managed resources
         /// </summary>
-        /// <param name="disposing"></param>
-        protected override void Dispose(bool disposing)
+        protected override void DisposeManaged()
         {
-            if (!disposed)
-            {
-                list = null;
-                disposed = true;
-                base.Dispose(disposing);
-            }
+            list = null;
+            base.DisposeManaged();
         }
     }
 }

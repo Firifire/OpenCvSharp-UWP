@@ -7,10 +7,10 @@ namespace OpenCvHololens
 {
     static partial class NativeMethods
     {
-        [DllImport(DllExtern, EntryPoint = "core_MatExpr_new1")]
-        public static extern IntPtr core_MatExpr_new();
-        [DllImport(DllExtern, EntryPoint = "core_MatExpr_new2")]
-        public static extern IntPtr core_MatExpr_new(IntPtr mat);
+        [DllImport(DllExtern)]
+        public static extern IntPtr core_MatExpr_new1();
+        [DllImport(DllExtern)]
+        public static extern IntPtr core_MatExpr_new2(IntPtr mat);
         [DllImport(DllExtern)]
         public static extern void core_MatExpr_delete(IntPtr expr);
 
@@ -66,10 +66,10 @@ namespace OpenCvHololens
         public static extern IntPtr core_MatExpr_row(IntPtr self, int y);
         [DllImport(DllExtern)]
         public static extern IntPtr core_MatExpr_col(IntPtr self, int x);
-        [DllImport(DllExtern, EntryPoint = "core_MatExpr_diag1")]
-        public static extern IntPtr core_MatExpr_diag(IntPtr self);
-        [DllImport(DllExtern, EntryPoint = "core_MatExpr_diag2")]
-        public static extern IntPtr core_MatExpr_diag(IntPtr self, int d);
+        [DllImport(DllExtern)]
+        public static extern IntPtr core_MatExpr_diag1(IntPtr self);
+        [DllImport(DllExtern)]
+        public static extern IntPtr core_MatExpr_diag2(IntPtr self, int d);
         [DllImport(DllExtern)]
         public static extern IntPtr core_MatExpr_submat(IntPtr self, int rowStart, int rowEnd, int colStart, int colEnd);
         [DllImport(DllExtern)]
@@ -78,10 +78,10 @@ namespace OpenCvHololens
         public static extern double core_MatExpr_dot(IntPtr self, IntPtr m);
         [DllImport(DllExtern)]
         public static extern IntPtr core_MatExpr_t(IntPtr self);
-        [DllImport(DllExtern, EntryPoint = "core_MatExpr_inv1")]
-        public static extern IntPtr core_MatExpr_inv(IntPtr self);
-        [DllImport(DllExtern, EntryPoint = "core_MatExpr_inv2")]
-        public static extern IntPtr core_MatExpr_inv(IntPtr self, int method);
+        [DllImport(DllExtern)]
+        public static extern IntPtr core_MatExpr_inv1(IntPtr self);
+        [DllImport(DllExtern)]
+        public static extern IntPtr core_MatExpr_inv2(IntPtr self, int method);
         [DllImport(DllExtern)]
         public static extern IntPtr core_MatExpr_mul_toMatExpr(IntPtr self, IntPtr e, double scale);
         [DllImport(DllExtern)]

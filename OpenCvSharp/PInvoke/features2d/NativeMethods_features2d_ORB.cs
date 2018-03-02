@@ -18,9 +18,6 @@ namespace OpenCvHololens
         public static extern void features2d_Ptr_ORB_delete(IntPtr ptr);
 
         [DllImport(DllExtern)]
-        public static extern IntPtr features2d_ORB_info(IntPtr obj);
-
-        [DllImport(DllExtern)]
         public static extern IntPtr features2d_Ptr_ORB_get(IntPtr ptr);
 
         [DllImport(DllExtern)]

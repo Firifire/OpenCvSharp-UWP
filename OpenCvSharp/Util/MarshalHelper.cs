@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 #pragma warning disable 1591
 
-namespace OpenCvSharp.Util
+namespace OpenCvHololens.Util
 {
     /// <summary>
     /// 
@@ -26,11 +26,7 @@ namespace OpenCvSharp.Util
 #else
             if (typeof(T).GetTypeInfo().IsValueType)
             {
-#if uwp
-                return Marshal.SizeOf(typeof(T));
-#else
                 return Marshal.SizeOf<T>();
-#endif
             }
             else
             {
@@ -42,7 +38,7 @@ namespace OpenCvSharp.Util
         public static T PtrToStructure<T>(IntPtr p)
             where T : struct 
         {
-#if net20 || net40 || uwp
+#if net20 || net40
             return (T)Marshal.PtrToStructure(p, typeof(T));
 #else
             return Marshal.PtrToStructure<T>(p);

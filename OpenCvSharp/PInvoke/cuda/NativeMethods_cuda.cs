@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using OpenCvHololens.Cuda;
 
 #pragma warning disable 1591
 
@@ -50,7 +51,7 @@ namespace OpenCvHololens
         [DllImport(DllExtern)]
         public static extern void cuda_DeviceInfo_delete(IntPtr obj);
 
-        [DllImport(DllExtern, CharSet = CharSet.Ansi)]
+        [DllImport(DllExtern,  CharSet = CharSet.Ansi, ExactSpelling = true)]
         public static extern void cuda_DeviceInfo_name(
             IntPtr obj, [MarshalAs(UnmanagedType.LPStr)] StringBuilder buf, int bufLength);
         [DllImport(DllExtern)]
@@ -178,7 +179,7 @@ namespace OpenCvHololens
         public static extern int HOGDescriptor_sizeof();
         [DllImport(DllExtern)]
         public static extern IntPtr HOGDescriptor_new(Size win_size, Size block_size, Size block_stride, Size cell_size, 
-	        int nbins, double winSigma, double threshold_L2Hys, bool gamma_correction, int nlevels);
+            int nbins, double winSigma, double threshold_L2Hys, bool gamma_correction, int nlevels);
         [DllImport(DllExtern)]
         public static extern void HOGDescriptor_delete(IntPtr obj);
 
@@ -197,7 +198,10 @@ namespace OpenCvHololens
         public static extern void HOGDescriptor_detect(IntPtr obj, IntPtr img, IntPtr found_locations, double hit_threshold, Size win_stride, Size padding);
         [DllImport(DllExtern)]
         public static extern void HOGDescriptor_detectMultiScale(IntPtr obj, IntPtr img, IntPtr found_locations, 
-										           double hit_threshold, Size win_stride, Size padding, double scale, int group_threshold);
+                                                   double hit_threshold, Size win_stride, Size padding, double scale, int group_threshold);
+        [DllImport(DllExtern)]
+        public static extern void HOGDescriptor_getDescriptors(IntPtr obj, IntPtr img, Size win_stride, IntPtr descriptors, [MarshalAs(UnmanagedType.I4)] DescriptorFormat descr_format);
+
         [DllImport(DllExtern)]
         public static extern Size HOGDescriptor_win_size_get(IntPtr obj);
         [DllImport(DllExtern)]
