@@ -4,12 +4,12 @@
 #include "include_opencv.h"
 
 CVAPI(void) superres_FrameSource_nextFrame(
-	cv::Ptr<cv::superres::FrameSource> *obj, cv::_OutputArray *frame)
+    cv::Ptr<cv::superres::FrameSource> *obj, cv::_OutputArray *frame)
 {
     (*obj)->nextFrame(*frame);
 }
 CVAPI(void) superres_FrameSource_reset(
-	cv::Ptr<cv::superres::FrameSource> *obj)
+    cv::Ptr<cv::superres::FrameSource> *obj)
 {
     (*obj)->reset();
 }
@@ -37,7 +37,7 @@ CVAPI(cv::superres::FrameSource*) superres_Ptr_FrameSource_get(cv::Ptr<cv::super
 }
 CVAPI(void) superres_Ptr_FrameSource_delete(cv::Ptr<cv::superres::FrameSource> *ptr)
 {
-	delete ptr;
+    delete ptr;
 }
 
 
@@ -75,13 +75,13 @@ CVAPI(cv::Ptr<cv::superres::SuperResolution>*) superres_createSuperResolution_BT
 }*/
 
 CVAPI(cv::superres::SuperResolution*) superres_Ptr_SuperResolution_get(
-	cv::Ptr<cv::superres::SuperResolution> *ptr)
+    cv::Ptr<cv::superres::SuperResolution> *ptr)
 {
     return ptr->get();
 }
 CVAPI(void) superres_Ptr_SuperResolution_delete(cv::Ptr<cv::superres::SuperResolution> *ptr)
 {
-	delete ptr;
+    delete ptr;
 }
 
 
@@ -139,11 +139,11 @@ CVAPI(cv::Ptr<cv::superres::DenseOpticalFlowExt>*) superres_createOptFlow_DualTV
     return clone(cv::superres::createOptFlow_DualTVL1_OCL());
 }
 */
-CVAPI(cv::Ptr<cv::superres::BroxOpticalFlow>*) superres_createOptFlow_Brox_GPU()
+CVAPI(cv::Ptr<cv::superres::BroxOpticalFlow>*) superres_createOptFlow_Brox_CUDA()
 {
     return clone(cv::superres::createOptFlow_Brox_CUDA());
 }
-CVAPI(cv::Ptr<cv::superres::PyrLKOpticalFlow>*) superres_createOptFlow_PyrLK_GPU()
+CVAPI(cv::Ptr<cv::superres::PyrLKOpticalFlow>*) superres_createOptFlow_PyrLK_CUDA()
 {
     return clone(cv::superres::createOptFlow_PyrLK_CUDA());
 }
