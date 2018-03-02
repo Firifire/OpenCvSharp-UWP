@@ -47,10 +47,10 @@ CVAPI(void) highgui_setWindowProperty(const char *winName, int propId, double pr
     cv::setWindowProperty(winName, propId, propValue);
 }
 
-CVAPI(void) highgui_setWindowTitle(const char *winname, const char *title)
-{
-    cv::setWindowTitle(winname, title);
-}
+//CVAPI(void) highgui_setWindowTitle(const char *winname, const char *title)
+//{
+//    cv::setWindowTitle(winname, title);
+//}
 
 CVAPI(double) highgui_getWindowProperty(const char *winName, int propId)
 {

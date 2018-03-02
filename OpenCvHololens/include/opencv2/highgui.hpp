@@ -429,7 +429,7 @@ CV_EXPORTS_W void setWindowProperty(const String& winname, int prop_id, double p
 @param winname Name of the window.
 @param title New title.
 */
-CV_EXPORTS_W void setWindowTitle(const String& winname, const String& title);
+//CV_EXPORTS_W void setWindowTitle(const String& winname, const String& title);
 
 /** @brief Provides parameters of a window.
 
