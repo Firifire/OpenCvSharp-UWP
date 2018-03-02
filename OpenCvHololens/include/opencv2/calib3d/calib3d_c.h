@@ -127,7 +127,7 @@ CVAPI(void) cvCorrectMatches(CvMat* F, CvMat* points1, CvMat* points2,
    alpha=0 - only valid pixels will be retained in the undistorted image
    alpha=1 - all the source image pixels will be retained in the undistorted image
 */
-OldAPI(void) cvGetOptimalNewCameraMatrix( const CvMat* camera_matrix,
+CVAPI(void) cvGetOptimalNewCameraMatrix( const CvMat* camera_matrix,
                                          const CvMat* dist_coeffs,
                                          CvSize image_size, double alpha,
                                          CvMat* new_camera_matrix,
@@ -245,6 +245,7 @@ CVAPI(void) cvDrawChessboardCorners( CvArr* image, CvSize pattern_size,
 #define CV_CALIB_FIX_S1_S2_S3_S4  65536
 #define CV_CALIB_TILTED_MODEL  262144
 #define CV_CALIB_FIX_TAUX_TAUY  524288
+#define CV_CALIB_FIX_TANGENT_DIST 2097152
 
 #define CV_CALIB_NINTRINSIC 18
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\OpenCV-Hololens.3.1.0\build\native\OpenCV-Hololens.props" Condition="Exists('..\packages\OpenCV-Hololens.3.1.0\build\native\OpenCV-Hololens.props')" />
+  <Import Project="..\packages\OpenCV-Hololens.3.3.1\build\native\OpenCV-Hololens.props" Condition="Exists('..\packages\OpenCV-Hololens.3.3.1\build\native\OpenCV-Hololens.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
       <Configuration>Debug</Configuration>
@@ -189,6 +189,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <PreprocessorDefinitions>_UWP;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -256,6 +257,8 @@
     <ClInclude Include="include\opencv2\core\cvdef.h" />
     <ClInclude Include="include\opencv2\core\cvstd.hpp" />
     <ClInclude Include="include\opencv2\core\cvstd.inl.hpp" />
+    <ClInclude Include="include\opencv2\core\cv_cpu_dispatch.h" />
+    <ClInclude Include="include\opencv2\core\cv_cpu_helper.h" />
     <ClInclude Include="include\opencv2\core\directx.hpp" />
     <ClInclude Include="include\opencv2\core\eigen.hpp" />
     <ClInclude Include="include\opencv2\core\fast_math.hpp" />
@@ -265,6 +268,7 @@
     <ClInclude Include="include\opencv2\core\hal\intrin_cpp.hpp" />
     <ClInclude Include="include\opencv2\core\hal\intrin_neon.hpp" />
     <ClInclude Include="include\opencv2\core\hal\intrin_sse.hpp" />
+    <ClInclude Include="include\opencv2\core\hal\intrin_vsx.hpp" />
     <ClInclude Include="include\opencv2\core\ippasync.hpp" />
     <ClInclude Include="include\opencv2\core\mat.hpp" />
     <ClInclude Include="include\opencv2\core\mat.inl.hpp" />
@@ -277,17 +281,19 @@
     <ClInclude Include="include\opencv2\core\optim.hpp" />
     <ClInclude Include="include\opencv2\core\ovx.hpp" />
     <ClInclude Include="include\opencv2\core\persistence.hpp" />
-    <ClInclude Include="include\opencv2\core\private.cuda.hpp" />
-    <ClInclude Include="include\opencv2\core\private.hpp" />
     <ClInclude Include="include\opencv2\core\ptr.inl.hpp" />
     <ClInclude Include="include\opencv2\core\saturate.hpp" />
+    <ClInclude Include="include\opencv2\core\softfloat.hpp" />
     <ClInclude Include="include\opencv2\core\sse_utils.hpp" />
     <ClInclude Include="include\opencv2\core\traits.hpp" />
     <ClInclude Include="include\opencv2\core\types.hpp" />
     <ClInclude Include="include\opencv2\core\types_c.h" />
     <ClInclude Include="include\opencv2\core\utility.hpp" />
+    <ClInclude Include="include\opencv2\core\utils\logger.hpp" />
+    <ClInclude Include="include\opencv2\core\utils\trace.hpp" />
     <ClInclude Include="include\opencv2\core\va_intel.hpp" />
     <ClInclude Include="include\opencv2\core\version.hpp" />
+    <ClInclude Include="include\opencv2\core\vsx_utils.hpp" />
     <ClInclude Include="include\opencv2\core\wimage.hpp" />
     <ClInclude Include="include\opencv2\cvconfig.h" />
     <ClInclude Include="include\opencv2\datasets\ar_hmdb.hpp" />
@@ -313,6 +319,7 @@
     <ClInclude Include="include\opencv2\datasets\pd_inria.hpp" />
     <ClInclude Include="include\opencv2\datasets\slam_kitti.hpp" />
     <ClInclude Include="include\opencv2\datasets\slam_tumindoor.hpp" />
+    <ClInclude Include="include\opencv2\datasets\track_alov.hpp" />
     <ClInclude Include="include\opencv2\datasets\track_vot.hpp" />
     <ClInclude Include="include\opencv2\datasets\tr_chars.hpp" />
     <ClInclude Include="include\opencv2\datasets\tr_icdar.hpp" />
@@ -364,6 +371,7 @@
     <ClInclude Include="include\opencv2\flann\timer.h" />
     <ClInclude Include="include\opencv2\fuzzy.hpp" />
     <ClInclude Include="include\opencv2\fuzzy\fuzzy_F0_math.hpp" />
+    <ClInclude Include="include\opencv2\fuzzy\fuzzy_F1_math.hpp" />
     <ClInclude Include="include\opencv2\fuzzy\fuzzy_image.hpp" />
     <ClInclude Include="include\opencv2\fuzzy\types.hpp" />
     <ClInclude Include="include\opencv2\highgui.hpp" />
@@ -381,6 +389,14 @@
     <ClInclude Include="include\opencv2\imgproc\imgproc.hpp" />
     <ClInclude Include="include\opencv2\imgproc\imgproc_c.h" />
     <ClInclude Include="include\opencv2\imgproc\types_c.h" />
+    <ClInclude Include="include\opencv2\img_hash.hpp" />
+    <ClInclude Include="include\opencv2\img_hash\average_hash.hpp" />
+    <ClInclude Include="include\opencv2\img_hash\block_mean_hash.hpp" />
+    <ClInclude Include="include\opencv2\img_hash\color_moment_hash.hpp" />
+    <ClInclude Include="include\opencv2\img_hash\img_hash_base.hpp" />
+    <ClInclude Include="include\opencv2\img_hash\marr_hildreth_hash.hpp" />
+    <ClInclude Include="include\opencv2\img_hash\phash.hpp" />
+    <ClInclude Include="include\opencv2\img_hash\radial_variance_hash.hpp" />
     <ClInclude Include="include\opencv2\line_descriptor.hpp" />
     <ClInclude Include="include\opencv2\line_descriptor\descriptor.hpp" />
     <ClInclude Include="include\opencv2\ml.hpp" />
@@ -493,6 +509,7 @@
     <ClInclude Include="include\opencv2\xfeatures2d\cuda.hpp" />
     <ClInclude Include="include\opencv2\xfeatures2d\nonfree.hpp" />
     <ClInclude Include="include\opencv2\ximgproc.hpp" />
+    <ClInclude Include="include\opencv2\ximgproc\deriche_filter.hpp" />
     <ClInclude Include="include\opencv2\ximgproc\disparity_filter.hpp" />
     <ClInclude Include="include\opencv2\ximgproc\edge_filter.hpp" />
     <ClInclude Include="include\opencv2\ximgproc\estimated_covariance.hpp" />
@@ -500,6 +517,7 @@
     <ClInclude Include="include\opencv2\ximgproc\fast_line_detector.hpp" />
     <ClInclude Include="include\opencv2\ximgproc\lsc.hpp" />
     <ClInclude Include="include\opencv2\ximgproc\paillou_filter.hpp" />
+    <ClInclude Include="include\opencv2\ximgproc\peilin.hpp" />
     <ClInclude Include="include\opencv2\ximgproc\seeds.hpp" />
     <ClInclude Include="include\opencv2\ximgproc\segmentation.hpp" />
     <ClInclude Include="include\opencv2\ximgproc\slic.hpp" />
@@ -524,9 +542,12 @@
     <ClInclude Include="include\opencv\highgui.h" />
     <ClInclude Include="include\opencv\ml.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Source\aruco.h" />
     <ClInclude Include="Source\bgsegm.h" />
     <ClInclude Include="Source\calib3d.h" />
+    <ClInclude Include="Source\calib3d_StereoBM.h" />
     <ClInclude Include="Source\calib3d_StereoMatcher.h" />
+    <ClInclude Include="Source\calib3d_StereoSGBM.h" />
     <ClInclude Include="Source\core.h" />
     <ClInclude Include="Source\core_Algorithm.h" />
     <ClInclude Include="Source\core_FileStorage.h" />
@@ -540,7 +561,14 @@
     <ClInclude Include="Source\core_SVD.h" />
     <ClInclude Include="Source\cuda.h" />
     <ClInclude Include="Source\cuda_GpuMat.h" />
+    <ClInclude Include="Source\dnn.h" />
+    <ClInclude Include="Source\dnn_Net.h" />
     <ClInclude Include="Source\face.h" />
+    <ClInclude Include="Source\face_BasicFaceRecognizer.h" />
+    <ClInclude Include="Source\face_EigenFaceRecognizer.h" />
+    <ClInclude Include="Source\face_FaceRecognizer.h" />
+    <ClInclude Include="Source\face_FisherFaceRecognizer.h" />
+    <ClInclude Include="Source\face_LBPHFaceRecognizer.h" />
     <ClInclude Include="Source\features2d.h" />
     <ClInclude Include="Source\features2d_AgastFeatureDetector.h" />
     <ClInclude Include="Source\features2d_AKAZE.h" />
@@ -556,6 +584,7 @@
     <ClInclude Include="Source\features2d_ORB.h" />
     <ClInclude Include="Source\features2d_SimpleBlobDetector.h" />
     <ClInclude Include="Source\flann.h" />
+    <ClInclude Include="Source\flann_IndexParams.h" />
     <ClInclude Include="Source\highgui.h" />
     <ClInclude Include="Source\imgcodecs.h" />
     <ClInclude Include="Source\imgproc.h" />
@@ -564,13 +593,16 @@
     <ClInclude Include="Source\imgproc_LineIterator.h" />
     <ClInclude Include="Source\imgproc_LineSegmentDetector.h" />
     <ClInclude Include="Source\imgproc_Subdiv2D.h" />
+    <ClInclude Include="Source\img_hash.h" />
     <ClInclude Include="Source\include_opencv.h" />
     <ClInclude Include="Source\ml.h" />
     <ClInclude Include="Source\ml_ANN_MLP.h" />
     <ClInclude Include="Source\ml_Boost.h" />
     <ClInclude Include="Source\ml_DTree.h" />
+    <ClInclude Include="Source\ml_DTrees.h" />
     <ClInclude Include="Source\ml_EM.h" />
     <ClInclude Include="Source\ml_KNearest.h" />
+    <ClInclude Include="Source\ml_LogisticRegression.h" />
     <ClInclude Include="Source\ml_LogisticRegressionh.h" />
     <ClInclude Include="Source\ml_NormalBayesClassifier.h" />
     <ClInclude Include="Source\ml_RTrees.h" />
@@ -585,15 +617,23 @@
     <ClInclude Include="Source\photo.h" />
     <ClInclude Include="Source\photo_HDR.h" />
     <ClInclude Include="Source\shape_ShapeDistanceExtractor.h" />
+    <ClInclude Include="Source\std_string.h" />
     <ClInclude Include="Source\std_vector.h" />
     <ClInclude Include="Source\stitching.h" />
     <ClInclude Include="Source\stitching_detail_Matchers.h" />
     <ClInclude Include="Source\superres.h" />
+    <ClInclude Include="Source\text.h" />
+    <ClInclude Include="Source\tracking.h" />
     <ClInclude Include="Source\video.h" />
     <ClInclude Include="Source\videoio.h" />
     <ClInclude Include="Source\video_background_segm.h" />
     <ClInclude Include="Source\video_tracking.h" />
     <ClInclude Include="Source\xfeatures2d.h" />
+    <ClInclude Include="Source\ximgproc.h" />
+    <ClInclude Include="Source\ximgproc_FastHoughTransform.h" />
+    <ClInclude Include="Source\ximgproc_FastLineDetector.h" />
+    <ClInclude Include="Source\ximgproc_Paillou.h" />
+    <ClInclude Include="Source\xphoto.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -607,39 +647,48 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Source\aruco.cpp" />
     <ClCompile Include="Source\bgsegm.cpp" />
     <ClCompile Include="Source\calib3d.cpp" />
     <ClCompile Include="Source\core.cpp" />
     <ClCompile Include="Source\cuda.cpp" />
+    <ClCompile Include="Source\dnn.cpp" />
     <ClCompile Include="Source\face.cpp" />
     <ClCompile Include="Source\features2d.cpp" />
     <ClCompile Include="Source\flann.cpp" />
     <ClCompile Include="Source\highgui.cpp" />
     <ClCompile Include="Source\imgcodecs.cpp" />
     <ClCompile Include="Source\imgproc.cpp" />
+    <ClCompile Include="Source\img_hash.cpp" />
     <ClCompile Include="Source\ml.cpp" />
     <ClCompile Include="Source\objdetect.cpp" />
     <ClCompile Include="Source\optflow.cpp" />
     <ClCompile Include="Source\photo.cpp" />
     <ClCompile Include="Source\shape.cpp" />
+    <ClCompile Include="Source\std_string.cpp" />
     <ClCompile Include="Source\std_vector.cpp" />
     <ClCompile Include="Source\stitching.cpp" />
+    <ClCompile Include="Source\superres.cpp" />
+    <ClCompile Include="Source\text.cpp" />
+    <ClCompile Include="Source\tracking.cpp" />
     <ClCompile Include="Source\video.cpp" />
     <ClCompile Include="Source\videoio.cpp" />
     <ClCompile Include="Source\xfeatures2d.cpp" />
+    <ClCompile Include="Source\ximgproc.cpp" />
+    <ClCompile Include="Source\xphoto.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\OpenCV-Hololens.3.1.0\build\native\OpenCV-Hololens.targets" Condition="Exists('..\packages\OpenCV-Hololens.3.1.0\build\native\OpenCV-Hololens.targets')" />
+    <Import Project="..\packages\OpenCV-Hololens.3.3.1\build\native\OpenCV-Hololens.targets" Condition="Exists('..\packages\OpenCV-Hololens.3.3.1\build\native\OpenCV-Hololens.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\OpenCV-Hololens.3.1.0\build\native\OpenCV-Hololens.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OpenCV-Hololens.3.1.0\build\native\OpenCV-Hololens.props'))" />
-    <Error Condition="!Exists('..\packages\OpenCV-Hololens.3.1.0\build\native\OpenCV-Hololens.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OpenCV-Hololens.3.1.0\build\native\OpenCV-Hololens.targets'))" />
+    <Error Condition="!Exists('..\packages\OpenCV-Hololens.3.3.1\build\native\OpenCV-Hololens.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OpenCV-Hololens.3.3.1\build\native\OpenCV-Hololens.props'))" />
+    <Error Condition="!Exists('..\packages\OpenCV-Hololens.3.3.1\build\native\OpenCV-Hololens.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OpenCV-Hololens.3.3.1\build\native\OpenCV-Hololens.targets'))" />
   </Target>
 </Project>

@@ -138,6 +138,7 @@ namespace OpenCvHololens
         {
             if (disposed)
                 throw new ObjectDisposedException(GetType().Name);
+            GC.KeepAlive(this);
             return NativeMethods.features2d_Feature2D_empty(ptr) != 0;
         }
 
@@ -166,6 +167,7 @@ namespace OpenCvHololens
             }
             finally
             {
+                GC.KeepAlive(this);
                 GC.KeepAlive(image);
                 GC.KeepAlive(mask);
             }
@@ -197,6 +199,7 @@ namespace OpenCvHololens
             }
             finally
             {
+                GC.KeepAlive(this);
                 GC.KeepAlive(image);
                 GC.KeepAlive(mask);
             }
@@ -235,8 +238,11 @@ namespace OpenCvHololens
                     NativeMethods.features2d_Feature2D_detect_Mat2(
                         ptr, imagesPtr, imagesArray.Length, keypoints.CvPtr, masksPtr);
                 }
+                GC.KeepAlive(this);
+                GC.KeepAlive(imagesArray);
                 return keypoints.ToArray();
             }
+
         }
 
         /// <summary>
@@ -257,6 +263,9 @@ namespace OpenCvHololens
                 NativeMethods.features2d_Feature2D_compute1(ptr, image.CvPtr, keypointsVec.CvPtr, descriptors.CvPtr);
                 keypoints = keypointsVec.ToArray();
             }
+            GC.KeepAlive(this);
+            GC.KeepAlive(image);
+            GC.KeepAlive(descriptors);
         }
 
         /// <summary>
@@ -279,6 +288,9 @@ namespace OpenCvHololens
                 NativeMethods.features2d_Feature2D_compute1(ptr, image.CvPtr, keypointsVec.CvPtr, descriptors.CvPtr);
                 outKeypoints = keypointsVec.ToArray();
             }
+            GC.KeepAlive(this);
+            GC.KeepAlive(image);
+            GC.KeepAlive(descriptors);
         }
 
         /// <summary>
@@ -308,6 +320,9 @@ namespace OpenCvHololens
 
                 keypoints = keypointsVec.ToArray();
             }
+            GC.KeepAlive(this);
+            GC.KeepAlive(images);
+            GC.KeepAlive(descriptors);
         }
 
         /// <summary>
@@ -342,9 +357,11 @@ namespace OpenCvHololens
                 keypoints = keypointsVec.ToArray();
             }
 
+            GC.KeepAlive(this);
             GC.KeepAlive(image);
             GC.KeepAlive(mask);
             descriptors.Fix();
+            GC.KeepAlive(descriptors);
         }
     }
 }
