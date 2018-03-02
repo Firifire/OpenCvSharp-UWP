@@ -62,7 +62,7 @@ namespace OpenCvHololens
         internal static new DenseFeatureDetector FromPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvSharpException("Invalid cv::Ptr<DenseFeatureDetector> pointer");
+                throw new OpenCvHololensException("Invalid cv::Ptr<DenseFeatureDetector> pointer");
             var ptrObj = new Ptr<DenseFeatureDetector>(ptr);
             return new DenseFeatureDetector(ptrObj);
         }

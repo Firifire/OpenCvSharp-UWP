@@ -37,13 +37,13 @@ namespace OpenCvHololens
 
         [DllImport(DllExtern)]
         public static extern IntPtr objdetect_CascadeClassifier_new();
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern IntPtr objdetect_CascadeClassifier_newFromFile([MarshalAs(UnmanagedType.LPStr)] string fileName);
         [DllImport(DllExtern)]
         public static extern void objdetect_CascadeClassifier_delete(IntPtr obj);
         [DllImport(DllExtern)]
         public static extern int objdetect_CascadeClassifier_empty(IntPtr obj);
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern int objdetect_CascadeClassifier_load(IntPtr obj, [MarshalAs(UnmanagedType.LPStr)] string fileName);
 
         [DllImport(DllExtern)]
@@ -75,7 +75,7 @@ namespace OpenCvHololens
         public static extern IntPtr objdetect_HOGDescriptor_new2(Size winSize, Size blockSize, Size blockStride, Size cellSize,
             int nbins, int derivAperture, double winSigma, [MarshalAs(UnmanagedType.I4)] HistogramNormType histogramNormType,
             double l2HysThreshold, int gammaCorrection, int nlevels);
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern IntPtr objdetect_HOGDescriptor_new3([MarshalAs(UnmanagedType.LPStr)] string fileName);
         [DllImport(DllExtern)]
         public static extern void objdetect_HOGDescriptor_delete(IntPtr self);
@@ -87,9 +87,9 @@ namespace OpenCvHololens
         public static extern double objdetect_HOGDescriptor_getWinSigma(IntPtr self);
         [DllImport(DllExtern)]
         public static extern void objdetect_HOGDescriptor_setSVMDetector(IntPtr self, IntPtr svmdetector);
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern bool objdetect_HOGDescriptor_load(IntPtr self, [MarshalAs(UnmanagedType.LPStr)] string filename, [MarshalAs(UnmanagedType.LPStr)] string objname);
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern void objdetect_HOGDescriptor_save(IntPtr self, [MarshalAs(UnmanagedType.LPStr)] string filename, [MarshalAs(UnmanagedType.LPStr)] string objname);
         
         [DllImport(DllExtern)]
@@ -97,23 +97,20 @@ namespace OpenCvHololens
             IntPtr self, IntPtr img, IntPtr descriptors,
                          Size winStride, Size padding, [In] Point[] locations, int locationsLength);
 
-        [DllImport(DllExtern,
-            EntryPoint = "objdetect_HOGDescriptor_detect1")]
-        public static extern void objdetect_HOGDescriptor_detect(
+        [DllImport(DllExtern)]
+        public static extern void objdetect_HOGDescriptor_detect1(
             IntPtr self, IntPtr img, IntPtr foundLocations,
             double hitThreshold, Size winStride, Size padding, [In] Point[] searchLocations, int searchLocationsLength);
-        [DllImport(DllExtern,
-            EntryPoint = "objdetect_HOGDescriptor_detect2")]
-        public static extern void objdetect_HOGDescriptor_detect(
+        [DllImport(DllExtern)]
+        public static extern void objdetect_HOGDescriptor_detect2(
             IntPtr self, IntPtr img, IntPtr foundLocations, IntPtr weights,
             double hitThreshold, Size winStride, Size padding, [In] Point[] searchLocations, int searchLocationsLength);
-        [DllImport(DllExtern, EntryPoint = "objdetect_HOGDescriptor_detectMultiScale1")]
-        public static extern void objdetect_HOGDescriptor_detectMultiScale(
+        [DllImport(DllExtern)]
+        public static extern void objdetect_HOGDescriptor_detectMultiScale1(
             IntPtr self, IntPtr img, IntPtr foundLocations,
             double hitThreshold, Size winStride, Size padding, double scale, int groupThreshold);
-        [DllImport(DllExtern,
-            EntryPoint = "objdetect_HOGDescriptor_detectMultiScale2")]
-        public static extern void objdetect_HOGDescriptor_detectMultiScale(
+        [DllImport(DllExtern)]
+        public static extern void objdetect_HOGDescriptor_detectMultiScale2(
             IntPtr self, IntPtr img, IntPtr foundLocations, IntPtr foundWeights,
             double hitThreshold, Size winStride, Size padding, double scale, int groupThreshold);
         [DllImport(DllExtern)]
@@ -130,7 +127,7 @@ namespace OpenCvHololens
             IntPtr obj, IntPtr img, IntPtr foundLocations,
             IntPtr roiScales, IntPtr roiLocations, IntPtr roiConfidences,
             double hitThreshold, int groupThreshold);
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern void objdetect_HOGDescriptor_readALTModel(IntPtr obj, [MarshalAs(UnmanagedType.LPStr)] string modelfile);
         [DllImport(DllExtern)]
         public static extern void objdetect_HOGDescriptor_groupRectangles(IntPtr obj,

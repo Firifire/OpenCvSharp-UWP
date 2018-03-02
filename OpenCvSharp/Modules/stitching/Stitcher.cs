@@ -59,8 +59,7 @@ namespace OpenCvHololens
     /// </summary>
     public sealed class Stitcher : DisposableCvObject
     {
-        private bool disposed;
-        private Ptr<Stitcher> ptrObj;
+        private Ptr ptrObj;
 
         #region Enum
 
@@ -83,10 +82,11 @@ namespace OpenCvHololens
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="ptr">cv::Stitcher*</param>
-        private Stitcher(IntPtr ptr)
+        /// <param name="p">cv::Stitcher*</param>
+        private Stitcher(IntPtr p)
         {
-            this.ptr = ptr;
+            ptrObj = new Ptr(p);
+            ptr = ptrObj.Get();
         }
 
         /// <summary>
@@ -96,38 +96,18 @@ namespace OpenCvHololens
         /// whenever it's possible.</param>
         public static Stitcher Create(bool tryUseGpu = false)
         {
-            IntPtr ptr = NativeMethods.stitching_createStitcher(tryUseGpu ? 1 : 0);
-            return new Stitcher(ptr);
+            IntPtr p = NativeMethods.stitching_createStitcher(tryUseGpu ? 1 : 0);
+            return new Stitcher(p);
         }
 
         /// <summary>
-        /// Deletes all resources 
+        /// Releases managed resources
         /// </summary>
-        /// <param name="disposing"></param>
-        protected override void Dispose(bool disposing)
+        protected override void DisposeManaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    // releases managed resources
-                    if (disposing)
-                    {
-                        if (ptrObj != null)
-                        {
-                            ptrObj.Dispose();
-                            ptrObj = null;
-                        }
-                    }
-                    // releases unmanaged resources
-                    ptr = IntPtr.Zero;
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            ptrObj?.Dispose();
+            ptrObj = null;
+            base.DisposeManaged();
         }
 
         #endregion
@@ -136,38 +116,92 @@ namespace OpenCvHololens
 
         public double RegistrationResol
         {
-            get { return NativeMethods.stitching_Stitcher_registrationResol(ptr); }
-            set { NativeMethods.stitching_Stitcher_setRegistrationResol(ptr, value); }
+            get
+            {
+                var res = NativeMethods.stitching_Stitcher_registrationResol(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.stitching_Stitcher_setRegistrationResol(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         public double SeamEstimationResol
         {
-            get { return NativeMethods.stitching_Stitcher_seamEstimationResol(ptr); }
-            set { NativeMethods.stitching_Stitcher_setRegistrationResol(ptr, value); }
+            get
+            {
+                var res = NativeMethods.stitching_Stitcher_seamEstimationResol(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.stitching_Stitcher_setSeamEstimationResol(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         public double CompositingResol
         {
-            get { return NativeMethods.stitching_Stitcher_compositingResol(ptr); }
-            set { NativeMethods.stitching_Stitcher_setRegistrationResol(ptr, value); }
+            get
+            {
+                var res = NativeMethods.stitching_Stitcher_compositingResol(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.stitching_Stitcher_setCompositingResol(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         public double PanoConfidenceThresh
         {
-            get { return NativeMethods.stitching_Stitcher_panoConfidenceThresh(ptr); }
-            set { NativeMethods.stitching_Stitcher_setRegistrationResol(ptr, value); }
+            get
+            {
+                var res = NativeMethods.stitching_Stitcher_panoConfidenceThresh(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.stitching_Stitcher_setPanoConfidenceThresh(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         public bool WaveCorrection
         {
-            get { return NativeMethods.stitching_Stitcher_waveCorrection(ptr) != 0; }
-            set { NativeMethods.stitching_Stitcher_setRegistrationResol(ptr, value ? 1 : 0); }
+            get
+            {
+                var res = NativeMethods.stitching_Stitcher_waveCorrection(ptr) != 0;
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.stitching_Stitcher_setWaveCorrection(ptr, value ? 1 : 0);
+                GC.KeepAlive(this);
+            }
         }
 
         public WaveCorrectKind WaveCorrectKind
         {
-            get { return (WaveCorrectKind)NativeMethods.stitching_Stitcher_waveCorrectKind(ptr); }
-            set { NativeMethods.stitching_Stitcher_setRegistrationResol(ptr, (int)value); }
+            get
+            {
+                var res = (WaveCorrectKind)NativeMethods.stitching_Stitcher_waveCorrectKind(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.stitching_Stitcher_setWaveCorrectKind(ptr, (int)value);
+                GC.KeepAlive(this);
+            }
         }
 
         public FeaturesFinder FeaturesFinder
@@ -229,6 +263,7 @@ namespace OpenCvHololens
 
                 int[] ret = new int[length];
                 Marshal.Copy(pointer, ret, 0, length);
+                GC.KeepAlive(this); // needs to be after copy of unmanaged data
                 return ret;
             }
         }
@@ -240,7 +275,12 @@ namespace OpenCvHololens
 
         public double WorkScale
         {
-            get { return NativeMethods.stitching_Stitcher_workScale(ptr); }
+            get
+            {
+                var res = NativeMethods.stitching_Stitcher_workScale(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
         }
 
         #endregion
@@ -255,6 +295,8 @@ namespace OpenCvHololens
 
             int status = NativeMethods.stitching_Stitcher_estimateTransform_InputArray1(
                 ptr, images.CvPtr);
+            GC.KeepAlive(this);
+            GC.KeepAlive(images);
             return (Status)status;
         }
 
@@ -271,6 +313,8 @@ namespace OpenCvHololens
                 int status = NativeMethods.stitching_Stitcher_estimateTransform_InputArray2(
                     ptr, images.CvPtr,
                     roisPointer.Pointer, roisPointer.Dim1Length, roisPointer.Dim2Lengths);
+                GC.KeepAlive(this);
+                GC.KeepAlive(images);
                 return (Status)status;
             }
         }
@@ -284,6 +328,8 @@ namespace OpenCvHololens
 
             int status = NativeMethods.stitching_Stitcher_estimateTransform_MatArray1(
                 ptr, imagesPtrs, imagesPtrs.Length);
+            GC.KeepAlive(this);
+            GC.KeepAlive(images);
             return (Status)status;
         }
 
@@ -301,6 +347,8 @@ namespace OpenCvHololens
                 int status = NativeMethods.stitching_Stitcher_estimateTransform_MatArray2(
                     ptr, imagesPtrs, imagesPtrs.Length,
                     roisPointer.Pointer, roisPointer.Dim1Length, roisPointer.Dim2Lengths);
+                GC.KeepAlive(this);
+                GC.KeepAlive(images);
                 return (Status)status;
             }
         }
@@ -314,6 +362,8 @@ namespace OpenCvHololens
             int status = NativeMethods.stitching_Stitcher_composePanorama1(
                 ptr, pano.CvPtr);
             pano.Fix();
+            GC.KeepAlive(this);
+            GC.KeepAlive(pano);
             return (Status)status;
         }
 
@@ -329,6 +379,9 @@ namespace OpenCvHololens
             int status = NativeMethods.stitching_Stitcher_composePanorama2_InputArray(
                 ptr, images.CvPtr, pano.CvPtr);
             pano.Fix();
+            GC.KeepAlive(this);
+            GC.KeepAlive(images);
+            GC.KeepAlive(pano);
             return (Status)status;
         }
 
@@ -344,6 +397,9 @@ namespace OpenCvHololens
             int status = NativeMethods.stitching_Stitcher_composePanorama2_MatArray(
                 ptr, imagesPtrs, imagesPtrs.Length, pano.CvPtr);
             pano.Fix();
+            GC.KeepAlive(this);
+            GC.KeepAlive(images);
+            GC.KeepAlive(pano);
             return (Status)status;
         }
 
@@ -364,7 +420,9 @@ namespace OpenCvHololens
 
             Status status = (Status)NativeMethods.stitching_Stitcher_stitch1_InputArray(
                 ptr, images.CvPtr, pano.CvPtr);
-
+            GC.KeepAlive(this);
+            GC.KeepAlive(images);
+            GC.KeepAlive(pano);
             pano.Fix();
 
             return status;
@@ -388,7 +446,9 @@ namespace OpenCvHololens
 
             Status status = (Status)NativeMethods.stitching_Stitcher_stitch1_MatArray(
                 ptr, imagesPtrs, imagesPtrs.Length, pano.CvPtr);
-
+            GC.KeepAlive(this);
+            GC.KeepAlive(images);
+            GC.KeepAlive(pano);
             pano.Fix();
 
             return status;
@@ -419,6 +479,9 @@ namespace OpenCvHololens
                     roisPointer.Pointer, roisPointer.Dim1Length, roisPointer.Dim2Lengths,
                     pano.CvPtr);
                 pano.Fix();
+                GC.KeepAlive(this);
+                GC.KeepAlive(images);
+                GC.KeepAlive(pano);
                 return (Status)status;
             }
         }
@@ -449,10 +512,33 @@ namespace OpenCvHololens
                     roisPointer.Pointer, roisPointer.Dim1Length, roisPointer.Dim2Lengths,
                     pano.CvPtr);
                 pano.Fix();
+                GC.KeepAlive(this);
+                GC.KeepAlive(images);
+                GC.KeepAlive(pano);
                 return (Status)status;
             }
         }
 
         #endregion
+
+        internal class Ptr : OpenCvHololens.Ptr
+        {
+            public Ptr(IntPtr ptr) : base(ptr)
+            {
+            }
+
+            public override IntPtr Get()
+            {
+                var res = NativeMethods.stitching_Ptr_Stitcher_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+
+            protected override void DisposeUnmanaged()
+            {
+                NativeMethods.stitching_Ptr_Stitcher_delete(ptr);
+                base.DisposeUnmanaged();
+            }
+        }
     }
 }

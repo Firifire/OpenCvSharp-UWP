@@ -48,11 +48,8 @@ namespace OpenCvHololens
             IntPtr obj, IntPtr queryDescriptors, IntPtr matches,
             float maxDistance, IntPtr[] masks, int masksSize, int compactResult);
 
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern IntPtr features2d_DescriptorMatcher_create([MarshalAs(UnmanagedType.LPStr)] string descriptorMatcherType);
-
-        [DllImport(DllExtern)]
-        public static extern IntPtr features2d_DescriptorMatcher_info(IntPtr obj);
 
         [DllImport(DllExtern)]
         public static extern IntPtr features2d_Ptr_DescriptorMatcher_get(IntPtr ptr);
@@ -66,8 +63,6 @@ namespace OpenCvHololens
         public static extern void features2d_BFMatcher_delete(IntPtr obj);
         [DllImport(DllExtern)]
         public static extern int features2d_BFMatcher_isMaskSupported(IntPtr obj);
-        [DllImport(DllExtern)]
-        public static extern IntPtr features2d_BFMatcher_info(IntPtr obj);
 
         [DllImport(DllExtern)]
         public static extern IntPtr features2d_Ptr_BFMatcher_get(IntPtr ptr);
@@ -90,8 +85,6 @@ namespace OpenCvHololens
         public static extern void features2d_FlannBasedMatcher_train(IntPtr obj);
         [DllImport(DllExtern)]
         public static extern int features2d_FlannBasedMatcher_isMaskSupported(IntPtr obj);
-        [DllImport(DllExtern)]
-        public static extern IntPtr features2d_FlannBasedMatcher_info(IntPtr obj);
 
         [DllImport(DllExtern)]
         public static extern IntPtr features2d_Ptr_FlannBasedMatcher_get(IntPtr ptr);

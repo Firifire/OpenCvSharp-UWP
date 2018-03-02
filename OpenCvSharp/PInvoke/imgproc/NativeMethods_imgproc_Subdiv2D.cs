@@ -7,18 +7,18 @@ namespace OpenCvHololens
 {
     static partial class NativeMethods
     {
-        [DllImport(DllExtern, EntryPoint = "imgproc_Subdiv2D_new1")]
-        public static extern IntPtr imgproc_Subdiv2D_new();
-        [DllImport(DllExtern, EntryPoint = "imgproc_Subdiv2D_new2")]
-        public static extern IntPtr imgproc_Subdiv2D_new(Rect rect);
+        [DllImport(DllExtern)]
+        public static extern IntPtr imgproc_Subdiv2D_new1();
+        [DllImport(DllExtern)]
+        public static extern IntPtr imgproc_Subdiv2D_new2(Rect rect);
         [DllImport(DllExtern)]
         public static extern void imgproc_Subdiv2D_delete(IntPtr obj);
         [DllImport(DllExtern)]
         public static extern void imgproc_Subdiv2D_initDelaunay(IntPtr obj, Rect rect);
-        [DllImport(DllExtern, EntryPoint = "imgproc_Subdiv2D_insert1")]
-        public static extern int imgproc_Subdiv2D_insert(IntPtr obj, Point2f pt);
-        [DllImport(DllExtern, EntryPoint = "imgproc_Subdiv2D_insert2")]
-        public static extern void imgproc_Subdiv2D_insert(IntPtr obj, [MarshalAs(UnmanagedType.LPArray)] Point2f[] ptArray, int length);
+        [DllImport(DllExtern)]
+        public static extern int imgproc_Subdiv2D_insert1(IntPtr obj, Point2f pt);
+        [DllImport(DllExtern)]
+        public static extern void imgproc_Subdiv2D_insert2(IntPtr obj, [MarshalAs(UnmanagedType.LPArray)] Point2f[] ptArray, int length);
         [DllImport(DllExtern)]
         public static extern int imgproc_Subdiv2D_locate(IntPtr obj, Point2f pt, out int edge, out int vertex);
         [DllImport(DllExtern)]

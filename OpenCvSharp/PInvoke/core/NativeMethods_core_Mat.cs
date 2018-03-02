@@ -79,10 +79,10 @@ namespace OpenCvHololens
         public static extern void core_Mat_convertTo(IntPtr self, IntPtr m, int rtype, double alpha, double beta);
         [DllImport(DllExtern)]
         public static extern void core_Mat_copyTo(IntPtr self, IntPtr m, IntPtr mask);
-        [DllImport(DllExtern, EntryPoint = "core_Mat_create1")]
-        public static extern void core_Mat_create(IntPtr self, int rows, int cols, int type);
-        [DllImport(DllExtern, EntryPoint = "core_Mat_create2")]
-        public static extern void core_Mat_create(IntPtr self, int ndims, 
+        [DllImport(DllExtern)]
+        public static extern void core_Mat_create1(IntPtr self, int rows, int cols, int type);
+        [DllImport(DllExtern)]
+        public static extern void core_Mat_create2(IntPtr self, int ndims, 
             [MarshalAs(UnmanagedType.LPArray)] int[] sizes, int type);
         [DllImport(DllExtern)]
         public static extern IntPtr core_Mat_cross(IntPtr self, IntPtr m);
@@ -98,10 +98,12 @@ namespace OpenCvHololens
 
         [DllImport(DllExtern)]
         public static extern int core_Mat_depth(IntPtr self);
-        [DllImport(DllExtern, EntryPoint = "core_Mat_diag1")]
-        public static extern IntPtr core_Mat_diag(IntPtr self);
-        [DllImport(DllExtern, EntryPoint = "core_Mat_diag2")]
-        public static extern IntPtr core_Mat_diag(IntPtr self, int d);
+        [DllImport(DllExtern)]
+        public static extern IntPtr core_Mat_diag1(IntPtr self);
+        [DllImport(DllExtern)]
+        public static extern IntPtr core_Mat_diag2(IntPtr self, int d);
+        [DllImport(DllExtern)]
+        public static extern IntPtr core_Mat_diag3(IntPtr self);
         [DllImport(DllExtern)]
         public static extern double core_Mat_dot(IntPtr self, IntPtr m);
         [DllImport(DllExtern)]
@@ -154,10 +156,10 @@ namespace OpenCvHololens
         public static extern Size core_Mat_size(IntPtr self);
         [DllImport(DllExtern)]
         public static extern int core_Mat_sizeAt(IntPtr self, int i);
-        [DllImport(DllExtern, EntryPoint = "core_Mat_step11")]
-        public static extern ulong core_Mat_step1(IntPtr self);
-        [DllImport(DllExtern, EntryPoint = "core_Mat_step12")]
-        public static extern ulong core_Mat_step1(IntPtr self, int i);
+        [DllImport(DllExtern)]
+        public static extern ulong core_Mat_step11(IntPtr self);
+        [DllImport(DllExtern)]
+        public static extern ulong core_Mat_step12(IntPtr self, int i);
         [DllImport(DllExtern)]
         public static extern long core_Mat_step(IntPtr self);
         [DllImport(DllExtern)]
@@ -165,7 +167,7 @@ namespace OpenCvHololens
         [DllImport(DllExtern)]
         public static extern IntPtr core_Mat_subMat1(IntPtr self, int rowStart, int rowEnd, int colStart, int colEnd);
         [DllImport(DllExtern)]
-        public static extern IntPtr core_Mat_subMa2t(IntPtr self, int nRanges, Range[] ranges);
+        public static extern IntPtr core_Mat_subMat2(IntPtr self, int nRanges, Range[] ranges);
         [DllImport(DllExtern)]
         public static extern IntPtr core_Mat_t(IntPtr self);
         [DllImport(DllExtern)]
@@ -176,7 +178,7 @@ namespace OpenCvHololens
         public static extern IntPtr core_Mat_zeros1(int rows, int cols, int type);
         [DllImport(DllExtern)]
         public static extern IntPtr core_Mat_zeros2(int ndims, [MarshalAs(UnmanagedType.LPArray)] int[] sz, int type);
-        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
         public static extern unsafe sbyte* core_Mat_dump(IntPtr self, [MarshalAs(UnmanagedType.LPStr)] string format);
         [DllImport(DllExtern)]
         public static extern unsafe void core_Mat_dump_delete(sbyte* buf);
@@ -294,12 +296,13 @@ namespace OpenCvHololens
         public static extern IntPtr core_abs_Mat(IntPtr e);
 
         #region nSet
+
         [DllImport(DllExtern)]
-        public static extern unsafe int core_Mat_nSetB(IntPtr obj, int row, int col,
+        public static extern unsafe int core_Mat_nSetB(IntPtr obj, int row, int col, 
             byte* vals, int valsLength);
 
         [DllImport(DllExtern)]
-        public static extern unsafe int core_Mat_nSetS(IntPtr obj, int row, int col,
+        public static extern unsafe int core_Mat_nSetS(IntPtr obj, int row, int col, 
             short* vals, int valsLength);
 
         [DllImport(DllExtern)]
@@ -307,15 +310,15 @@ namespace OpenCvHololens
             ushort* vals, int valsLength);
 
         [DllImport(DllExtern)]
-        public static extern unsafe int core_Mat_nSetI(IntPtr obj, int row, int col,
+        public static extern unsafe int core_Mat_nSetI(IntPtr obj, int row, int col, 
             int* vals, int valsLength);
 
         [DllImport(DllExtern)]
-        public static extern unsafe int core_Mat_nSetF(IntPtr obj, int row, int col,
+        public static extern unsafe int core_Mat_nSetF(IntPtr obj, int row, int col, 
             float* vals, int valsLength);
 
         [DllImport(DllExtern)]
-        public static extern unsafe int core_Mat_nSetD(IntPtr obj, int row, int col,
+        public static extern unsafe int core_Mat_nSetD(IntPtr obj, int row, int col, 
             double* vals, int valsLength);
 
         [DllImport(DllExtern)]
@@ -365,15 +368,17 @@ namespace OpenCvHololens
         [DllImport(DllExtern)]
         public static extern unsafe int core_Mat_nSetRect(IntPtr obj, int row, int col,
             Rect* vals, int valsLength);
+
         #endregion
 
         #region nGet
+
         [DllImport(DllExtern)]
-        public static extern unsafe int core_Mat_nGetB(IntPtr obj, int row, int col,
+        public static extern unsafe int core_Mat_nGetB(IntPtr obj, int row, int col, 
             byte* vals, int valsLength);
 
         [DllImport(DllExtern)]
-        public static extern unsafe int core_Mat_nGetS(IntPtr obj, int row, int col,
+        public static extern unsafe int core_Mat_nGetS(IntPtr obj, int row, int col, 
             short* vals, int valsLength);
 
         [DllImport(DllExtern)]
@@ -381,15 +386,15 @@ namespace OpenCvHololens
             ushort* vals, int valsLength);
 
         [DllImport(DllExtern)]
-        public static extern unsafe int core_Mat_nGetI(IntPtr obj, int row, int col,
+        public static extern unsafe int core_Mat_nGetI(IntPtr obj, int row, int col, 
             int* vals, int valsLength);
 
         [DllImport(DllExtern)]
-        public static extern unsafe int core_Mat_nGetF(IntPtr obj, int row, int col,
+        public static extern unsafe int core_Mat_nGetF(IntPtr obj, int row, int col, 
             float* vals, int valsLength);
 
         [DllImport(DllExtern)]
-        public static extern unsafe int core_Mat_nGetD(IntPtr obj, int row, int col,
+        public static extern unsafe int core_Mat_nGetD(IntPtr obj, int row, int col, 
             double* vals, int valsLength);
 
         [DllImport(DllExtern)]
@@ -439,6 +444,7 @@ namespace OpenCvHololens
         [DllImport(DllExtern)]
         public static extern unsafe int core_Mat_nGetRect(IntPtr obj, int row, int col,
             Rect* vals, int valsLength);
+
         #endregion
 
         #region push_back

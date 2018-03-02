@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvHololens.Gpu;
+using OpenCvHololens.Cuda;
 
 namespace OpenCvHololens
 {
@@ -9,7 +9,6 @@ namespace OpenCvHololens
     /// </summary>
     public class OutputArray : DisposableCvObject
     {
-        private bool disposed;
         private readonly object obj;
 
         #region Init & Disposal
@@ -22,6 +21,7 @@ namespace OpenCvHololens
             if (mat == null)
                 throw new ArgumentNullException(nameof(mat));
             ptr = NativeMethods.core_OutputArray_new_byMat(mat.CvPtr);
+            GC.KeepAlive(mat);
             obj = mat;
         }
 
@@ -29,14 +29,14 @@ namespace OpenCvHololens
         /// 
         /// </summary>
         /// <param name="mat"></param>
-        /// <GPUMAT></GPUMAT>
-        //internal OutputArray(GpuMat mat)
-        //{
-        //    if (mat == null)
-        //        throw new ArgumentNullException(nameof(mat));
-        //    ptr = NativeMethods.core_OutputArray_new_byGpuMat(mat.CvPtr);
-        //    obj = mat;
-        //}
+        internal OutputArray(GpuMat mat)
+        {
+            if (mat == null)
+                throw new ArgumentNullException(nameof(mat));
+            ptr = NativeMethods.core_OutputArray_new_byGpuMat(mat.CvPtr);
+            GC.KeepAlive(mat);
+            obj = mat;
+        }
 
         /// <summary>
         /// 
@@ -54,31 +54,14 @@ namespace OpenCvHololens
         }
 
         /// <summary>
-        /// 
+        /// Releases unmanaged resources
         /// </summary>
-        /// <param name="disposing"></param>
-        protected override void Dispose(bool disposing)
+        protected override void DisposeUnmanaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    if (disposing)
-                    {
-                    }
-                    if (ptr != IntPtr.Zero)
-                    {
-                        NativeMethods.core_OutputArray_delete(ptr);
-                        ptr = IntPtr.Zero;
-                    }
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            NativeMethods.core_OutputArray_delete(ptr);
+            base.DisposeUnmanaged();
         }
+
         #endregion
 
         #region Cast
@@ -97,11 +80,10 @@ namespace OpenCvHololens
         /// </summary>
         /// <param name="mat"></param>
         /// <returns></returns>
-        /// <GPUMAT></GPUMAT>
-        //public static implicit operator OutputArray(GpuMat mat)
-        //{
-        //    return new OutputArray(mat);
-        //}
+        public static implicit operator OutputArray(GpuMat mat)
+        {
+            return new OutputArray(mat);
+        }
 
         #endregion
 
@@ -131,21 +113,19 @@ namespace OpenCvHololens
         /// 
         /// </summary>
         /// <returns></returns>
-        /// <GPUMAT></GPUMAT>
-        //public bool IsGpuMat()
-        //{
-        //    return obj is GpuMat;
-        //}
+        public bool IsGpuMat()
+        {
+            return obj is GpuMat;
+        }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        /// <GPUMAT></GPUMAT>
-        //public virtual Mat GetGpuMat()
-        //{
-        //    return obj as GpuMat;
-        //}
+        public virtual Mat GetGpuMat()
+        {
+            return obj as GpuMat;
+        }
 
         /// <summary>
         /// 
@@ -188,14 +168,13 @@ namespace OpenCvHololens
                 NativeMethods.core_Mat_delete(outMat);
                 */
             }
-            ///< GPUMAT ></ GPUMAT >
-            //else if (IsGpuMat())
-            //{
-            //    // do nothing
-            //}
+            else if (IsGpuMat())
+            {
+                // do nothing
+            }
             else
             {
-                throw new OpenCvSharpException("Not supported OutputArray-compatible type");
+                throw new OpenCvHololensException("Not supported OutputArray-compatible type");
             }
         }
 
@@ -216,10 +195,9 @@ namespace OpenCvHololens
         {
             return
                 ptr != IntPtr.Zero &&
-                !disposed &&
+                !IsDisposed &&
                 obj != null &&
-                //< GPUMAT ></ GPUMAT >
-                IsMat();//(IsMat() || IsGpuMat());
+                (IsMat() || IsGpuMat());
         }
         /// <summary>
         /// 
@@ -228,7 +206,7 @@ namespace OpenCvHololens
         public void ThrowIfNotReady()
         {
             if (!IsReady())
-                throw new OpenCvSharpException("Invalid OutputArray");
+                throw new OpenCvHololensException("Invalid OutputArray");
         }
 
         /// <summary>
@@ -246,11 +224,10 @@ namespace OpenCvHololens
         /// </summary>
         /// <param name="mat"></param>
         /// <returns></returns>
-        /// <GPUMAT></GPUMAT>
-        //public static OutputArray Create(GpuMat mat)
-        //{
-        //    return new OutputArray(mat);
-        //}
+        public static OutputArray Create(GpuMat mat)
+        {
+            return new OutputArray(mat);
+        }
 
         /// <summary>
         /// Creates a proxy class of the specified list

@@ -6,8 +6,8 @@ namespace OpenCvHololens
 
 #if LANG_JP
     /// <summary>
-	/// 正規化のタイプ
-	/// </summary>
+    /// 正規化のタイプ
+    /// </summary>
 #else
     /// <summary>
     /// Type of norm

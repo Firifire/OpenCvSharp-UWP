@@ -10,14 +10,12 @@ namespace OpenCvHololens
     /// </summary>
     public class DescriptorMatcher : Algorithm
     {
-        private bool disposed;
-
         /// <summary>
         /// 
         /// </summary>
-        private Ptr<DescriptorMatcher> detectorPtr;
+        private Ptr detectorPtr;
 
-        internal virtual IntPtr PtrObj => detectorPtr.CvPtr;
+        //internal virtual IntPtr PtrObj => detectorPtr.CvPtr;
 
         #region Init & Disposal
 
@@ -62,7 +60,7 @@ namespace OpenCvHololens
                     return new BFMatcher(NormTypes.Hamming2);
 
                 default:
-                    throw new OpenCvSharpException("Unknown matcher name '{0}'", descriptorMatcherType);
+                    throw new OpenCvHololensException("Unknown matcher name '{0}'", descriptorMatcherType);
             }
             /*
             IntPtr ptr;
@@ -70,9 +68,9 @@ namespace OpenCvHololens
             {
                 ptr = NativeMethods.features2d_FeatureDetector_create(descriptorMatcherType);
             }
-            catch (OpenCvSharpException)
+            catch (OpenCvHololensException)
             {
-                throw new OpenCvSharpException(
+                throw new OpenCvHololensException(
                     "matcher name '{0}' is not valid.", descriptorMatcherType);
             }
             return FromPtr(ptr);*/
@@ -86,8 +84,8 @@ namespace OpenCvHololens
         internal static DescriptorMatcher FromPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvSharpException("Invalid cv::Ptr<DescriptorMatcher> pointer");
-            var ptrObj = new Ptr<DescriptorMatcher>(ptr);
+                throw new OpenCvHololensException("Invalid cv::Ptr<DescriptorMatcher> pointer");
+            var ptrObj = new Ptr(ptr);
             var detector = new DescriptorMatcher
             {
                 detectorPtr = ptrObj,
@@ -103,7 +101,7 @@ namespace OpenCvHololens
         internal static DescriptorMatcher FromRawPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvSharpException("Invalid DescriptorMatcher pointer");
+                throw new OpenCvHololensException("Invalid DescriptorMatcher pointer");
             var detector = new DescriptorMatcher
             {
                 detectorPtr = null,
@@ -112,49 +110,14 @@ namespace OpenCvHololens
             return detector;
         }
 
-
-#if LANG_JP
-    /// <summary>
-    /// リソースの解放
-    /// </summary>
-    /// <param name="disposing">
-    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-    ///</param>
-#else
         /// <summary>
-        /// Releases the resources
+        /// Releases managed resources
         /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
+        protected override void DisposeManaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    // releases managed resources
-                    if (disposing)
-                    {
-                    }
-                    // releases unmanaged resources
-                    if (IsEnabledDispose)
-                    {
-                        if (detectorPtr != null)
-                            detectorPtr.Dispose();
-                        detectorPtr = null;
-                        ptr = IntPtr.Zero;
-                    }
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            detectorPtr?.Dispose();
+            detectorPtr = null;
+            base.DisposeManaged();
         }
 
         #endregion
@@ -177,6 +140,8 @@ namespace OpenCvHololens
 
             IntPtr[] descriptorsPtrs = EnumerableEx.SelectPtrs(descriptorsArray);
             NativeMethods.features2d_DescriptorMatcher_add(ptr, descriptorsPtrs, descriptorsPtrs.Length);
+            GC.KeepAlive(this);
+            GC.KeepAlive(descriptorsArray);
         }
 
         /// <summary>
@@ -189,6 +154,7 @@ namespace OpenCvHololens
             using (var matVec = new VectorOfMat())
             {
                 NativeMethods.features2d_DescriptorMatcher_getTrainDescriptors(ptr, matVec.CvPtr);
+                GC.KeepAlive(this);
                 return matVec.ToArray();
             }
         }
@@ -200,6 +166,7 @@ namespace OpenCvHololens
         {
             ThrowIfDisposed();
             NativeMethods.features2d_DescriptorMatcher_clear(ptr);
+            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -209,7 +176,9 @@ namespace OpenCvHololens
         public virtual new bool Empty()
         {
             ThrowIfDisposed();
-            return NativeMethods.features2d_DescriptorMatcher_empty(ptr) != 0;
+            var res = NativeMethods.features2d_DescriptorMatcher_empty(ptr) != 0;
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -219,7 +188,9 @@ namespace OpenCvHololens
         public virtual bool IsMaskSupported()
         {
             ThrowIfDisposed();
-            return NativeMethods.features2d_DescriptorMatcher_isMaskSupported(ptr) != 0;
+            var res = NativeMethods.features2d_DescriptorMatcher_isMaskSupported(ptr) != 0;
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -236,6 +207,7 @@ namespace OpenCvHololens
         {
             ThrowIfDisposed();
             NativeMethods.features2d_DescriptorMatcher_train(ptr);
+            GC.KeepAlive(this);
         }
 
         #region *Match
@@ -259,6 +231,10 @@ namespace OpenCvHololens
                 NativeMethods.features2d_DescriptorMatcher_match1(
                     ptr, queryDescriptors.CvPtr, trainDescriptors.CvPtr,
                     matchesVec.CvPtr, Cv2.ToPtr(mask));
+                GC.KeepAlive(this);
+                GC.KeepAlive(queryDescriptors);
+                GC.KeepAlive(trainDescriptors);
+                GC.KeepAlive(mask);
                 return matchesVec.ToArray();
             }
         }
@@ -288,6 +264,10 @@ namespace OpenCvHololens
                 NativeMethods.features2d_DescriptorMatcher_knnMatch1(
                     ptr, queryDescriptors.CvPtr, trainDescriptors.CvPtr,
                     matchesVec.CvPtr, k, Cv2.ToPtr(mask), compactResult ? 1 : 0);
+                GC.KeepAlive(this);
+                GC.KeepAlive(queryDescriptors);
+                GC.KeepAlive(trainDescriptors);
+                GC.KeepAlive(mask);
                 return matchesVec.ToArray();
             }
         }
@@ -315,6 +295,10 @@ namespace OpenCvHololens
                 NativeMethods.features2d_DescriptorMatcher_radiusMatch1(
                     ptr, queryDescriptors.CvPtr, trainDescriptors.CvPtr,
                     matchesVec.CvPtr, maxDistance, Cv2.ToPtr(mask), compactResult ? 1 : 0);
+                GC.KeepAlive(this);
+                GC.KeepAlive(queryDescriptors);
+                GC.KeepAlive(trainDescriptors);
+                GC.KeepAlive(mask);
                 return matchesVec.ToArray();
             }
         }
@@ -341,6 +325,9 @@ namespace OpenCvHololens
             {
                 NativeMethods.features2d_DescriptorMatcher_match2(
                     ptr, queryDescriptors.CvPtr, matchesVec.CvPtr, masksPtrs, masksPtrs.Length);
+                GC.KeepAlive(this);
+                GC.KeepAlive(queryDescriptors);
+                GC.KeepAlive(masks);
                 return matchesVec.ToArray();
             }
         }
@@ -373,6 +360,9 @@ namespace OpenCvHololens
                 NativeMethods.features2d_DescriptorMatcher_knnMatch2(
                     ptr, queryDescriptors.CvPtr, matchesVec.CvPtr, k,
                     masksPtrs, masksPtrs.Length, compactResult ? 1 : 0);
+                GC.KeepAlive(this);
+                GC.KeepAlive(queryDescriptors);
+                GC.KeepAlive(masks);
                 return matchesVec.ToArray();
             }
         }
@@ -403,6 +393,9 @@ namespace OpenCvHololens
                 NativeMethods.features2d_DescriptorMatcher_radiusMatch2(
                     ptr, queryDescriptors.CvPtr, matchesVec.CvPtr, maxDistance, 
                     masksPtrs, masksPtrs.Length, compactResult ? 1 : 0);
+                GC.KeepAlive(this);
+                GC.KeepAlive(queryDescriptors);
+                GC.KeepAlive(masks);
                 return matchesVec.ToArray();
             }
         }
@@ -410,5 +403,25 @@ namespace OpenCvHololens
         #endregion
 
         #endregion
+
+        internal class Ptr : OpenCvHololens.Ptr
+        {
+            public Ptr(IntPtr ptr) : base(ptr)
+            {
+            }
+
+            public override IntPtr Get()
+            {
+                var res = NativeMethods.features2d_Ptr_DescriptorMatcher_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+
+            protected override void DisposeUnmanaged()
+            {
+                NativeMethods.features2d_Ptr_DescriptorMatcher_delete(ptr);
+                base.DisposeUnmanaged();
+            }
+        }
     }
 }

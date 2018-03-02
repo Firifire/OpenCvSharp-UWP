@@ -53,7 +53,9 @@ namespace OpenCvHololens
             if (prms == null)
                 prms = new int[0];
 
-            return NativeMethods.imgcodecs_imwrite(fileName, img.CvPtr, prms, prms.Length) != 0;
+            var res = NativeMethods.imgcodecs_imwrite(fileName, img.CvPtr, prms, prms.Length) != 0;
+            GC.KeepAlive(img);
+            return res;
         }
 
         /// <summary>
@@ -142,9 +144,10 @@ namespace OpenCvHololens
             if (prms == null)
                 prms = new int[0];
             img.ThrowIfDisposed();
-            using (VectorOfByte bufVec = new VectorOfByte())
+            using (var bufVec = new VectorOfByte())
             {
                 int ret = NativeMethods.imgcodecs_imencode_vector(ext, img.CvPtr, bufVec.CvPtr, prms, prms.Length);
+                GC.KeepAlive(img);
                 buf = bufVec.ToArray();
                 return ret != 0;
             }
@@ -161,7 +164,7 @@ namespace OpenCvHololens
         {
             if (prms != null)
             {
-                List<int> p = new List<int>();
+                var p = new List<int>();
                 foreach (ImageEncodingParam item in prms)
                 {
                     p.Add((int) item.EncodingId);

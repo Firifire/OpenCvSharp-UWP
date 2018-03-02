@@ -16,18 +16,16 @@ namespace OpenCvHololens.XFeatures2D
 #endif
     public class SIFT : Feature2D
     {
-        private bool disposed;
-        private Ptr<SIFT> detectorPtr;
+        private Ptr detectorPtr;
 
         #region Init & Disposal
 
         /// <summary>
-        /// Creates instance by raw pointer cv::SURF*
+        /// Creates instance by raw pointer cv::SIFT*
         /// </summary>
         protected SIFT(IntPtr p)
-            : base()
         {
-            detectorPtr = new Ptr<SIFT>(p);
+            detectorPtr = new Ptr(p);
             ptr = detectorPtr.Get();
         }
 
@@ -54,48 +52,14 @@ namespace OpenCvHololens.XFeatures2D
             return new SIFT(ptr);
         }
 
-#if LANG_JP
         /// <summary>
-        /// リソースの解放
+        /// Releases managed resources
         /// </summary>
-        /// <param name="disposing">
-        /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-        /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-        ///</param>
-#else
-        /// <summary>
-        /// Releases the resources
-        /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
+        protected override void DisposeManaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    // releases managed resources
-                    if (disposing)
-                    {
-                        if (detectorPtr != null)
-                        {
-                            detectorPtr.Dispose();
-                            detectorPtr = null;
-                        }
-                    }
-                    // releases unmanaged resources
-                    
-                    ptr = IntPtr.Zero;
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            detectorPtr?.Dispose();
+            detectorPtr = null;
+            base.DisposeManaged();
         }
 
         #endregion
@@ -103,5 +67,25 @@ namespace OpenCvHololens.XFeatures2D
         #region Properties
 
         #endregion
+
+        internal new class Ptr : OpenCvHololens.Ptr
+        {
+            public Ptr(IntPtr ptr) : base(ptr)
+            {
+            }
+
+            public override IntPtr Get()
+            {
+                var res = NativeMethods.xfeatures2d_Ptr_SIFT_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+
+            protected override void DisposeUnmanaged()
+            {
+                NativeMethods.xfeatures2d_Ptr_SIFT_delete(ptr);
+                base.DisposeUnmanaged();
+            }
+        }
     }
 }

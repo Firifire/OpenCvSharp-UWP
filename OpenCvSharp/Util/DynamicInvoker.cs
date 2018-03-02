@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace OpenCvHololens.Util
 {
+#if !uap10
 #if LANG_JP
     /// <summary>
     /// 動的にアンマネージのアセンブリにある関数を呼び出すためのクラス
@@ -26,6 +28,7 @@ namespace OpenCvHololens.Util
         /// </summary>
 #endif
         public string DllName { get; private set; }
+
 #if LANG_JP
         /// <summary>
         /// 呼び出す関数の名前
@@ -36,6 +39,7 @@ namespace OpenCvHololens.Util
         /// </summary>
 #endif
         public string FunctionName { get; private set; }
+
 #if LANG_JP
         /// <summary>
         /// LoadLibraryで得られたポインタ
@@ -45,7 +49,8 @@ namespace OpenCvHololens.Util
         /// Pointer which retrieved by LoadLibrary
         /// </summary>
 #endif
-        public IntPtr PtrLib { get; private set; }
+        public IntPtr PtrLib { get; }
+
 #if LANG_JP
         /// <summary>
         /// GetProcAddressで得られたポインタ
@@ -55,7 +60,8 @@ namespace OpenCvHololens.Util
         /// Pointer which retrieved by GetProcAddress
         /// </summary>
 #endif
-        public IntPtr PtrProc { get; private set; }
+        public IntPtr PtrProc { get; }
+
 #if LANG_JP
         /// <summary>
         /// 呼び出す関数ポインタをデリゲートに変換したものを取得する
@@ -66,8 +72,6 @@ namespace OpenCvHololens.Util
         /// </summary>
 #endif
         public T Call { get; private set; }
-
-        private bool disposed;
 
 #if LANG_JP
         /// <summary>
@@ -89,9 +93,12 @@ namespace OpenCvHololens.Util
                 throw new PlatformNotSupportedException("This method is for only Windows");
             }
 
-            //<NEW>
-            //if (!typeof(T).IsSubclassOf(typeof(Delegate)))
-            //    throw new OpenCvSharpException("The type argument must be Delegate.");
+#if net20 || net40
+            if (!typeof(T).IsSubclassOf(typeof(Delegate)))
+#else
+            if (!typeof(T).GetTypeInfo().IsSubclassOf(typeof(Delegate)))
+#endif
+                throw new OpenCvHololensException("The type argument must be Delegate.");
             if (string.IsNullOrEmpty(dllName))
                 throw new ArgumentNullException(nameof(dllName));
             if (string.IsNullOrEmpty(functionName))
@@ -99,41 +106,30 @@ namespace OpenCvHololens.Util
 
             PtrLib = Win32Api.LoadLibrary(dllName);
             if (PtrLib == IntPtr.Zero)
-                throw new OpenCvSharpException("Failed to load \"{0}\".", dllName);
+                throw new OpenCvHololensException("Failed to load \"{0}\".", dllName);
             PtrProc = Win32Api.GetProcAddress(PtrLib, functionName);
             if (PtrProc == IntPtr.Zero)
-                throw new OpenCvSharpException("Failed to get address of function \"{0}\".", functionName);
+                throw new OpenCvHololensException("Failed to get address of function \"{0}\".", functionName);
 
             DllName = dllName;
             FunctionName = functionName;
             IsDisposed = false;
 
+#if net20 || net40 || uwp
             Call = (T)(object)Marshal.GetDelegateForFunctionPointer(PtrProc, typeof(T));
+#else
+            Call = Marshal.GetDelegateForFunctionPointer<T>(PtrProc);
+#endif
         }
 
-#if LANG_JP
         /// <summary>
-        /// リソースの解放
+        /// Releases unmanaged resources
         /// </summary>
-#else
-        /// <summary>
-        /// Releases resources
-        /// </summary>
-        /// <param name="disposing"></param>
-#endif
-        protected override void Dispose(bool disposing)
+        protected override void DisposeUnmanaged()
         {
-            if (!disposed)
-            {
-                // Dispose of any managed resources of the derived class here.
-                if (disposing)
-                {
-                }
-                base.Dispose(disposing);
-                // Dispose of any unmanaged resources of the derived class here.
-                Win32Api.FreeLibrary(PtrLib);
-                disposed = true;
-            }
+            Win32Api.FreeLibrary(PtrLib);
+            base.DisposeUnmanaged();
         }
     }
+#endif
 }

@@ -12,9 +12,8 @@ namespace OpenCvHololens
     /// </summary>
     public class KalmanFilter : DisposableCvObject
     {
-        private bool disposed;
-
         #region Init & Disposal
+
         /// <summary>
         /// the default constructor
         /// </summary>
@@ -37,31 +36,14 @@ namespace OpenCvHololens
         }
 
         /// <summary>
-        /// 
+        /// Releases unmanaged resources
         /// </summary>
-        /// <param name="disposing"></param>
-        protected override void Dispose(bool disposing)
+        protected override void DisposeUnmanaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    if (disposing)
-                    {
-                    }
-                    if (ptr != IntPtr.Zero)
-                    {
-                        NativeMethods.video_KalmanFilter_delete(ptr);
-                        ptr = IntPtr.Zero;
-                    }
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            NativeMethods.video_KalmanFilter_delete(ptr);
+            base.DisposeUnmanaged();
         }
+
         #endregion
 
         #region Properties
@@ -72,9 +54,9 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException("KalmanFilter");
+                ThrowIfDisposed();
                 IntPtr ret = NativeMethods.video_KalmanFilter_statePre(ptr);
+                GC.KeepAlive(this);
                 return new Mat(ret);
             }
         }
@@ -86,9 +68,9 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException("KalmanFilter");
+                ThrowIfDisposed();
                 IntPtr ret = NativeMethods.video_KalmanFilter_statePost(ptr);
+                GC.KeepAlive(this);
                 return new Mat(ret);
             }
         }
@@ -100,9 +82,9 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException("KalmanFilter");
+                ThrowIfDisposed();
                 IntPtr ret = NativeMethods.video_KalmanFilter_transitionMatrix(ptr);
+                GC.KeepAlive(this);
                 return new Mat(ret);
             }
         }
@@ -114,9 +96,9 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException("KalmanFilter");
+                ThrowIfDisposed();
                 IntPtr ret = NativeMethods.video_KalmanFilter_controlMatrix(ptr);
+                GC.KeepAlive(this);
                 return new Mat(ret);
             }
         }
@@ -128,9 +110,9 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException("KalmanFilter");
+                ThrowIfDisposed();
                 IntPtr ret = NativeMethods.video_KalmanFilter_measurementMatrix(ptr);
+                GC.KeepAlive(this);
                 return new Mat(ret);
             }
         }
@@ -142,9 +124,9 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException("KalmanFilter");
+                ThrowIfDisposed();
                 IntPtr ret = NativeMethods.video_KalmanFilter_processNoiseCov(ptr);
+                GC.KeepAlive(this);
                 return new Mat(ret);
             }
         }
@@ -156,9 +138,9 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException("KalmanFilter");
+                ThrowIfDisposed();
                 IntPtr ret = NativeMethods.video_KalmanFilter_measurementNoiseCov(ptr);
+                GC.KeepAlive(this);
                 return new Mat(ret);
             }
         }
@@ -170,9 +152,9 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException("KalmanFilter");
+                ThrowIfDisposed();
                 IntPtr ret = NativeMethods.video_KalmanFilter_errorCovPre(ptr);
+                GC.KeepAlive(this);
                 return new Mat(ret);
             }
         }
@@ -184,9 +166,9 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException("KalmanFilter");
+                ThrowIfDisposed();
                 IntPtr ret = NativeMethods.video_KalmanFilter_gain(ptr);
+                GC.KeepAlive(this);
                 return new Mat(ret);
             }
         }
@@ -198,9 +180,9 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException("KalmanFilter");
+                ThrowIfDisposed();
                 IntPtr ret = NativeMethods.video_KalmanFilter_errorCovPost(ptr);
+                GC.KeepAlive(this);
                 return new Mat(ret);
             }
         }
@@ -218,10 +200,10 @@ namespace OpenCvHololens
         /// <param name="type"></param>
         public void Init(int dynamParams, int measureParams, int controlParams = 0, int type = MatType.CV_32F)
         {
-            if (disposed)
-                throw new ObjectDisposedException("KalmanFilter");
+            ThrowIfDisposed();
             NativeMethods.video_KalmanFilter_init(ptr, 
                 dynamParams, measureParams, controlParams, type);
+            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -231,10 +213,11 @@ namespace OpenCvHololens
         /// <returns></returns>
         public Mat Predict(Mat control = null)
         {
-            if (disposed)
-                throw new ObjectDisposedException("KalmanFilter");
+            ThrowIfDisposed();
 
             IntPtr ret = NativeMethods.video_KalmanFilter_predict(ptr, Cv2.ToPtr(control));
+            GC.KeepAlive(this);
+            GC.KeepAlive(control);
             return new Mat(ret);
         }
 
@@ -245,17 +228,17 @@ namespace OpenCvHololens
         /// <returns></returns>
         public Mat Correct(Mat measurement)
         {
-            if (disposed)
-                throw new ObjectDisposedException("KalmanFilter");
+            ThrowIfDisposed();
             if (measurement == null)
                 throw new ArgumentNullException(nameof(measurement));
             measurement.ThrowIfDisposed();
 
             IntPtr ret = NativeMethods.video_KalmanFilter_correct(ptr, measurement.CvPtr);
+            GC.KeepAlive(this);
+            GC.KeepAlive(measurement);
             return new Mat(ret);
         }
 
         #endregion
-
     }
 }

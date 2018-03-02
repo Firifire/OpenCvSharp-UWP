@@ -2,22 +2,19 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenCvHololens.Gpu
+namespace OpenCvHololens.Cuda
 {
     /// <summary>
     /// Gives information about the given GPU
     /// </summary>
     public sealed class DeviceInfo : DisposableGpuObject
     {
-        private bool disposed;
-
         /// <summary>
         /// Creates DeviceInfo object for the current GPU
         /// </summary>
         public DeviceInfo()
         {
-            //<GPUMAT>
-            //Cv2Gpu.ThrowIfGpuNotAvailable();
+            Cv2.ThrowIfGpuNotAvailable();
             ptr = NativeMethods.cuda_DeviceInfo_new1();
         }
 
@@ -27,32 +24,18 @@ namespace OpenCvHololens.Gpu
         /// <param name="deviceId"></param>
         public DeviceInfo(int deviceId)
         {
-            //<GPUMAT>
-            //Cv2Gpu.ThrowIfGpuNotAvailable();
+            Cv2.ThrowIfGpuNotAvailable();
             ptr = NativeMethods.cuda_DeviceInfo_new2(deviceId);
         }
 
         /// <summary>
-        /// Releases the resources
+        /// Releases unmanaged resources
         /// </summary>
-        /// <param name="disposing"></param>
-        protected override void Dispose(bool disposing)
+        protected override void DisposeUnmanaged()
         {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                }
-                if(ptr != IntPtr.Zero)
-                    NativeMethods.cuda_DeviceInfo_delete(ptr);
-
-                ptr = IntPtr.Zero;
-                disposed = true;
-            }
-
-            base.Dispose(disposing);
+            NativeMethods.cuda_DeviceInfo_delete(ptr);
+            base.DisposeUnmanaged();
         }
-
 
         /// <summary>
         /// 
@@ -61,7 +44,9 @@ namespace OpenCvHololens.Gpu
         {
             get
             {
-                return NativeMethods.cuda_DeviceInfo_deviceID(ptr);
+                var res = NativeMethods.cuda_DeviceInfo_deviceID(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -74,6 +59,7 @@ namespace OpenCvHololens.Gpu
             {
                 var buf = new StringBuilder(1 << 16);
                 NativeMethods.cuda_DeviceInfo_name(ptr, buf, buf.Capacity);
+                GC.KeepAlive(this);
                 return buf.ToString();
             }
         }
@@ -85,7 +71,9 @@ namespace OpenCvHololens.Gpu
         {
             get
             {
-                return NativeMethods.cuda_DeviceInfo_majorVersion(ptr);
+                var res = NativeMethods.cuda_DeviceInfo_majorVersion(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -96,7 +84,9 @@ namespace OpenCvHololens.Gpu
         {
             get
             {
-                return NativeMethods.cuda_DeviceInfo_minorVersion(ptr);
+                var res = NativeMethods.cuda_DeviceInfo_minorVersion(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -107,7 +97,9 @@ namespace OpenCvHololens.Gpu
         {
             get
             {
-                return NativeMethods.cuda_DeviceInfo_multiProcessorCount(ptr);
+                var res = NativeMethods.cuda_DeviceInfo_multiProcessorCount(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -118,7 +110,9 @@ namespace OpenCvHololens.Gpu
         {
             get
             {
-                return (long)NativeMethods.cuda_DeviceInfo_sharedMemPerBlock(ptr);
+                var res = (long)NativeMethods.cuda_DeviceInfo_sharedMemPerBlock(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -129,6 +123,7 @@ namespace OpenCvHololens.Gpu
         {
             ulong t, f;
             NativeMethods.cuda_DeviceInfo_queryMemory(ptr, out t, out f);
+            GC.KeepAlive(this);
             totalMemory = (long)t;
             freeMemory = (long)f;
         }
@@ -140,7 +135,9 @@ namespace OpenCvHololens.Gpu
         {
             get
             {
-                return (long)NativeMethods.cuda_DeviceInfo_freeMemory(ptr);
+                var res = (long)NativeMethods.cuda_DeviceInfo_freeMemory(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -151,7 +148,9 @@ namespace OpenCvHololens.Gpu
         {
             get
             {
-                return (long)NativeMethods.cuda_DeviceInfo_totalMemory(ptr);
+                var res = (long)NativeMethods.cuda_DeviceInfo_totalMemory(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -162,7 +161,9 @@ namespace OpenCvHololens.Gpu
         /// <returns></returns>
         public bool Supports(FeatureSet featureSet)
         {
-            return NativeMethods.cuda_DeviceInfo_supports(ptr, (int)featureSet) != 0;
+            var res = NativeMethods.cuda_DeviceInfo_supports(ptr, (int)featureSet) != 0;
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -173,7 +174,9 @@ namespace OpenCvHololens.Gpu
         {
             get
             {
-                return NativeMethods.cuda_DeviceInfo_isCompatible(ptr) != 0;
+                var res = NativeMethods.cuda_DeviceInfo_isCompatible(ptr) != 0;
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -185,7 +188,9 @@ namespace OpenCvHololens.Gpu
         {
             get
             {
-                return NativeMethods.cuda_DeviceInfo_canMapHostMemory(ptr) != 0;
+                var res =  NativeMethods.cuda_DeviceInfo_canMapHostMemory(ptr) != 0;
+                GC.KeepAlive(this);
+                return res;
             }
         }
     }

@@ -14,19 +14,18 @@ namespace OpenCvHololens
 #endif
     public class FastFeatureDetector : Feature2D
     {
-        private bool disposed;
-        private Ptr<FastFeatureDetector> ptrObj;
+        private Ptr ptrObj;
 
-        internal override IntPtr PtrObj => ptrObj.CvPtr;
+        //internal override IntPtr PtrObj => ptrObj.CvPtr;
 
         #region Init & Disposal
 
         /// <summary>
         /// 
         /// </summary>
-        protected FastFeatureDetector(IntPtr ptr)
+        protected FastFeatureDetector(IntPtr p)
         {
-            ptrObj = new Ptr<FastFeatureDetector>(ptr);
+            ptrObj = new Ptr(p);
             ptr = ptrObj.Get();
         }
 
@@ -41,48 +40,16 @@ namespace OpenCvHololens
             return new FastFeatureDetector(ptr);
         }
 
-#if LANG_JP
-    /// <summary>
-    /// リソースの解放
-    /// </summary>
-    /// <param name="disposing">
-    /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-    /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-    ///</param>
-#else
         /// <summary>
-        /// Releases the resources
+        /// Releases managed resources
         /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
+        protected override void DisposeManaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    // releases managed resources
-                    if (disposing)
-                    {
-                        if (ptrObj != null)
-                        {
-                            ptrObj.Dispose();
-                            ptrObj = null;
-                        }
-                    }
-                    // releases unmanaged resources
-                    
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            ptrObj?.Dispose();
+            ptrObj = null;
+            base.DisposeManaged();
         }
+
         #endregion
 
         #region Properties
@@ -94,15 +61,16 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.features2d_FastFeatureDetector_getThreshold(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.features2d_FastFeatureDetector_getThreshold(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.features2d_FastFeatureDetector_setThreshold(ptr, value);
+                GC.KeepAlive(this);
             }
         }
 
@@ -113,15 +81,16 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.features2d_FastFeatureDetector_getNonmaxSuppression(ptr) != 0;
+                ThrowIfDisposed();
+                var res = NativeMethods.features2d_FastFeatureDetector_getNonmaxSuppression(ptr) != 0;
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.features2d_FastFeatureDetector_setNonmaxSuppression(ptr, value ? 1 : 0);
+                GC.KeepAlive(this);
             }
         }
 
@@ -132,22 +101,39 @@ namespace OpenCvHololens
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
-                return NativeMethods.features2d_FastFeatureDetector_getType(ptr);
+                ThrowIfDisposed();
+                var res = NativeMethods.features2d_FastFeatureDetector_getType(ptr);
+                GC.KeepAlive(this);
+                return res;
             }
             set
             {
-                if (disposed)
-                    throw new ObjectDisposedException(GetType().Name);
+                ThrowIfDisposed();
                 NativeMethods.features2d_FastFeatureDetector_setType(ptr, value);
+                GC.KeepAlive(this);
             }
         }
 
         #endregion
 
-        #region Methods
+        internal new class Ptr : OpenCvHololens.Ptr
+        {
+            public Ptr(IntPtr ptr) : base(ptr)
+            {
+            }
 
-        #endregion
+            public override IntPtr Get()
+            {
+                var res = NativeMethods.features2d_Ptr_FastFeatureDetector_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+
+            protected override void DisposeUnmanaged()
+            {
+                NativeMethods.features2d_Ptr_FastFeatureDetector_delete(ptr);
+                base.DisposeUnmanaged();
+            }
+        }
     }
 }

@@ -16,9 +16,6 @@ namespace OpenCvHololens
         [DllImport(DllExtern)]
         public static extern IntPtr imgproc_Ptr_CLAHE_get(IntPtr obj);
 
-        [DllImport(DllExtern)]
-        public static extern IntPtr imgproc_CLAHE_info(IntPtr obj);
-
 
         [DllImport(DllExtern)]
         public static extern void imgproc_CLAHE_apply(IntPtr obj, IntPtr src, IntPtr dst);

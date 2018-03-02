@@ -10,8 +10,6 @@ namespace OpenCvHololens
     /// </summary>
     public class SparseMat : DisposableCvObject
     {
-        private bool disposed;
-
         #region Init & Disposal
 
 #if LANG_JP
@@ -28,7 +26,7 @@ namespace OpenCvHololens
         public SparseMat(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvSharpException("Native object address is NULL");
+                throw new OpenCvHololensException("Native object address is NULL");
             this.ptr = ptr;
         }
 
@@ -88,8 +86,9 @@ namespace OpenCvHololens
                 throw new ArgumentNullException(nameof(m));
             m.ThrowIfDisposed();
             ptr = NativeMethods.core_SparseMat_new3(m.CvPtr);
+            GC.KeepAlive(m);
             if (ptr == IntPtr.Zero)
-                throw new OpenCvSharpException();
+                throw new OpenCvHololensException();
         }
 
 #if LANG_JP
@@ -106,50 +105,14 @@ namespace OpenCvHololens
             Dispose();
         }
 
-#if LANG_JP
         /// <summary>
-        /// リソースの解放
+        /// Releases unmanaged resources
         /// </summary>
-        /// <param name="disposing">
-        /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-        /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-        ///</param>
-#else
-        /// <summary>
-        /// Releases the resources
-        /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
+        protected override void DisposeUnmanaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    // releases managed resources
-                    if (disposing)
-                    {
-                    }
-                    // releases unmanaged resources
-                    if (IsEnabledDispose)
-                    {
-                        if (ptr != IntPtr.Zero)
-                        {
-                            NativeMethods.core_SparseMat_delete(ptr);
-                        }
-                    }
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            NativeMethods.core_SparseMat_delete(ptr);
+            base.DisposeUnmanaged();
         }
-
 
         #region Static Initializers
 
@@ -188,6 +151,8 @@ namespace OpenCvHololens
             if(m == null)
                 throw new ArgumentNullException(nameof(m));
             NativeMethods.core_SparseMat_operatorAssign_SparseMat(ptr, m.CvPtr);
+            GC.KeepAlive(this);
+            GC.KeepAlive(m);
             return this;
         }
 
@@ -202,6 +167,8 @@ namespace OpenCvHololens
             if (m == null)
                 throw new ArgumentNullException(nameof(m));
             NativeMethods.core_SparseMat_operatorAssign_Mat(ptr, m.CvPtr);
+            GC.KeepAlive(this);
+            GC.KeepAlive(m);
             return this;
         }
         
@@ -213,6 +180,7 @@ namespace OpenCvHololens
         {
             ThrowIfDisposed();
             IntPtr p = NativeMethods.core_SparseMat_clone(ptr);
+            GC.KeepAlive(this);
             return new SparseMat(p);
         }
 
@@ -224,6 +192,8 @@ namespace OpenCvHololens
         {
             ThrowIfDisposed();
             NativeMethods.core_SparseMat_copyTo_SparseMat(ptr, m.CvPtr);
+            GC.KeepAlive(this);
+            GC.KeepAlive(m);
         }
         /// <summary>
         /// converts sparse matrix to dense matrix.
@@ -233,6 +203,8 @@ namespace OpenCvHololens
         {
             ThrowIfDisposed();
             NativeMethods.core_SparseMat_copyTo_Mat(ptr, m.CvPtr);
+            GC.KeepAlive(this);
+            GC.KeepAlive(m);
         }
 
         /// <summary>
@@ -245,6 +217,8 @@ namespace OpenCvHololens
         {
             ThrowIfDisposed();
             NativeMethods.core_SparseMat_convertTo_SparseMat(ptr, m.CvPtr, rtype, alpha);
+            GC.KeepAlive(this);
+            GC.KeepAlive(m);
         }
 
         /// <summary>
@@ -257,7 +231,9 @@ namespace OpenCvHololens
         public void ConvertTo(Mat m, int rtype, double alpha = 1, double beta = 0)
         {
             ThrowIfDisposed();
-            NativeMethods.core_SparseMat_convertTo_SparseMat(ptr, m.CvPtr, rtype, alpha);
+            NativeMethods.core_SparseMat_convertTo_Mat(ptr, m.CvPtr, rtype, alpha, beta);
+            GC.KeepAlive(this);
+            GC.KeepAlive(m);
         }
 
         /// <summary>
@@ -269,6 +245,8 @@ namespace OpenCvHololens
         {
             ThrowIfDisposed();
             NativeMethods.core_SparseMat_assignTo(ptr, m.CvPtr, type);
+            GC.KeepAlive(this);
+            GC.KeepAlive(m);
         }
 
         /// <summary>
@@ -287,6 +265,7 @@ namespace OpenCvHololens
             if (sizes.Length == 1)
                 throw new ArgumentException("sizes is empty");
             NativeMethods.core_SparseMat_create(ptr, sizes.Length, sizes, type);
+            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -296,6 +275,7 @@ namespace OpenCvHololens
         {
             ThrowIfDisposed();
             NativeMethods.core_SparseMat_clear(ptr);
+            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -305,6 +285,7 @@ namespace OpenCvHololens
         {
             ThrowIfDisposed();
             NativeMethods.core_SparseMat_addref(ptr);
+            GC.KeepAlive(this);
         }
 
         /// <summary>
@@ -314,8 +295,9 @@ namespace OpenCvHololens
         public int ElemSize()
         {
             ThrowIfDisposed();
-            return NativeMethods.core_SparseMat_elemSize(ptr);
-
+            var res = NativeMethods.core_SparseMat_elemSize(ptr);
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -325,8 +307,9 @@ namespace OpenCvHololens
         public int ElemSize1()
         {
             ThrowIfDisposed();
-            return NativeMethods.core_SparseMat_elemSize1(ptr);
-
+            var res = NativeMethods.core_SparseMat_elemSize1(ptr);
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -336,7 +319,9 @@ namespace OpenCvHololens
         public MatType Type()
         {
             ThrowIfDisposed();
-            return NativeMethods.core_SparseMat_type(ptr);
+            var res = NativeMethods.core_SparseMat_type(ptr);
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -346,7 +331,9 @@ namespace OpenCvHololens
         public int Depth()
         {
             ThrowIfDisposed();
-            return NativeMethods.core_SparseMat_depth(ptr);
+            var res = NativeMethods.core_SparseMat_depth(ptr);
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -355,7 +342,9 @@ namespace OpenCvHololens
         public int Dims()
         {
             ThrowIfDisposed();
-            return NativeMethods.core_Mat_dims(ptr);
+            var res = NativeMethods.core_SparseMat_dims(ptr);
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -365,7 +354,9 @@ namespace OpenCvHololens
         public int Channels()
         {
             ThrowIfDisposed();
-            return NativeMethods.core_Mat_channels(ptr);
+            var res = NativeMethods.core_SparseMat_channels(ptr);
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -383,6 +374,7 @@ namespace OpenCvHololens
             int length = Dims();
             int[] size = new int[length];
             Marshal.Copy(sizePtr, size, 0, length);
+            GC.KeepAlive(this);
             return size;
         }
 
@@ -394,7 +386,9 @@ namespace OpenCvHololens
         public int Size(int dim)
         {
             ThrowIfDisposed();
-            return NativeMethods.core_SparseMat_size2(ptr, dim);
+            var res = NativeMethods.core_SparseMat_size2(ptr, dim);
+            GC.KeepAlive(this);
+            return res;
         }
 
         #region Hash
@@ -407,7 +401,9 @@ namespace OpenCvHololens
         public long Hash(int i0)
         {
             ThrowIfDisposed();
-            return NativeMethods.core_SparseMat_hash_1d(ptr, i0).ToInt64();
+            var res = NativeMethods.core_SparseMat_hash_1d(ptr, i0).ToInt64();
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -419,7 +415,9 @@ namespace OpenCvHololens
         public long Hash(int i0, int i1)
         {
             ThrowIfDisposed();
-            return NativeMethods.core_SparseMat_hash_2d(ptr, i0, i1).ToInt64();
+            var res = NativeMethods.core_SparseMat_hash_2d(ptr, i0, i1).ToInt64();
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -432,7 +430,9 @@ namespace OpenCvHololens
         public long Hash(int i0, int i1, int i2)
         {
             ThrowIfDisposed();
-            return NativeMethods.core_SparseMat_hash_3d(ptr, i0, i1, i2).ToInt64();
+            var res = NativeMethods.core_SparseMat_hash_3d(ptr, i0, i1, i2).ToInt64();
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -443,7 +443,9 @@ namespace OpenCvHololens
         public long Hash(params int[] idx)
         {
             ThrowIfDisposed();
-            return NativeMethods.core_SparseMat_hash_nd(ptr, idx).ToInt64();
+            var res = NativeMethods.core_SparseMat_hash_nd(ptr, idx).ToInt64();
+            GC.KeepAlive(this);
+            return res;
         }
 
         #endregion
@@ -458,15 +460,20 @@ namespace OpenCvHololens
         /// <returns></returns>
         public IntPtr Ptr(int i0, bool createMissing, long? hashVal = null)
         {
+            IntPtr res;
             //ThrowIfDisposed();
             if (hashVal.HasValue)
             {
                 ulong hashVal0 = (ulong)hashVal.Value;
-                return NativeMethods.core_SparseMat_ptr_1d(
+                res = NativeMethods.core_SparseMat_ptr_1d(
                     ptr, i0, createMissing ? 1 : 0, ref hashVal0);
             }
-            return NativeMethods.core_SparseMat_ptr_1d(
+            else
+                res = NativeMethods.core_SparseMat_ptr_1d(
                     ptr, i0, createMissing ? 1 : 0, IntPtr.Zero);
+
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -479,15 +486,20 @@ namespace OpenCvHololens
         /// <returns></returns>
         public IntPtr Ptr(int i0, int i1, bool createMissing, long? hashVal = null)
         {
+            IntPtr res;
             //ThrowIfDisposed();
             if (hashVal.HasValue)
             {
                 ulong hashVal0 = (ulong)hashVal.Value;
-                return NativeMethods.core_SparseMat_ptr_2d(
+                res = NativeMethods.core_SparseMat_ptr_2d(
                     ptr, i0, i1, createMissing ? 1 : 0, ref hashVal0);
             }
-            return NativeMethods.core_SparseMat_ptr_2d(
+            else
+                res = NativeMethods.core_SparseMat_ptr_2d(
                     ptr, i0, i1, createMissing ? 1 : 0, IntPtr.Zero);
+
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -501,15 +513,20 @@ namespace OpenCvHololens
         /// <returns></returns>
         public IntPtr Ptr(int i0, int i1, int i2, bool createMissing, long? hashVal = null)
         {
+            IntPtr res;
             //ThrowIfDisposed();
             if (hashVal.HasValue)
             {
                 ulong hashVal0 = (ulong)hashVal.Value;
-                return NativeMethods.core_SparseMat_ptr_3d(
+                res = NativeMethods.core_SparseMat_ptr_3d(
                     ptr, i0, i1, i2, createMissing ? 1 : 0, ref hashVal0);
             }
-            return NativeMethods.core_SparseMat_ptr_3d(
+            else
+                res = NativeMethods.core_SparseMat_ptr_3d(
                     ptr, i0, i1, i2, createMissing ? 1 : 0, IntPtr.Zero);
+
+            GC.KeepAlive(this);
+            return res;
         }
 
         /// <summary>
@@ -521,15 +538,19 @@ namespace OpenCvHololens
         /// <returns></returns>
         public IntPtr Ptr(int[] idx, bool createMissing, long? hashVal = null)
         {
+            IntPtr res;
             //ThrowIfDisposed();
             if (hashVal.HasValue)
             {
                 ulong hashVal0 = (ulong)hashVal.Value;
-                return NativeMethods.core_SparseMat_ptr_nd(
+                res = NativeMethods.core_SparseMat_ptr_nd(
                     ptr, idx, createMissing ? 1 : 0, ref hashVal0);
             }
-            return NativeMethods.core_SparseMat_ptr_nd(
+            else
+                res = NativeMethods.core_SparseMat_ptr_nd(
                     ptr, idx, createMissing ? 1 : 0, IntPtr.Zero);
+            GC.KeepAlive(this);
+            return res;
         }
 
         #endregion
@@ -548,7 +569,7 @@ namespace OpenCvHololens
             if (p == IntPtr.Zero)
                 return null;
 
-            return (T)Marshal.PtrToStructure(p, typeof(T));
+            return MarshalHelper.PtrToStructure<T>(p);
         }
 
         /// <summary>
@@ -565,7 +586,7 @@ namespace OpenCvHololens
             if (p == IntPtr.Zero)
                 return null;
 
-            return (T)Marshal.PtrToStructure(p, typeof(T));
+            return MarshalHelper.PtrToStructure<T>(p);
         }
 
         /// <summary>
@@ -583,7 +604,7 @@ namespace OpenCvHololens
             if (p == IntPtr.Zero)
                 return null;
 
-            return (T)Marshal.PtrToStructure(p, typeof(T));
+            return MarshalHelper.PtrToStructure<T>(p);
         }
 
         /// <summary>
@@ -599,7 +620,7 @@ namespace OpenCvHololens
             if (p == IntPtr.Zero)
                 return null;
 
-            return (T)Marshal.PtrToStructure(p, typeof(T));
+            return MarshalHelper.PtrToStructure<T>(p);
         }
 
         #endregion
@@ -618,7 +639,7 @@ namespace OpenCvHololens
             if (p == IntPtr.Zero)
                 return default(T);
 
-            return (T)Marshal.PtrToStructure(p, typeof(T));
+            return MarshalHelper.PtrToStructure<T>(p);
         }
 
         /// <summary>
@@ -635,7 +656,7 @@ namespace OpenCvHololens
             if (p == IntPtr.Zero)
                 return default(T);
 
-            return (T)Marshal.PtrToStructure(p, typeof(T));
+            return MarshalHelper.PtrToStructure<T>(p);
         }
 
         /// <summary>
@@ -653,7 +674,7 @@ namespace OpenCvHololens
             if (p == IntPtr.Zero)
                 return default(T);
 
-            return (T)Marshal.PtrToStructure(p, typeof(T));
+            return MarshalHelper.PtrToStructure<T>(p);
         }
 
         /// <summary>
@@ -669,7 +690,7 @@ namespace OpenCvHololens
             if (p == IntPtr.Zero)
                 return default(T);
 
-            return (T)Marshal.PtrToStructure(p, typeof(T));
+            return MarshalHelper.PtrToStructure<T>(p);
         }
 
         #endregion
@@ -697,7 +718,7 @@ namespace OpenCvHololens
                 get
                 {
                     IntPtr p = parent.Ptr(i0, true, hashVal);
-                    return (T)Marshal.PtrToStructure(p, typeof(T));
+                    return MarshalHelper.PtrToStructure<T>(p);
                 }
                 set
                 {
@@ -718,7 +739,7 @@ namespace OpenCvHololens
                 get
                 {
                     IntPtr p = parent.Ptr(i0, i1, true, hashVal);
-                    return (T)Marshal.PtrToStructure(p, typeof(T));
+                    return MarshalHelper.PtrToStructure<T>(p);
                 }
                 set
                 {
@@ -740,7 +761,7 @@ namespace OpenCvHololens
                 get
                 {
                     IntPtr p = parent.Ptr(i0, i1, i2, true, hashVal);
-                    return (T)Marshal.PtrToStructure(p, typeof(T));
+                    return MarshalHelper.PtrToStructure<T>(p);
                 }
                 set
                 {
@@ -760,7 +781,7 @@ namespace OpenCvHololens
                 get
                 {
                     IntPtr p = parent.Ptr(idx, true, hashVal);
-                    return (T)Marshal.PtrToStructure(p, typeof(T));
+                    return MarshalHelper.PtrToStructure<T>(p);
                 }
                 set
                 {

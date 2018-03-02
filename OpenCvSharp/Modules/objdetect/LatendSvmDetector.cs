@@ -44,20 +44,15 @@ namespace OpenCvHololens
             public int ClassId { get; set; }
         }
 
-        /// <summary>
-        /// Track whether Dispose has been called
-        /// </summary>
-        private bool disposed;
-
         #region Init and Disposal
 
         /// <summary>
         /// Default constructor
         /// </summary>
         public LatentSvmDetector()
-	    {
+        {
             ptr = NativeMethods.objdetect_LatentSvmDetector_new();               
-	    }
+        }
 
         /// <summary>
         /// Creates the HOG descriptor and detector.
@@ -72,44 +67,15 @@ namespace OpenCvHololens
             Load(fileNames, classNames);
         }
 
-#if LANG_JP
         /// <summary>
-        /// リソースの解放
+        /// Releases unmanaged resources
         /// </summary>
-        /// <param name="disposing">
-        /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-        /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-        ///</param>
-#else
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
+        protected override void DisposeUnmanaged()
         {
-            if (!disposed)
-            {
-                try
-                {
-                    if (disposing)
-                    {
-                    }
-                    if (IsEnabledDispose)
-                    {
-                        NativeMethods.objdetect_LatentSvmDetector_delete(ptr);
-                    }
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
+            NativeMethods.objdetect_LatentSvmDetector_delete(ptr);
+            base.DisposeUnmanaged();
         }
+
         #endregion
 
         #region Methods
@@ -119,18 +85,19 @@ namespace OpenCvHololens
         /// </summary>
         public virtual void Clear()
         {
-            if (disposed)
-                throw new ObjectDisposedException("LatentSvmDetector");
+            ThrowIfDisposed();
             NativeMethods.objdetect_LatentSvmDetector_clear(ptr);
+            GC.KeepAlive(this);
         }
         /// <summary>
         /// 
         /// </summary>
         public virtual bool Empty()
         {
-            if (disposed)
-                throw new ObjectDisposedException("LatentSvmDetector");
-            return NativeMethods.objdetect_LatentSvmDetector_empty(ptr) != 0;
+            ThrowIfDisposed();
+            var res = NativeMethods.objdetect_LatentSvmDetector_empty(ptr) != 0;
+            GC.KeepAlive(this);
+            return res;
         }
         /// <summary>
         /// 
@@ -141,8 +108,7 @@ namespace OpenCvHololens
         /// constructed from the name of file containing the model. E.g. the model stored in "/home/user/cat.xml" will get the name "cat".</param>
         public virtual bool Load(IEnumerable<string> fileNames, IEnumerable<string> classNames)
         {
-            if (disposed)
-                throw new ObjectDisposedException("LatentSvmDetector");
+            ThrowIfDisposed();
             if (fileNames == null)
                 throw new ArgumentNullException(nameof(fileNames));
             if (classNames == null)
@@ -151,8 +117,10 @@ namespace OpenCvHololens
             using (var fn = new StringArrayAddress(fileNames))
             using (var cn = new StringArrayAddress(classNames))
             {
-                return NativeMethods.objdetect_LatentSvmDetector_load(
+                var res = NativeMethods.objdetect_LatentSvmDetector_load(
                     ptr, fn.Pointer, fn.Dim1Length, cn.Pointer, cn.Dim1Length) != 0;
+                GC.KeepAlive(this);
+                return res;
             }
         }
 
@@ -167,8 +135,7 @@ namespace OpenCvHololens
         public virtual ObjectDetection[] Detect(Mat image,
             float overlapThreshold = 0.5f, int numThreads = -1)
         {
-            if (disposed)
-                throw new ObjectDisposedException("LatentSvmDetector");
+            ThrowIfDisposed();
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
             image.ThrowIfDisposed();
@@ -177,6 +144,8 @@ namespace OpenCvHololens
             {
                 NativeMethods.objdetect_LatentSvmDetector_detect(
                     ptr, image.CvPtr, odVec.CvPtr, overlapThreshold, numThreads);
+                GC.KeepAlive(this);
+                GC.KeepAlive(image);
 
                 return EnumerableEx.SelectToArray(odVec.ToArray(), v => 
                     new ObjectDetection
@@ -198,6 +167,7 @@ namespace OpenCvHololens
             using (var outVec = new VectorOfString())
             {
                 NativeMethods.objdetect_LatentSvmDetector_getClassNames(ptr, outVec.CvPtr);
+                GC.KeepAlive(this);
                 return outVec.ToArray();
             }
         }
@@ -208,12 +178,12 @@ namespace OpenCvHololens
         /// <returns></returns>
         public long GetClassCount()
         {
-            if (disposed)
-                throw new ObjectDisposedException("LatentSvmDetector");
-            return NativeMethods.objdetect_LatentSvmDetector_getClassCount(ptr).ToInt64();
+            ThrowIfDisposed();
+            var res = NativeMethods.objdetect_LatentSvmDetector_getClassCount(ptr).ToInt64();
+            GC.KeepAlive(this);
+            return res;
         }
 
         #endregion
     }
-
 }

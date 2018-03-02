@@ -685,6 +685,7 @@ namespace OpenCvHololens
         {
             ThrowIfDisposed();
             NativeMethods.core_Mat_push_back_ushort(ptr, value);
+            GC.KeepAlive(this);
         }
     }
 }

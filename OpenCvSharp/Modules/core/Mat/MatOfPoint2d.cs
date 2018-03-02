@@ -700,6 +700,7 @@ namespace OpenCvHololens
         {
             ThrowIfDisposed();
             NativeMethods.core_Mat_push_back_Point2d(ptr, value);
+            GC.KeepAlive(this);
         }
     }
 }

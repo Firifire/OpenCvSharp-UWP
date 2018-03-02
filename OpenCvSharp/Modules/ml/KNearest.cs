@@ -7,17 +7,13 @@ namespace OpenCvHololens.ML
     /// K近傍法モデルクラス
     /// </summary>
 #else
-	/// <summary>
+    /// <summary>
     /// K nearest neighbors classifier
     /// </summary>
 #endif
     public class KNearest : StatModel
     {
-        /// <summary>
-        /// Track whether Dispose has been called
-        /// </summary>
-        private bool disposed;
-        private Ptr<KNearest> ptrObj;
+        private Ptr ptrObj;
 
         #region Init and Disposal
 
@@ -26,7 +22,7 @@ namespace OpenCvHololens.ML
         /// </summary>
         protected KNearest(IntPtr p)
         {
-            ptrObj = new Ptr<KNearest>(p);
+            ptrObj = new Ptr(p);
             ptr = ptrObj.Get();
         }
 
@@ -35,51 +31,47 @@ namespace OpenCvHololens.ML
         /// </summary>
         /// <returns></returns>
         public static KNearest Create()
-	    {
+        {
             IntPtr ptr = NativeMethods.ml_KNearest_create();
             return new KNearest(ptr);
-	    }
-
-#if LANG_JP
-        /// <summary>
-        /// リソースの解放
-        /// </summary>
-        /// <param name="disposing">
-        /// trueの場合は、このメソッドがユーザコードから直接が呼ばれたことを示す。マネージ・アンマネージ双方のリソースが解放される。
-        /// falseの場合は、このメソッドはランタイムからファイナライザによって呼ばれ、もうほかのオブジェクトから参照されていないことを示す。アンマネージリソースのみ解放される。
-        ///</param>
-#else
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">
-        /// If disposing equals true, the method has been called directly or indirectly by a user's code. Managed and unmanaged resources can be disposed.
-        /// If false, the method has been called by the runtime from inside the finalizer and you should not reference other objects. Only unmanaged resources can be disposed.
-        /// </param>
-#endif
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                try
-                {
-                    if (disposing)
-                    {
-                        if (ptrObj != null)
-                        {
-                            ptrObj.Dispose();
-                            ptrObj = null;
-                        }
-                    }
-                    ptr = IntPtr.Zero;
-                    disposed = true;
-                }
-                finally
-                {
-                    base.Dispose(disposing);
-                }
-            }
         }
+
+        /// <summary>
+        /// Loads and creates a serialized model from a file.
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public static KNearest Load(string filePath)
+        {
+            if (filePath == null)
+                throw new ArgumentNullException(nameof(filePath));
+            IntPtr ptr = NativeMethods.ml_KNearest_load(filePath);
+            return new KNearest(ptr);
+        }
+
+        /// <summary>
+        /// Loads algorithm from a String.
+        /// </summary>
+        /// <param name="strModel">he string variable containing the model you want to load.</param>
+        /// <returns></returns>
+        public static KNearest LoadFromString(string strModel)
+        {
+            if (strModel == null)
+                throw new ArgumentNullException(nameof(strModel));
+            IntPtr ptr = NativeMethods.ml_KNearest_loadFromString(strModel);
+            return new KNearest(ptr);
+        }
+
+        /// <summary>
+        /// Releases managed resources
+        /// </summary>
+        protected override void DisposeManaged()
+        {
+            ptrObj?.Dispose();
+            ptrObj = null;
+            base.DisposeManaged();
+        }
+
         #endregion
 
         #region Properties
@@ -89,8 +81,17 @@ namespace OpenCvHololens.ML
         /// </summary>
         public int DefaultK
         {
-            get { return NativeMethods.ml_KNearest_getDefaultK(ptr); }
-            set { NativeMethods.ml_KNearest_setDefaultK(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_KNearest_getDefaultK(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_KNearest_setDefaultK(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -98,8 +99,17 @@ namespace OpenCvHololens.ML
         /// </summary>
         public new bool IsClassifier
         {
-            get { return NativeMethods.ml_KNearest_getIsClassifier(ptr) != 0; }
-            set { NativeMethods.ml_KNearest_setIsClassifier(ptr, value ? 1 : 0); }
+            get
+            {
+                var res = NativeMethods.ml_KNearest_getIsClassifier(ptr) != 0;
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_KNearest_setIsClassifier(ptr, value ? 1 : 0);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -107,8 +117,17 @@ namespace OpenCvHololens.ML
         /// </summary>
         public int Emax
         {
-            get { return NativeMethods.ml_KNearest_getEmax(ptr); }
-            set { NativeMethods.ml_KNearest_setEmax(ptr, value); }
+            get
+            {
+                var res = NativeMethods.ml_KNearest_getEmax(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_KNearest_setEmax(ptr, value);
+                GC.KeepAlive(this);
+            }
         }
 
         /// <summary>
@@ -116,52 +135,63 @@ namespace OpenCvHololens.ML
         /// </summary>
         public Types AlgorithmType
         {
-            get { return (Types)NativeMethods.ml_KNearest_getAlgorithmType(ptr); }
-            set { NativeMethods.ml_KNearest_setAlgorithmType(ptr, (int)value); }
+            get
+            {
+                var res = (Types)NativeMethods.ml_KNearest_getAlgorithmType(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+            set
+            {
+                NativeMethods.ml_KNearest_setAlgorithmType(ptr, (int)value);
+                GC.KeepAlive(this);
+            }
         }
 
         #endregion
 
         #region Methods
 
-	    /// <summary>
-	    /// Finds the neighbors and predicts responses for input vectors.
-	    /// </summary>
-	    /// <param name="samples">Input samples stored by rows. 
-	    /// It is a single-precision floating-point matrix of `[number_of_samples] * k` size.</param>
-	    /// <param name="k">Number of used nearest neighbors. Should be greater than 1.</param>
-	    /// <param name="results">Vector with results of prediction (regression or classification) for each 
-	    /// input sample. It is a single-precision floating-point vector with `[number_of_samples]` elements.</param>
-	    /// <param name="neighborResponses">neighborResponses Optional output values for corresponding neighbors. 
-	    /// It is a single-precision floating-point matrix of `[number_of_samples] * k` size.</param>
-	    /// <param name="dist">Optional output distances from the input vectors to the corresponding neighbors. 
-	    /// It is a single-precision floating-point matrix of `[number_of_samples] * k` size.</param>
-	    /// <returns></returns>
-	    public float FindNearest(InputArray samples, int k, OutputArray results,
-	        OutputArray neighborResponses = null, OutputArray dist = null)
-	    {
-	        if (disposed)
-	            throw new ObjectDisposedException(GetType().Name);
-	        if (samples == null)
-	            throw new ArgumentNullException(nameof(samples));
-	        if (results == null)
-	            throw new ArgumentNullException(nameof(results));
-	        samples.ThrowIfDisposed();
-	        results.ThrowIfNotReady();
+        /// <summary>
+        /// Finds the neighbors and predicts responses for input vectors.
+        /// </summary>
+        /// <param name="samples">Input samples stored by rows. 
+        /// It is a single-precision floating-point matrix of `[number_of_samples] * k` size.</param>
+        /// <param name="k">Number of used nearest neighbors. Should be greater than 1.</param>
+        /// <param name="results">Vector with results of prediction (regression or classification) for each 
+        /// input sample. It is a single-precision floating-point vector with `[number_of_samples]` elements.</param>
+        /// <param name="neighborResponses">neighborResponses Optional output values for corresponding neighbors. 
+        /// It is a single-precision floating-point matrix of `[number_of_samples] * k` size.</param>
+        /// <param name="dist">Optional output distances from the input vectors to the corresponding neighbors. 
+        /// It is a single-precision floating-point matrix of `[number_of_samples] * k` size.</param>
+        /// <returns></returns>
+        public float FindNearest(InputArray samples, int k, OutputArray results,
+            OutputArray neighborResponses = null, OutputArray dist = null)
+        {
+            ThrowIfDisposed();
+            if (samples == null)
+                throw new ArgumentNullException(nameof(samples));
+            if (results == null)
+                throw new ArgumentNullException(nameof(results));
+            samples.ThrowIfDisposed();
+            results.ThrowIfNotReady();
 
-	        float ret = NativeMethods.ml_KNearest_findNearest(
-	            samples.CvPtr, k, results.CvPtr, Cv2.ToPtr(neighborResponses), Cv2.ToPtr(dist));
-
+            float ret = NativeMethods.ml_KNearest_findNearest(
+                ptr,
+                samples.CvPtr, k, results.CvPtr,
+                Cv2.ToPtr(neighborResponses), Cv2.ToPtr(dist));
+            GC.KeepAlive(this);
             GC.KeepAlive(samples);
-	        results.Fix();
-            if (neighborResponses != null)
-    	        neighborResponses.Fix();
-	        if (dist != null)
-                dist.Fix();
-	        return ret;
-	    }
+            GC.KeepAlive(results);
+            GC.KeepAlive(neighborResponses);
+            GC.KeepAlive(dist);
+            results.Fix();
+            neighborResponses?.Fix();
+            dist?.Fix();
+            return ret;
+        }
 
-	    #endregion
+        #endregion
 
         #region Types
 
@@ -177,5 +207,25 @@ namespace OpenCvHololens.ML
         };
 
         #endregion
+
+        internal class Ptr : OpenCvHololens.Ptr
+        {
+            public Ptr(IntPtr ptr) : base(ptr)
+            {
+            }
+
+            public override IntPtr Get()
+            {
+                var res = NativeMethods.ml_Ptr_KNearest_get(ptr);
+                GC.KeepAlive(this);
+                return res;
+            }
+
+            protected override void DisposeUnmanaged()
+            {
+                NativeMethods.ml_Ptr_KNearest_delete(ptr);
+                base.DisposeUnmanaged();
+            }
+        }
     }
 }

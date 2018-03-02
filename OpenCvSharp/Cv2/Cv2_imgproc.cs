@@ -54,7 +54,8 @@ namespace OpenCvHololens
             var ktype0 = ktype.GetValueOrDefault(MatType.CV_32F);
             NativeMethods.imgproc_getDerivKernels(
                 kx.CvPtr, ky.CvPtr, dx, dy, ksize, normalize ? 1 : 0, ktype0);
-
+            GC.KeepAlive(kx);
+            GC.KeepAlive(ky);
             kx.Fix();
             ky.Fix();
         }
@@ -125,6 +126,7 @@ namespace OpenCvHololens
             Scalar value0 = value.GetValueOrDefault(new Scalar());
             NativeMethods.imgproc_copyMakeBorder(src.CvPtr, dst.CvPtr, top, bottom, left, right, (int)borderType, value0);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -147,6 +149,7 @@ namespace OpenCvHololens
             dst.ThrowIfNotReady();
             NativeMethods.imgproc_medianBlur(src.CvPtr, dst.CvPtr, ksize);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -176,6 +179,7 @@ namespace OpenCvHololens
             dst.ThrowIfNotReady();
             NativeMethods.imgproc_GaussianBlur(src.CvPtr, dst.CvPtr, ksize, sigmaX, sigmaY, (int)borderType);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -206,6 +210,7 @@ namespace OpenCvHololens
             dst.ThrowIfNotReady();
             NativeMethods.imgproc_bilateralFilter(src.CvPtr, dst.CvPtr, d, sigmaColor, sigmaSpace, (int)borderType);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -269,6 +274,7 @@ namespace OpenCvHololens
             Point anchor0 = anchor.GetValueOrDefault(new Point(-1, -1));
             NativeMethods.imgproc_boxFilter(src.CvPtr, dst.CvPtr, ddepth, ksize, anchor0, normalize ? 1 : 0, (int)borderType);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -294,6 +300,7 @@ namespace OpenCvHololens
             Point anchor0 = anchor.GetValueOrDefault(new Point(-1, -1));
             NativeMethods.imgproc_blur(src.CvPtr, dst.CvPtr, ksize, anchor0, (int)borderType);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -314,7 +321,7 @@ namespace OpenCvHololens
         /// <param name="borderType">The pixel extrapolation method</param>
         public static void Filter2D(
             InputArray src, OutputArray dst, MatType ddepth,
-	        InputArray kernel, Point? anchor = null, double delta = 0, 
+            InputArray kernel, Point? anchor = null, double delta = 0, 
             BorderTypes borderType = BorderTypes.Default)
         {
             if (src == null)
@@ -330,6 +337,8 @@ namespace OpenCvHololens
             NativeMethods.imgproc_filter2D(src.CvPtr, dst.CvPtr, ddepth, kernel.CvPtr, 
                 anchor0, delta, (int)borderType);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
+            GC.KeepAlive(kernel);
             dst.Fix();
         }
         #endregion
@@ -366,6 +375,9 @@ namespace OpenCvHololens
             NativeMethods.imgproc_sepFilter2D(src.CvPtr, dst.CvPtr, ddepth, 
                 kernelX.CvPtr, kernelY.CvPtr, anchor0, delta, (int)borderType);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
+            GC.KeepAlive(kernelX);
+            GC.KeepAlive(kernelY);
             dst.Fix();
         }
         #endregion
@@ -396,6 +408,7 @@ namespace OpenCvHololens
             NativeMethods.imgproc_Sobel(src.CvPtr, dst.CvPtr, ddepth, xorder, yorder, 
                 ksize, scale, delta, (int)borderType);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -424,6 +437,7 @@ namespace OpenCvHololens
             NativeMethods.imgproc_Scharr(src.CvPtr, dst.CvPtr, ddepth, xorder, yorder, 
                 scale, delta, (int)borderType);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -451,6 +465,7 @@ namespace OpenCvHololens
             dst.ThrowIfNotReady();
             NativeMethods.imgproc_Laplacian(src.CvPtr, dst.CvPtr, ddepth, ksize, scale, delta, (int)borderType);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -487,6 +502,7 @@ namespace OpenCvHololens
             edges.ThrowIfNotReady();
             NativeMethods.imgproc_Canny(src.CvPtr, edges.CvPtr, threshold1, threshold2, apertureSize, L2gradient ? 1 : 0);
             GC.KeepAlive(src);
+            GC.KeepAlive(edges);
             edges.Fix();
         }
         #endregion
@@ -511,6 +527,7 @@ namespace OpenCvHololens
             dst.ThrowIfNotReady();
             NativeMethods.imgproc_cornerEigenValsAndVecs(src.CvPtr, dst.CvPtr, blockSize, ksize, (int)borderType);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -533,6 +550,7 @@ namespace OpenCvHololens
             dst.ThrowIfNotReady();
             NativeMethods.imgproc_preCornerDetect(src.CvPtr, dst.CvPtr, ksize, (int)borderType);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -604,6 +622,7 @@ namespace OpenCvHololens
                 NativeMethods.imgproc_goodFeaturesToTrack(src.CvPtr, vector.CvPtr, maxCorners, qualityLevel, 
                     minDistance, maskPtr, blockSize, useHarrisDetector ? 0 : 1, k);
                 GC.KeepAlive(src);
+                GC.KeepAlive(mask);
                 return vector.ToArray();
             }
         }
@@ -782,6 +801,8 @@ namespace OpenCvHololens
             IntPtr elementPtr = ToPtr(element);
             NativeMethods.imgproc_dilate(src.CvPtr, dst.CvPtr, elementPtr, anchor0, iterations, (int)borderType, borderValue0);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
+            GC.KeepAlive(element);
             dst.Fix();
         }
         #endregion
@@ -826,6 +847,8 @@ namespace OpenCvHololens
             IntPtr elementPtr = ToPtr(element);
             NativeMethods.imgproc_erode(src.CvPtr, dst.CvPtr, elementPtr, anchor0, iterations, (int)borderType, borderValue0);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
+            GC.KeepAlive(element);
             dst.Fix();
         }
         #endregion
@@ -872,6 +895,8 @@ namespace OpenCvHololens
             IntPtr elementPtr = ToPtr(element);
             NativeMethods.imgproc_morphologyEx(src.CvPtr, dst.CvPtr, (int)op, elementPtr, anchor0, iterations, (int)borderType, borderValue0);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
+            GC.KeepAlive(element);
             dst.Fix();
         }
         #endregion
@@ -901,6 +926,7 @@ namespace OpenCvHololens
             dst.ThrowIfNotReady();
             NativeMethods.imgproc_resize(src.CvPtr, dst.CvPtr, dsize, fx, fy, (int)interpolation);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -935,6 +961,8 @@ namespace OpenCvHololens
             Scalar borderValue0 = borderValue.GetValueOrDefault(Scalar.All(0));
             NativeMethods.imgproc_warpAffine(src.CvPtr, dst.CvPtr, m.CvPtr, dsize, (int)flags, (int)borderMode, borderValue0);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
+            GC.KeepAlive(m);
             dst.Fix();
         }
         #endregion
@@ -984,6 +1012,8 @@ namespace OpenCvHololens
             NativeMethods.imgproc_warpPerspective_MisInputArray(
                 src.CvPtr, dst.CvPtr, m.CvPtr, dsize, (int)flags, (int)borderMode, borderValue0);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
+            GC.KeepAlive(m);
             dst.Fix();
         }
 
@@ -1033,6 +1063,7 @@ namespace OpenCvHololens
             NativeMethods.imgproc_warpPerspective_MisArray(
                 src.CvPtr, dst.CvPtr, m, mRow, mCol, dsize, (int)flags, (int)borderMode, borderValue0);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -1069,7 +1100,10 @@ namespace OpenCvHololens
             Scalar borderValue0 = borderValue.GetValueOrDefault(Scalar.All(0));
             NativeMethods.imgproc_remap(src.CvPtr, dst.CvPtr, map1.CvPtr, map2.CvPtr, (int)interpolation, (int)borderMode, borderValue0);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
+            GC.KeepAlive(map1);
+            GC.KeepAlive(map2);
         }
         #endregion
         #region ConvertMaps
@@ -1099,6 +1133,8 @@ namespace OpenCvHololens
             NativeMethods.imgproc_convertMaps(map1.CvPtr, map2.CvPtr, dstmap1.CvPtr, dstmap2.CvPtr, dstmap1Type, nnInterpolation ? 1 : 0);
             GC.KeepAlive(map1);
             GC.KeepAlive(map2);
+            GC.KeepAlive(dstmap1);
+            GC.KeepAlive(dstmap2);
             dstmap1.Fix();
             dstmap2.Fix();
         }
@@ -1135,6 +1171,7 @@ namespace OpenCvHololens
             im.ThrowIfNotReady();
             NativeMethods.imgproc_invertAffineTransform(m.CvPtr, im.CvPtr);
             GC.KeepAlive(m);
+            GC.KeepAlive(im);
             im.Fix();
         }
         #endregion
@@ -1236,7 +1273,8 @@ namespace OpenCvHololens
             image.ThrowIfDisposed();
             patch.ThrowIfNotReady();
             NativeMethods.imgproc_getRectSubPix(image.CvPtr, patchSize, center, patch.CvPtr, patchType);
-            GC.KeepAlive(image); 
+            GC.KeepAlive(image);
+            GC.KeepAlive(patch);
             patch.Fix();
         }
         #endregion
@@ -1263,6 +1301,7 @@ namespace OpenCvHololens
             NativeMethods.imgproc_logPolar(src.CvPtr, dst.CvPtr, center, m, (int)flags);
 
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
 
@@ -1288,6 +1327,7 @@ namespace OpenCvHololens
             NativeMethods.imgproc_linearPolar(src.CvPtr, dst.CvPtr, center, maxRadius, (int)flags);
 
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
 
@@ -1308,6 +1348,7 @@ namespace OpenCvHololens
             sum.ThrowIfNotReady();
             NativeMethods.imgproc_integral1(src.CvPtr, sum.CvPtr, sdepth);
             GC.KeepAlive(src);
+            GC.KeepAlive(sum);
             sum.Fix();
         }
         /// <summary>
@@ -1330,6 +1371,8 @@ namespace OpenCvHololens
             sqsum.ThrowIfNotReady();
             NativeMethods.imgproc_integral2(src.CvPtr, sum.CvPtr, sqsum.CvPtr, sdepth);
             GC.KeepAlive(src);
+            GC.KeepAlive(sum);
+            GC.KeepAlive(sqsum);
             sum.Fix();
             sqsum.Fix();
         }
@@ -1357,6 +1400,9 @@ namespace OpenCvHololens
             tilted.ThrowIfNotReady();
             NativeMethods.imgproc_integral3(src.CvPtr, sum.CvPtr, sqsum.CvPtr, tilted.CvPtr, sdepth);
             GC.KeepAlive(src);
+            GC.KeepAlive(sum);
+            GC.KeepAlive(sqsum);
+            GC.KeepAlive(tilted);
             sum.Fix();
             sqsum.Fix();
             tilted.Fix();
@@ -1379,6 +1425,8 @@ namespace OpenCvHololens
             dst.ThrowIfNotReady();
             NativeMethods.imgproc_accumulate(src.CvPtr, dst.CvPtr, ToPtr(mask));
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
+            GC.KeepAlive(mask);
             dst.Fix();
         }
         /// <summary>
@@ -1397,6 +1445,8 @@ namespace OpenCvHololens
             dst.ThrowIfNotReady();
             NativeMethods.imgproc_accumulateSquare(src.CvPtr, dst.CvPtr, ToPtr(mask));
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
+            GC.KeepAlive(mask);
             dst.Fix();
         }
         /// <summary>
@@ -1420,6 +1470,8 @@ namespace OpenCvHololens
             NativeMethods.imgproc_accumulateProduct(src1.CvPtr, src2.CvPtr, dst.CvPtr, ToPtr(mask));
             GC.KeepAlive(src1);
             GC.KeepAlive(src2);
+            GC.KeepAlive(dst);
+            GC.KeepAlive(mask);
             dst.Fix();
         }
         /// <summary>
@@ -1439,6 +1491,8 @@ namespace OpenCvHololens
             dst.ThrowIfNotReady();
             NativeMethods.imgproc_accumulateWeighted(src.CvPtr, dst.CvPtr, alpha, ToPtr(mask));
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
+            GC.KeepAlive(mask);
             dst.Fix();
         }
         #endregion
@@ -1484,6 +1538,7 @@ namespace OpenCvHololens
             var ret = NativeMethods.imgproc_phaseCorrelate(src1.CvPtr, src2.CvPtr, ToPtr(window));
             GC.KeepAlive(src1);
             GC.KeepAlive(src2);
+            GC.KeepAlive(window);
             return ret;
         }
         #endregion
@@ -1540,6 +1595,7 @@ namespace OpenCvHololens
                 throw new ArgumentNullException(nameof(dst));
             dst.ThrowIfNotReady();
             NativeMethods.imgproc_createHanningWindow(dst.CvPtr, winSize, type);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -1563,6 +1619,7 @@ namespace OpenCvHololens
             dst.ThrowIfNotReady();
             double ret = NativeMethods.imgproc_threshold(src.CvPtr, dst.CvPtr, thresh, maxval, (int)type);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
             return ret;
         }
@@ -1590,6 +1647,7 @@ namespace OpenCvHololens
             dst.ThrowIfNotReady();
             NativeMethods.imgproc_adaptiveThreshold(src.CvPtr, dst.CvPtr, maxValue, (int)adaptiveMethod, (int)thresholdType, blockSize, c);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -1613,6 +1671,7 @@ namespace OpenCvHololens
             Size dstSize0 = dstSize.GetValueOrDefault(new Size());
             NativeMethods.imgproc_pyrDown(src.CvPtr, dst.CvPtr, dstSize0, (int)borderType);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         /// <summary>
@@ -1634,6 +1693,7 @@ namespace OpenCvHololens
             Size dstSize0 = dstSize.GetValueOrDefault(new Size());
             NativeMethods.imgproc_pyrUp(src.CvPtr, dst.CvPtr, dstSize0, (int)borderType);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -1666,6 +1726,10 @@ namespace OpenCvHololens
             NativeMethods.imgproc_undistort(src.CvPtr, dst.CvPtr, cameraMatrix.CvPtr,
                 ToPtr(distCoeffs), ToPtr(newCameraMatrix));
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
+            GC.KeepAlive(cameraMatrix);
+            GC.KeepAlive(distCoeffs);
+            GC.KeepAlive(newCameraMatrix);
             dst.Fix();
         }
         #endregion
@@ -1710,6 +1774,8 @@ namespace OpenCvHololens
             GC.KeepAlive(distCoeffs);
             GC.KeepAlive(r);
             GC.KeepAlive(newCameraMatrix);
+            GC.KeepAlive(map1);
+            GC.KeepAlive(map2);
             map1.Fix();
             map2.Fix();
         }
@@ -1750,6 +1816,8 @@ namespace OpenCvHololens
                 destImageWidth, m1Type, map1.CvPtr, map2.CvPtr, (int)projType, alpha);
             GC.KeepAlive(cameraMatrix);
             GC.KeepAlive(distCoeffs);
+            GC.KeepAlive(map1);
+            GC.KeepAlive(map2);
             map1.Fix();
             map2.Fix();
             return ret;
@@ -1810,7 +1878,9 @@ namespace OpenCvHololens
             NativeMethods.imgproc_undistortPoints(src.CvPtr, dst.CvPtr, cameraMatrix.CvPtr, 
                 ToPtr(distCoeffs), ToPtr(r), ToPtr(p));
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             GC.KeepAlive(cameraMatrix);
+            GC.KeepAlive(distCoeffs);
             GC.KeepAlive(r);
             GC.KeepAlive(p);
             dst.Fix();
@@ -1879,6 +1949,7 @@ namespace OpenCvHololens
             }
             GC.KeepAlive(images);
             GC.KeepAlive(mask);
+            GC.KeepAlive(hist);
             hist.Fix();
         }
         #endregion
@@ -1919,6 +1990,7 @@ namespace OpenCvHololens
             }
             GC.KeepAlive(images);
             GC.KeepAlive(hist);
+            GC.KeepAlive(backProject);
             backProject.Fix();
         }
         #endregion
@@ -1960,6 +2032,7 @@ namespace OpenCvHololens
             dst.ThrowIfNotReady();
             NativeMethods.imgproc_equalizeHist(src.CvPtr, dst.CvPtr);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -2040,7 +2113,8 @@ namespace OpenCvHololens
             GC.KeepAlive(signature1);
             GC.KeepAlive(signature2);
             GC.KeepAlive(cost);
-            if(flow != null)
+            GC.KeepAlive(flow);
+            if (flow != null)
                 flow.Fix();
             return ret;
         }
@@ -2062,6 +2136,7 @@ namespace OpenCvHololens
             markers.ThrowIfNotReady();
             NativeMethods.imgproc_watershed(image.CvPtr, markers.CvPtr);
             GC.KeepAlive(image);
+            GC.KeepAlive(markers);
             markers.Fix();
         }
         #endregion
@@ -2088,6 +2163,7 @@ namespace OpenCvHololens
                 new TermCriteria(CriteriaType.Count | CriteriaType.Eps, 5, 1));
             NativeMethods.imgproc_pyrMeanShiftFiltering(src.CvPtr, dst.CvPtr, sp, sr, maxLevel, termcrit0);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -2125,6 +2201,9 @@ namespace OpenCvHololens
             NativeMethods.imgproc_grabCut(img.CvPtr, mask.CvPtr, rect,
                 bgdModel.CvPtr, fgdModel.CvPtr, iterCount, (int)mode);
             GC.KeepAlive(img);
+            GC.KeepAlive(mask);
+            GC.KeepAlive(bgdModel);
+            GC.KeepAlive(fgdModel);
             mask.Fix();
             bgdModel.Fix();
             fgdModel.Fix();
@@ -2159,6 +2238,8 @@ namespace OpenCvHololens
             NativeMethods.imgproc_distanceTransformWithLabels(
                 src.CvPtr, dst.CvPtr, labels.CvPtr, (int)distanceType, (int)maskSize, (int)labelType);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
+            GC.KeepAlive(labels);
             dst.Fix();
             labels.Fix();
         }
@@ -2184,6 +2265,7 @@ namespace OpenCvHololens
             NativeMethods.imgproc_distanceTransform(
                 src.CvPtr, dst.CvPtr, (int)distanceType, (int)maskSize);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -2200,8 +2282,9 @@ namespace OpenCvHololens
         public static int FloodFill(InputOutputArray image, Point seedPoint, Scalar newVal)
         {
             Rect rect;
-            return FloodFill(image, seedPoint, newVal, out rect);
+            return FloodFill(image, seedPoint, newVal, out rect, null, null, FloodFillFlags.Link4);
         }
+
         /// <summary>
         /// Fills a connected component with the given color.
         /// </summary>
@@ -2227,13 +2310,42 @@ namespace OpenCvHololens
                                     Scalar? loDiff = null, Scalar? upDiff = null,
                                     FloodFillFlags flags = FloodFillFlags.Link4)
         {
+            return FloodFill(image, seedPoint, newVal, out rect, loDiff, upDiff, (int)flags);
+        }
+
+        /// <summary>
+        /// Fills a connected component with the given color.
+        /// </summary>
+        /// <param name="image">Input/output 1- or 3-channel, 8-bit, or floating-point image. 
+        /// It is modified by the function unless the FLOODFILL_MASK_ONLY flag is set in the 
+        /// second variant of the function. See the details below.</param>
+        /// <param name="seedPoint">Starting point.</param>
+        /// <param name="newVal">New value of the repainted domain pixels.</param>
+        /// <param name="rect">Optional output parameter set by the function to the 
+        /// minimum bounding rectangle of the repainted domain.</param>
+        /// <param name="loDiff">Maximal lower brightness/color difference between the currently 
+        /// observed pixel and one of its neighbors belonging to the component, or a seed pixel 
+        /// being added to the component.</param>
+        /// <param name="upDiff">Maximal upper brightness/color difference between the currently 
+        /// observed pixel and one of its neighbors belonging to the component, or a seed pixel 
+        /// being added to the component.</param>
+        /// <param name="flags">Operation flags. Lower bits contain a connectivity value, 
+        /// 4 (default) or 8, used within the function. Connectivity determines which 
+        /// neighbors of a pixel are considered. </param>
+        /// <returns></returns>
+        public static int FloodFill(InputOutputArray image,
+                                    Point seedPoint, Scalar newVal, out Rect rect,
+                                    Scalar? loDiff = null, Scalar? upDiff = null,
+                                    int flags = 4)
+        {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
             image.ThrowIfNotReady();
             Scalar loDiff0 = loDiff.GetValueOrDefault(new Scalar());
             Scalar upDiff0 = upDiff.GetValueOrDefault(new Scalar());
-            int ret = NativeMethods.imgproc_floodFill(image.CvPtr, seedPoint, newVal, out rect,
+            int ret = NativeMethods.imgproc_floodFill1(image.CvPtr, seedPoint, newVal, out rect,
                 loDiff0, upDiff0, (int)flags);
+            GC.KeepAlive(image);
             image.Fix();
             return ret;
         }
@@ -2256,7 +2368,7 @@ namespace OpenCvHololens
                                     Point seedPoint, Scalar newVal)
         {
             Rect rect;
-            return FloodFill(image, mask, seedPoint, newVal, out rect);
+            return FloodFill(image, mask, seedPoint, newVal, out rect, null, null, FloodFillFlags.Link4);
         }
 
         /// <summary>
@@ -2289,6 +2401,39 @@ namespace OpenCvHololens
                                     Scalar? loDiff = null, Scalar? upDiff = null,
                                     FloodFillFlags flags = FloodFillFlags.Link4)
         {
+            return FloodFill(image, mask, seedPoint, newVal, out rect, loDiff, upDiff, (int)flags);
+        }
+
+        /// <summary>
+        /// Fills a connected component with the given color.
+        /// </summary>
+        /// <param name="image">Input/output 1- or 3-channel, 8-bit, or floating-point image. 
+        /// It is modified by the function unless the FLOODFILL_MASK_ONLY flag is set in the 
+        /// second variant of the function. See the details below.</param>
+        /// <param name="mask">(For the second function only) Operation mask that should be a single-channel 8-bit image, 
+        /// 2 pixels wider and 2 pixels taller. The function uses and updates the mask, so you take responsibility of 
+        /// initializing the mask content. Flood-filling cannot go across non-zero pixels in the mask. For example, 
+        /// an edge detector output can be used as a mask to stop filling at edges. It is possible to use the same mask 
+        /// in multiple calls to the function to make sure the filled area does not overlap.</param>
+        /// <param name="seedPoint">Starting point.</param>
+        /// <param name="newVal">New value of the repainted domain pixels.</param>
+        /// <param name="rect">Optional output parameter set by the function to the 
+        /// minimum bounding rectangle of the repainted domain.</param>
+        /// <param name="loDiff">Maximal lower brightness/color difference between the currently 
+        /// observed pixel and one of its neighbors belonging to the component, or a seed pixel 
+        /// being added to the component.</param>
+        /// <param name="upDiff">Maximal upper brightness/color difference between the currently 
+        /// observed pixel and one of its neighbors belonging to the component, or a seed pixel 
+        /// being added to the component.</param>
+        /// <param name="flags">Operation flags. Lower bits contain a connectivity value, 
+        /// 4 (default) or 8, used within the function. Connectivity determines which 
+        /// neighbors of a pixel are considered. </param>
+        /// <returns></returns>
+        public static int FloodFill(InputOutputArray image, InputOutputArray mask,
+                                    Point seedPoint, Scalar newVal, out Rect rect,
+                                    Scalar? loDiff = null, Scalar? upDiff = null,
+                                    int flags = 4)
+        {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
             if (mask == null)
@@ -2297,8 +2442,10 @@ namespace OpenCvHololens
             mask.ThrowIfNotReady();
             Scalar loDiff0 = loDiff.GetValueOrDefault(new Scalar());
             Scalar upDiff0 = upDiff.GetValueOrDefault(new Scalar());
-            int ret = NativeMethods.imgproc_floodFill(image.CvPtr, mask.CvPtr, seedPoint, 
-                newVal, out rect, loDiff0, upDiff0, (int)flags);
+            int ret = NativeMethods.imgproc_floodFill2(image.CvPtr, mask.CvPtr, seedPoint,
+                newVal, out rect, loDiff0, upDiff0, flags);
+            GC.KeepAlive(image);
+            GC.KeepAlive(mask);
             image.Fix();
             mask.Fix();
             return ret;
@@ -2333,6 +2480,7 @@ namespace OpenCvHololens
             
             NativeMethods.imgproc_cvtColor(src.CvPtr, dst.CvPtr, (int)code, dstCn);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
         #endregion
@@ -2430,6 +2578,7 @@ namespace OpenCvHololens
             NativeMethods.imgproc_matchTemplate(image.CvPtr, templ.CvPtr, result.CvPtr, (int)method, ToPtr(mask));
             GC.KeepAlive(image);
             GC.KeepAlive(templ);
+            GC.KeepAlive(result);
             result.Fix();
             GC.KeepAlive(mask);
         }
@@ -2479,6 +2628,7 @@ namespace OpenCvHololens
                 image.CvPtr, labels.CvPtr, (int)connectivity, ltype);
 
             GC.KeepAlive(image);
+            GC.KeepAlive(labels);
             labels.Fix();
             return result;
         }
@@ -2571,6 +2721,9 @@ namespace OpenCvHololens
                 image.CvPtr, labels.CvPtr, stats.CvPtr, centroids.CvPtr, (int) connectivity, ltype);
 
             GC.KeepAlive(image);
+            GC.KeepAlive(labels);
+            GC.KeepAlive(stats);
+            GC.KeepAlive(centroids);
             labels.Fix();
             stats.Fix();
             centroids.Fix();
@@ -2674,6 +2827,7 @@ namespace OpenCvHololens
                 hierarchy = EnumerableEx.SelectToArray(hierarchyOrg, HierarchyIndex.FromVec4i);
             }
             image.Fix();
+            GC.KeepAlive(image);
         }
 #if LANG_JP
         /// <summary>
@@ -2727,6 +2881,8 @@ namespace OpenCvHololens
             }
             image.Fix();
             hierarchy.Fix();
+            GC.KeepAlive(image);
+            GC.KeepAlive(hierarchy);
         }
 
 #if LANG_JP
@@ -2763,6 +2919,7 @@ namespace OpenCvHololens
             IntPtr contoursPtr;
             NativeMethods.imgproc_findContours2_vector(image.CvPtr, out contoursPtr, (int)mode, (int)method, offset0);
             image.Fix();
+            GC.KeepAlive(image);
 
             using (var contoursVec = new VectorOfVectorPoint(contoursPtr))
             {
@@ -2803,6 +2960,7 @@ namespace OpenCvHololens
             IntPtr contoursPtr;
             NativeMethods.imgproc_findContours2_OutputArray(image.CvPtr, out contoursPtr, (int)mode, (int)method, offset0);
             image.Fix();
+            GC.KeepAlive(image);
 
             using (var contoursVec = new VectorOfMat(contoursPtr))
             {
@@ -2833,6 +2991,7 @@ namespace OpenCvHololens
             approxCurve.ThrowIfNotReady();
             NativeMethods.imgproc_approxPolyDP_InputArray(curve.CvPtr, approxCurve.CvPtr, epsilon, closed ? 1 : 0);
             GC.KeepAlive(curve);
+            GC.KeepAlive(approxCurve);
             approxCurve.Fix();
         }
         /// <summary>
@@ -3159,6 +3318,7 @@ namespace OpenCvHololens
             hull.ThrowIfNotReady();
             NativeMethods.imgproc_convexHull_InputArray(points.CvPtr, hull.CvPtr, clockwise ? 1 : 0, returnPoints ? 1 : 0);
             GC.KeepAlive(points);
+            GC.KeepAlive(hull);
             hull.Fix();
         }
 
@@ -3286,6 +3446,7 @@ namespace OpenCvHololens
             NativeMethods.imgproc_convexityDefects_InputArray(contour.CvPtr, convexHull.CvPtr, convexityDefects.CvPtr);
             GC.KeepAlive(contour);
             GC.KeepAlive(convexHull);
+            GC.KeepAlive(convexityDefects);
             convexityDefects.Fix();
         }
 
@@ -3419,6 +3580,7 @@ namespace OpenCvHololens
             float ret = NativeMethods.imgproc_intersectConvexConvex_InputArray(p1.CvPtr, p2.CvPtr, p12.CvPtr, handleNested ? 1 : 0);
             GC.KeepAlive(p1);
             GC.KeepAlive(p2);
+            GC.KeepAlive(p12);
             p12.Fix();
             return ret;
         }
@@ -3550,6 +3712,7 @@ namespace OpenCvHololens
             line.ThrowIfNotReady();
             NativeMethods.imgproc_fitLine_InputArray(points.CvPtr, line.CvPtr, (int)distType, param, reps, aeps);
             GC.KeepAlive(points);
+            GC.KeepAlive(line);
             line.Fix();
         }
 
@@ -3722,7 +3885,7 @@ namespace OpenCvHololens
 
             int ret = NativeMethods.imgproc_rotatedRectangleIntersection_OutputArray(
                 rect1, rect2, intersectingRegion.CvPtr);
-
+            GC.KeepAlive(intersectingRegion);
             intersectingRegion.Fix();
 
             return (RectanglesIntersectTypes)ret;
@@ -3746,7 +3909,7 @@ namespace OpenCvHololens
         {
             using (var intersectingRegionVec = new VectorOfPoint2f())
             {
-                int ret = NativeMethods.imgproc_rotatedRectangleIntersection_OutputArray(
+                int ret = NativeMethods.imgproc_rotatedRectangleIntersection_vector(
                     rect1, rect2, intersectingRegionVec.CvPtr);
                 intersectingRegion = intersectingRegionVec.ToArray();
                 return (RectanglesIntersectTypes) ret;
@@ -3771,6 +3934,7 @@ namespace OpenCvHololens
             dst.ThrowIfNotReady();
             NativeMethods.imgproc_applyColorMap(src.CvPtr, dst.CvPtr, (int)colormap);
             GC.KeepAlive(src);
+            GC.KeepAlive(dst);
             dst.Fix();
         }
 
@@ -3841,6 +4005,7 @@ namespace OpenCvHololens
             img.ThrowIfNotReady();
             NativeMethods.imgproc_line(img.CvPtr, pt1, pt2, color, thickness, (int)lineType, shift);
             img.Fix();
+            GC.KeepAlive(img);
         }
         #endregion
 
@@ -3872,7 +4037,7 @@ namespace OpenCvHololens
 
             NativeMethods.imgproc_arrowedLine(
                 img.CvPtr, pt1, pt2, color, thickness, (int)lineType, shift, tipLength);
-
+            GC.KeepAlive(img);
             img.Fix();
         }
 
@@ -3908,6 +4073,7 @@ namespace OpenCvHololens
                 throw new ArgumentNullException(nameof(img));
             NativeMethods.imgproc_rectangle_InputOutputArray(img.CvPtr, pt1, pt2, color, thickness, (int)lineType, shift);
             img.Fix();
+            GC.KeepAlive(img);
         }
 
 #if LANG_JP
@@ -3939,6 +4105,7 @@ namespace OpenCvHololens
                 throw new ArgumentNullException(nameof(img));
             NativeMethods.imgproc_rectangle_InputOutputArray(img.CvPtr, rect.TopLeft, rect.BottomRight, color, thickness, (int)lineType, shift);
             img.Fix();
+            GC.KeepAlive(img);
         }
 
 #if LANG_JP
@@ -4069,6 +4236,7 @@ namespace OpenCvHololens
             img.ThrowIfDisposed();
             NativeMethods.imgproc_circle(img.CvPtr, center, radius, color, thickness, (int)lineType, shift);
             img.Fix();
+            GC.KeepAlive(img);
         }
         #endregion
         #region Ellipse
@@ -4110,6 +4278,7 @@ namespace OpenCvHololens
             img.ThrowIfNotReady();
             NativeMethods.imgproc_ellipse1(img.CvPtr, center, axes, angle, startAngle, endAngle, color, thickness, (int)lineType, shift);
             img.Fix();
+            GC.KeepAlive(img);
         }
 
 #if LANG_JP
@@ -4139,6 +4308,7 @@ namespace OpenCvHololens
             img.ThrowIfDisposed();
             NativeMethods.imgproc_ellipse2(img.CvPtr, box, color, thickness, (int)lineType);
             img.Fix();
+            GC.KeepAlive(img);
         }
         #endregion
         #region FillConvexPoly
@@ -4255,6 +4425,7 @@ namespace OpenCvHololens
                 NativeMethods.imgproc_fillPoly_Mat(
                     img.CvPtr, ptsPtr.Pointer, npts, ncontours, color, (int)lineType, shift, offset0);
             }
+            GC.KeepAlive(img);
         }
 
 #if LANG_JP
@@ -4292,7 +4463,7 @@ namespace OpenCvHololens
 
             NativeMethods.imgproc_fillPoly_InputOutputArray(
                 img.CvPtr, pts.CvPtr, color, (int)lineType, shift, offset0);
-
+            GC.KeepAlive(img);
             GC.KeepAlive(pts);
             img.Fix();
         }
@@ -4331,6 +4502,7 @@ namespace OpenCvHololens
             {
                 NativeMethods.imgproc_polylines_Mat(
                     img.CvPtr, ptsPtr.Pointer, npts, ncontours, isClosed ? 1 : 0, color, thickness, (int)lineType, shift);
+                GC.KeepAlive(img);
             }
         }
 
@@ -4357,7 +4529,7 @@ namespace OpenCvHololens
 
             NativeMethods.imgproc_polylines_InputOutputArray(
                 img.CvPtr, pts.CvPtr, isClosed ? 1 : 0, color, thickness, (int)lineType, shift);
-
+            GC.KeepAlive(img);
             img.Fix();
             GC.KeepAlive(pts);
         }
@@ -4433,7 +4605,7 @@ namespace OpenCvHololens
                         contourIdx, color, thickness, (int)lineType, hiearchyVecs, hiearchyVecs.Length, maxLevel, offset0);
                 }
             }
-
+            GC.KeepAlive(image);
             image.Fix();
         }
 #if LANG_JP
@@ -4492,6 +4664,9 @@ namespace OpenCvHololens
             NativeMethods.imgproc_drawContours_InputArray(image.CvPtr, contoursPtr, contoursPtr.Length,
                         contourIdx, color, thickness, (int)lineType, ToPtr(hierarchy), maxLevel, offset0);
             image.Fix();
+            GC.KeepAlive(image);
+            GC.KeepAlive(contours);
+            GC.KeepAlive(hierarchy);
         }
         #endregion
 
@@ -4586,6 +4761,7 @@ namespace OpenCvHololens
             NativeMethods.core_putText(img.CvPtr, text, org, (int)fontFace, fontScale, color,
                 thickness, (int)lineType, bottomLeftOrigin ? 1 : 0);
             img.Fix();
+            GC.KeepAlive(img);
         }
 
         /// <summary>

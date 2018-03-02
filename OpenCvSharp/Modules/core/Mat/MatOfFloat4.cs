@@ -627,7 +627,7 @@ namespace OpenCvHololens
         {
             /*int num = CheckVector(ThisChannels, ThisDepth);
             if (num < 0)
-                throw new OpenCvSharpException("Native Mat has unexpected type or size: " + ToString());*/
+                throw new OpenCvHololensException("Native Mat has unexpected type or size: " + ToString());*/
             long numOfElems = (long)Total();
             if (numOfElems == 0)
                 return new Vec4f[0];
@@ -643,7 +643,7 @@ namespace OpenCvHololens
         {
             /*int num = CheckVector(ThisChannels, ThisDepth);
             if (num < 0)
-                throw new OpenCvSharpException("Native Mat has unexpected type or size: " + ToString());*/
+                throw new OpenCvHololensException("Native Mat has unexpected type or size: " + ToString());*/
             long numOfElems = (long)Total();
             if (numOfElems == 0)
                 return new float[0];
@@ -703,6 +703,7 @@ namespace OpenCvHololens
         {
             ThrowIfDisposed();
             NativeMethods.core_Mat_push_back_Vec4f(ptr, value);
+            GC.KeepAlive(this);
         }
     }
 }

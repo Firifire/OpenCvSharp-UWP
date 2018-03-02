@@ -50,5 +50,11 @@ namespace OpenCvHololens
         public static extern void ml_Ptr_LogisticRegression_delete(IntPtr obj);
         [DllImport(DllExtern)]
         public static extern IntPtr ml_Ptr_LogisticRegression_get(IntPtr obj);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr ml_LogisticRegression_load(string filePath);
+
+        [DllImport(DllExtern)]
+        public static extern IntPtr ml_LogisticRegression_loadFromString(string strModel);
     }
 }
