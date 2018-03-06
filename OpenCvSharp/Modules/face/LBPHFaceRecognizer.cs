@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens.Face
+namespace OpenCvSharp.Face
 {
     /// <inheritdoc />
     /// <summary>
@@ -58,7 +58,7 @@ namespace OpenCvHololens.Face
         {
             IntPtr p = NativeMethods.face_LBPHFaceRecognizer_create(radius, neighbors, gridX, gridY, threshold);
             if (p == IntPtr.Zero)
-                throw new OpenCvHololensException($"Invalid cv::Ptr<{nameof(LBPHFaceRecognizer)}> pointer");
+                throw new OpenCvSharpException($"Invalid cv::Ptr<{nameof(LBPHFaceRecognizer)}> pointer");
             var ptrObj = new Ptr(p);
             var detector = new LBPHFaceRecognizer
             {
@@ -217,7 +217,7 @@ namespace OpenCvHololens.Face
 
         #endregion
 
-        internal new class Ptr : OpenCvHololens.Ptr
+        internal new class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

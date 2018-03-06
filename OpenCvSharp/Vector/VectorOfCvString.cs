@@ -1,7 +1,7 @@
 ﻿using System;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// std::vector&lt;cv::String&gt;

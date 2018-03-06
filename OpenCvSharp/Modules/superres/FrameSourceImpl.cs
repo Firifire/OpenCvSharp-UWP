@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// 
@@ -28,7 +28,7 @@ namespace OpenCvHololens
         internal static FrameSource FromPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Invalid FrameSource pointer");
+                throw new OpenCvSharpException("Invalid FrameSource pointer");
             var obj = new FrameSourceImpl();
             var ptrObj = new Ptr(ptr);
             obj.ptrObj = ptrObj;
@@ -43,7 +43,7 @@ namespace OpenCvHololens
         internal static FrameSource FromRawPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Invalid FrameSource pointer");
+                throw new OpenCvSharpException("Invalid FrameSource pointer");
             var obj = new FrameSourceImpl
                 {
                     ptrObj = null,
@@ -92,7 +92,7 @@ namespace OpenCvHololens
         }
         #endregion
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens.Aruco
+namespace OpenCvSharp.Aruco
 {
     /// <summary>
     /// aruco module

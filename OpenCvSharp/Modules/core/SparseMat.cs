@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// Sparse matrix class.
@@ -26,7 +26,7 @@ namespace OpenCvHololens
         public SparseMat(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Native object address is NULL");
+                throw new OpenCvSharpException("Native object address is NULL");
             this.ptr = ptr;
         }
 
@@ -88,7 +88,7 @@ namespace OpenCvHololens
             ptr = NativeMethods.core_SparseMat_new3(m.CvPtr);
             GC.KeepAlive(m);
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException();
+                throw new OpenCvSharpException();
         }
 
 #if LANG_JP

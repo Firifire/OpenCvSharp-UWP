@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenCvHololens.Flann
+namespace OpenCvSharp.Flann
 {
 #if LANG_JP
     /// <summary>
@@ -31,7 +31,7 @@ namespace OpenCvHololens.Flann
         {
             IntPtr p = NativeMethods.flann_Ptr_KDTreeIndexParams_new(trees);
             if (p == IntPtr.Zero)
-                throw new OpenCvHololensException($"Failed to create {nameof(AutotunedIndexParams)}");
+                throw new OpenCvSharpException($"Failed to create {nameof(AutotunedIndexParams)}");
 
             PtrObj = new Ptr(p);
             ptr = PtrObj.Get();
@@ -40,12 +40,12 @@ namespace OpenCvHololens.Flann
         /// <summary>
         /// 
         /// </summary>
-        protected KDTreeIndexParams(OpenCvHololens.Ptr ptrObj)
+        protected KDTreeIndexParams(OpenCvSharp.Ptr ptrObj)
             : base(ptrObj)
         {
         }
 
-        internal new class Ptr : OpenCvHololens.Ptr
+        internal new class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

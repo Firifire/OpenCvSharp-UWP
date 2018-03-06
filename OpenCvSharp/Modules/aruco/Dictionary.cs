@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens.Aruco
+namespace OpenCvSharp.Aruco
 {
     /// <summary>
     /// Dictionary/Set of markers. It contains the inner codification
@@ -91,7 +91,7 @@ namespace OpenCvHololens.Aruco
 
         #endregion
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

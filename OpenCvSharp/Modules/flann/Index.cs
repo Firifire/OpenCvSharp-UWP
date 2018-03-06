@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenCvHololens.Flann
+namespace OpenCvSharp.Flann
 {
 #if LANG_JP
     /// <summary>
@@ -43,7 +43,7 @@ namespace OpenCvHololens.Flann
             GC.KeepAlive(features);
             GC.KeepAlive(@params);
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Failed to create Index");
+                throw new OpenCvSharpException("Failed to create Index");
         }
 
         /// <summary>

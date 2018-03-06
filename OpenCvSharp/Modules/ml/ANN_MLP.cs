@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens.ML
+namespace OpenCvSharp.ML
 {
 #if LANG_JP
     /// <summary>
@@ -343,7 +343,7 @@ namespace OpenCvHololens.ML
 
         #endregion
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

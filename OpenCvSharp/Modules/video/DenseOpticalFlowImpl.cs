@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     // ReSharper disable InconsistentNaming
 
@@ -34,7 +34,7 @@ namespace OpenCvHololens
         internal static DenseOpticalFlowImpl FromPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Invalid DenseOpticalFlow pointer");
+                throw new OpenCvSharpException("Invalid DenseOpticalFlow pointer");
 
             var ptrObj = new Ptr(ptr);
             var obj = new DenseOpticalFlowImpl
@@ -52,7 +52,7 @@ namespace OpenCvHololens
         internal static DenseOpticalFlowImpl FromRawPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Invalid DenseOpticalFlow pointer");
+                throw new OpenCvSharpException("Invalid DenseOpticalFlow pointer");
             var obj = new DenseOpticalFlowImpl
             {
                 detectorPtr = null,
@@ -116,7 +116,7 @@ namespace OpenCvHololens
 
         #endregion
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

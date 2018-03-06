@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// Type-specific abstract matrix 
@@ -438,7 +438,7 @@ namespace OpenCvHololens
         /// </summary>
         protected override void DisposeManaged()
         {
-            // https://github.com/shimat/OpenCvHololens/commit/803542a68b60a60f2355105d052bbcee91447fbd#commitcomment-24105696
+            // https://github.com/shimat/OpenCvSharp/commit/803542a68b60a60f2355105d052bbcee91447fbd#commitcomment-24105696
 
             if (sourceMat != null)
             {

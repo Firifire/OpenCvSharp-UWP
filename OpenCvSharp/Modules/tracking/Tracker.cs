@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens.Tracking
+namespace OpenCvSharp.Tracking
 {
     /// <summary>
     /// Base abstract class for the long-term tracker

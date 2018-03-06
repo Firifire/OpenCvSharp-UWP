@@ -2,7 +2,7 @@
 
 // ReSharper disable InconsistentNaming
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
 #if LANG_JP
     /// <summary>
@@ -2041,7 +2041,7 @@ namespace OpenCvHololens
                 double[][] c = confidencesVec.ToArray();
 
                 if(s.Length != l.Length || l.Length != c.Length)
-                    throw new OpenCvHololensException("Invalid result data 'locations'");
+                    throw new OpenCvSharpException("Invalid result data 'locations'");
                 locations = new DetectionROI[s.Length];
                 for (int i = 0; i < s.Length; i++)
                 {

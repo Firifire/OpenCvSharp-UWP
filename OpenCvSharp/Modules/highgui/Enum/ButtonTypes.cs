@@ -1,5 +1,5 @@
 ﻿
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     // TODO support createButton
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens.ML
+namespace OpenCvSharp.ML
 {
     /// <summary>
     /// Boosted tree classifier derived from DTrees
@@ -171,7 +171,7 @@ namespace OpenCvHololens.ML
 
         #endregion
 
-        internal new class Ptr : OpenCvHololens.Ptr
+        internal new class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

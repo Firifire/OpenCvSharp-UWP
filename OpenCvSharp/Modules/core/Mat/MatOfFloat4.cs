@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// A matrix whose element is 32FC4 (cv::Mat_&lt;cv::Vec4f&gt;)
@@ -627,7 +627,7 @@ namespace OpenCvHololens
         {
             /*int num = CheckVector(ThisChannels, ThisDepth);
             if (num < 0)
-                throw new OpenCvHololensException("Native Mat has unexpected type or size: " + ToString());*/
+                throw new OpenCvSharpException("Native Mat has unexpected type or size: " + ToString());*/
             long numOfElems = (long)Total();
             if (numOfElems == 0)
                 return new Vec4f[0];
@@ -643,7 +643,7 @@ namespace OpenCvHololens
         {
             /*int num = CheckVector(ThisChannels, ThisDepth);
             if (num < 0)
-                throw new OpenCvHololensException("Native Mat has unexpected type or size: " + ToString());*/
+                throw new OpenCvSharpException("Native Mat has unexpected type or size: " + ToString());*/
             long numOfElems = (long)Total();
             if (numOfElems == 0)
                 return new float[0];

@@ -1,22 +1,22 @@
 ﻿using System;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
 #if LANG_JP
 /// <summary>
-/// OpenCvHololensから投げられる例外
+/// OpenCvSharpから投げられる例外
 /// </summary>
 #else
     /// <summary>
-    /// The exception that is thrown by OpenCvHololens. 
+    /// The exception that is thrown by OpenCvSharp. 
     /// </summary>
 #endif
-    public class OpenCvHololensException : Exception
+    public class OpenCvSharpException : Exception
     {
         /// <summary>
         /// 
         /// </summary>
-        public OpenCvHololensException()
+        public OpenCvSharpException()
             : base()
         {
         }
@@ -25,7 +25,7 @@ namespace OpenCvHololens
         /// 
         /// </summary>
         /// <param name="message"></param>
-        public OpenCvHololensException(string message)
+        public OpenCvSharpException(string message)
             : base(message)
         {
         }
@@ -35,7 +35,7 @@ namespace OpenCvHololens
         /// </summary>
         /// <param name="messageFormat"></param>
         /// <param name="args"></param>
-        public OpenCvHololensException(string messageFormat, params object[] args)
+        public OpenCvSharpException(string messageFormat, params object[] args)
             : base(string.Format(messageFormat, args))
         {
         }
@@ -45,7 +45,7 @@ namespace OpenCvHololens
         /// </summary>
         /// <param name="message"></param>
         /// <param name="innerException"></param>
-        public OpenCvHololensException(string message, Exception innerException)
+        public OpenCvSharpException(string message, Exception innerException)
             : base(message, innerException)
         {
         }

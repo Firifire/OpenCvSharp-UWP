@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens.Face
+namespace OpenCvSharp.Face
 {
     /// <inheritdoc />
     /// <summary>
@@ -55,7 +55,7 @@ namespace OpenCvHololens.Face
         {
             IntPtr p = NativeMethods.face_FisherFaceRecognizer_create(numComponents, threshold);
             if (p == IntPtr.Zero)
-                throw new OpenCvHololensException($"Invalid cv::Ptr<{nameof(FisherFaceRecognizer)}> pointer");
+                throw new OpenCvSharpException($"Invalid cv::Ptr<{nameof(FisherFaceRecognizer)}> pointer");
             var ptrObj = new Ptr(p);
             var detector = new FisherFaceRecognizer
             {
@@ -65,7 +65,7 @@ namespace OpenCvHololens.Face
             return detector;
         }
         
-        internal new class Ptr : OpenCvHololens.Ptr
+        internal new class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

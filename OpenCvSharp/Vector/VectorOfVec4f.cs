@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// 
@@ -104,7 +104,7 @@ namespace OpenCvHololens
             int typeSize = MarshalHelper.SizeOf<T>();
             if (typeSize != sizeof (float)*4)
             {
-                throw new OpenCvHololensException();
+                throw new OpenCvSharpException();
             }
 
             int arySize = Size;

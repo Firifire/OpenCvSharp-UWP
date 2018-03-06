@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens.Aruco
+namespace OpenCvSharp.Aruco
 {
     /// <summary>
     /// Parameters for the detectMarker process
@@ -456,7 +456,7 @@ namespace OpenCvHololens.Aruco
 
         #endregion
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

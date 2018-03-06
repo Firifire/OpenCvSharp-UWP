@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenCvHololens.Flann
+namespace OpenCvSharp.Flann
 {
 
 #if LANG_JP

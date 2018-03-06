@@ -1,6 +1,6 @@
 using System;
 
-namespace OpenCvHololens.ImgHash
+namespace OpenCvSharp.ImgHash
 {
     /// <inheritdoc />
     /// <summary>
@@ -83,7 +83,7 @@ namespace OpenCvHololens.ImgHash
             base.Compute(inputArr, outputArr);
         }
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

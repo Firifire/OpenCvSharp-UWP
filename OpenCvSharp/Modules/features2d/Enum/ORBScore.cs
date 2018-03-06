@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// cv::ORB score flags

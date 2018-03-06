@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Text;
 
-namespace OpenCvHololens.Flann
+namespace OpenCvSharp.Flann
 {
     /// <summary>
     /// 
     /// </summary>
     public class IndexParams : DisposableCvObject
     {
-        internal OpenCvHololens.Ptr PtrObj { get; set; }
+        internal OpenCvSharp.Ptr PtrObj { get; set; }
 
         /// <summary>
         /// 
@@ -18,7 +18,7 @@ namespace OpenCvHololens.Flann
         {
             IntPtr p = NativeMethods.flann_Ptr_IndexParams_new();
             if (p == IntPtr.Zero)
-                throw new OpenCvHololensException($"Failed to create {nameof(IndexParams)}");
+                throw new OpenCvSharpException($"Failed to create {nameof(IndexParams)}");
 
             PtrObj = new Ptr(p);
             ptr = PtrObj.Get();
@@ -27,7 +27,7 @@ namespace OpenCvHololens.Flann
         /// <summary>
         /// 
         /// </summary>
-        protected IndexParams(OpenCvHololens.Ptr ptrObj)
+        protected IndexParams(OpenCvSharp.Ptr ptrObj)
             : base()
         {
             PtrObj = ptrObj;
@@ -179,7 +179,7 @@ namespace OpenCvHololens.Flann
         #endregion
         #endregion
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

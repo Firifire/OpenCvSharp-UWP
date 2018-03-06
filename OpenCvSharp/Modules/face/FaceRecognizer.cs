@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens.Face
+namespace OpenCvSharp.Face
 {
     /// <summary>
     /// Abstract base class for all face recognition models.
@@ -35,7 +35,7 @@ namespace OpenCvHololens.Face
         internal static FaceRecognizer FromPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException($"Invalid cv::Ptr<{nameof(FaceRecognizer)}> pointer");
+                throw new OpenCvSharpException($"Invalid cv::Ptr<{nameof(FaceRecognizer)}> pointer");
             var ptrObj = new Ptr(ptr);
             var detector = new FaceRecognizer
             {
@@ -265,7 +265,7 @@ namespace OpenCvHololens.Face
 
         #endregion
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

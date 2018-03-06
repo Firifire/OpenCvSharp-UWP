@@ -1,4 +1,4 @@
-﻿namespace OpenCvHololens
+﻿namespace OpenCvSharp
 {
     /// <summary>
     /// components algorithm output formats

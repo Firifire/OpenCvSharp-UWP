@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens.XImgProc
+namespace OpenCvSharp.XImgProc
 {
     /// <summary>
     /// cv::ximgproc functions

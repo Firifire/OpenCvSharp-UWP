@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// Contrast Limited Adaptive Histogram Equalization
@@ -49,7 +49,7 @@ namespace OpenCvHololens
         private void Initialize()
         {
             if (ptr != IntPtr.Zero)
-                throw new OpenCvHololensException("invalid state");
+                throw new OpenCvSharpException("invalid state");
             img.ThrowIfDisposed();
 
             ptr = NativeMethods.imgproc_LineIterator_new(

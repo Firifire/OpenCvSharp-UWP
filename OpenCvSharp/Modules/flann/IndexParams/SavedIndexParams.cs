@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenCvHololens.Flann
+namespace OpenCvSharp.Flann
 {
 #if LANG_JP
     /// <summary>
@@ -26,7 +26,7 @@ namespace OpenCvHololens.Flann
 
             IntPtr p = NativeMethods.flann_Ptr_SavedIndexParams_new(fileName);
             if (p == IntPtr.Zero)
-                throw new OpenCvHololensException($"Failed to create {nameof(SavedIndexParams)}");
+                throw new OpenCvSharpException($"Failed to create {nameof(SavedIndexParams)}");
 
             PtrObj = new Ptr(p);
             ptr = PtrObj.Get();
@@ -35,12 +35,12 @@ namespace OpenCvHololens.Flann
         /// <summary>
         /// 
         /// </summary>
-        protected SavedIndexParams(OpenCvHololens.Ptr ptrObj)
+        protected SavedIndexParams(OpenCvSharp.Ptr ptrObj)
             : base(ptrObj)
         {
         }
 
-        internal new class Ptr : OpenCvHololens.Ptr
+        internal new class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens.OptFlow
+namespace OpenCvSharp.OptFlow
 {
     // ReSharper disable InconsistentNaming
 

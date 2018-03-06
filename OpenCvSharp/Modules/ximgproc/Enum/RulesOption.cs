@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OpenCvHololens.XImgProc
+namespace OpenCvSharp.XImgProc
 {
     // ReSharper disable InconsistentNaming
 

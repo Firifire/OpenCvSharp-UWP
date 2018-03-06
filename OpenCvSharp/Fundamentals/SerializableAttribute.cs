@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
 #if !DOTNET_FRAMEWORK
     /// <summary>

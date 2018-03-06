@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// File Storage Node class

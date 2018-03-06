@@ -6,7 +6,7 @@ using System.Linq;
 #endif
 using System.Reflection;
 
-namespace OpenCvHololens.Util
+namespace OpenCvSharp.Util
 {
 #if net20
     internal delegate TResult Func<in T1, out TResult>(T1 t1);

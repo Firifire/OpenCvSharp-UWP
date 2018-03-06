@@ -1,6 +1,6 @@
 using System;
 
-namespace OpenCvHololens.Text
+namespace OpenCvSharp.Text
 {
     /// <summary>
     /// base class BaseOCR declares a common API that would be used in a typical text recognition scenario

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace OpenCvHololens.Util
+namespace OpenCvSharp.Util
 {
     internal static class StringHelper
     {

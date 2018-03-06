@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace OpenCvHololens.Cuda
+namespace OpenCvSharp.Cuda
 {
     /// <summary>
     /// 
@@ -47,7 +47,7 @@ namespace OpenCvHololens.Cuda
         {
             ThrowIfNotAvailable();
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Native object address is NULL");
+                throw new OpenCvSharpException("Native object address is NULL");
             this.ptr = ptr;
         }
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace OpenCvHololens.Util
+namespace OpenCvSharp.Util
 {
     /// <summary>
     /// Substitute of System.Action

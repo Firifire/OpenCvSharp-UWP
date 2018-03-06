@@ -1,6 +1,6 @@
 using System;
 
-namespace OpenCvHololens.Cuda
+namespace OpenCvSharp.Cuda
 {
 #pragma warning disable 1591
 

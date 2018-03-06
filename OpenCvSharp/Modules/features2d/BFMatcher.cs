@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     // ReSharper disable once InconsistentNaming
 
@@ -53,7 +53,7 @@ namespace OpenCvHololens
         internal new static BFMatcher FromPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Invalid cv::Ptr<BFMatcher> pointer");
+                throw new OpenCvSharpException("Invalid cv::Ptr<BFMatcher> pointer");
             var ptrObj = new Ptr(ptr);
             return new BFMatcher(ptrObj);
         }
@@ -101,7 +101,7 @@ namespace OpenCvHololens
 
         #endregion
 
-        internal new class Ptr : OpenCvHololens.Ptr
+        internal new class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

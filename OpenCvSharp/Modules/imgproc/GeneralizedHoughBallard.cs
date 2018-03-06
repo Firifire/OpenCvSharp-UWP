@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// Ballard, D.H. (1981). Generalizing the Hough transform to detect arbitrary shapes. 
@@ -86,7 +86,7 @@ namespace OpenCvHololens
             }
         }
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

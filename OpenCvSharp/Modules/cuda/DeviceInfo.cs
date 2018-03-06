@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenCvHololens.Cuda
+namespace OpenCvSharp.Cuda
 {
     /// <summary>
     /// Gives information about the given GPU

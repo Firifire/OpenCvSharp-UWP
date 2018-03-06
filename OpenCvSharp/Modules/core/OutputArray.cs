@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvHololens.Cuda;
+using OpenCvSharp.Cuda;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// Proxy datatype for passing Mat's and List&lt;&gt;'s as output parameters
@@ -174,7 +174,7 @@ namespace OpenCvHololens
             }
             else
             {
-                throw new OpenCvHololensException("Not supported OutputArray-compatible type");
+                throw new OpenCvSharpException("Not supported OutputArray-compatible type");
             }
         }
 
@@ -206,7 +206,7 @@ namespace OpenCvHololens
         public void ThrowIfNotReady()
         {
             if (!IsReady())
-                throw new OpenCvHololensException("Invalid OutputArray");
+                throw new OpenCvSharpException("Invalid OutputArray");
         }
 
         /// <summary>

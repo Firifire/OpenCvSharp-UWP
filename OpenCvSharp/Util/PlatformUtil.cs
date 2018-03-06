@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     internal static class PlatformUtil
     {
