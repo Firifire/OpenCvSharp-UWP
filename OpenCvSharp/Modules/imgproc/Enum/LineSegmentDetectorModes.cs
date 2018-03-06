@@ -1,4 +1,4 @@
-﻿namespace OpenCvHololens
+﻿namespace OpenCvSharp
 {
     /// <summary>
     /// Variants of Line Segment %Detector

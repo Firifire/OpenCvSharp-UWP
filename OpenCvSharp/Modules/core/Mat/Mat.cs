@@ -4,9 +4,9 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// OpenCV C++ n-dimensional dense array class (cv::Mat)
@@ -29,7 +29,7 @@ namespace OpenCvHololens
         public Mat(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Native object address is NULL");
+                throw new OpenCvSharpException("Native object address is NULL");
             this.ptr = ptr;
         }
 
@@ -3411,7 +3411,7 @@ namespace OpenCvHololens
 
             MatType t = Type();
             if (data == null || data.Length % t.Channels != 0)
-                throw new OpenCvHololensException(
+                throw new OpenCvSharpException(
                     "Provided data element number ({0}) should be multiple of the Mat channels count ({1})",
                     data.Length, t.Channels);
 
@@ -3422,7 +3422,7 @@ namespace OpenCvHololens
                     return type == t;
                 });
                 if (!isValidDepth)
-                    throw new OpenCvHololensException("Mat data type is not compatible: " + t);
+                    throw new OpenCvSharpException("Mat data type is not compatible: " + t);
             }
         }
         */
@@ -3440,7 +3440,7 @@ namespace OpenCvHololens
 
             MatType t = Type();
             if (data == null || (data.Length * dataDimension) % t.Channels != 0)
-                throw new OpenCvHololensException(
+                throw new OpenCvSharpException(
                     "Provided data element number ({0}) should be multiple of the Mat channels count ({1})",
                     data.Length, t.Channels);
 
@@ -3451,7 +3451,7 @@ namespace OpenCvHololens
                     return type == t;
                 });
                 if (!isValidDepth)
-                    throw new OpenCvHololensException("Mat data type is not compatible: " + t);
+                    throw new OpenCvSharpException("Mat data type is not compatible: " + t);
             }
         }
 
@@ -5209,7 +5209,7 @@ namespace OpenCvHololens
             var constructor = type.GetTypeInfo().GetConstructor(new[] { typeof(Mat) }); 
 #endif
             if (constructor == null)
-                throw new OpenCvHololensException("Failed to cast to {0}", type.Name);
+                throw new OpenCvSharpException("Failed to cast to {0}", type.Name);
             return (TMat)constructor.Invoke(new object[] {this});*/
         }
 

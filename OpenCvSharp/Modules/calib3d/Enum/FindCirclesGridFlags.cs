@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// Method for solving a PnP problem:

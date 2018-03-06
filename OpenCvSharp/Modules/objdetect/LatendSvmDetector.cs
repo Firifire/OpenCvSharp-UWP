@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
 // ReSharper disable InconsistentNaming
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// Find rectangular regions in the given image that are likely

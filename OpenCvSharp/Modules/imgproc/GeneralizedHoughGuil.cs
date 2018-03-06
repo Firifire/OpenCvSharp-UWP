@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// Guil, N., González-Linares, J.M. and Zapata, E.L. (1999). 
@@ -296,7 +296,7 @@ namespace OpenCvHololens
             }
         }
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

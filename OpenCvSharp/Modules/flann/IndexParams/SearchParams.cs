@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens.Flann
+namespace OpenCvSharp.Flann
 {
     /// <summary>
     /// 
@@ -18,7 +18,7 @@ namespace OpenCvHololens.Flann
         {
             IntPtr p = NativeMethods.flann_Ptr_SearchParams_new(checks, eps, sorted ? 1 : 0);
             if (p == IntPtr.Zero)
-                throw new OpenCvHololensException($"Failed to create {nameof(SearchParams)}");
+                throw new OpenCvSharpException($"Failed to create {nameof(SearchParams)}");
 
             PtrObj = new Ptr(p);
             ptr = PtrObj.Get();
@@ -27,12 +27,12 @@ namespace OpenCvHololens.Flann
         /// <summary>
         /// 
         /// </summary>
-        protected SearchParams(OpenCvHololens.Ptr ptrObj)
+        protected SearchParams(OpenCvSharp.Ptr ptrObj)
             : base(ptrObj)
         {
         }
 
-        internal new class Ptr : OpenCvHololens.Ptr
+        internal new class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

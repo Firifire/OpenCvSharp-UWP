@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens.Cuda
+namespace OpenCvSharp.Cuda
 {
 #if LANG_JP
     /// <summary>
@@ -34,7 +34,7 @@ namespace OpenCvHololens.Cuda
         {
             ThrowIfNotAvailable();
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Native object address is NULL");
+                throw new OpenCvSharpException("Native object address is NULL");
             this.ptr = ptr;
         }
 
@@ -52,7 +52,7 @@ namespace OpenCvHololens.Cuda
             ThrowIfNotAvailable();
             ptr = NativeMethods.cuda_GpuMat_new1();
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException();
+                throw new OpenCvSharpException();
         }
 
 #if LANG_JP
@@ -81,7 +81,7 @@ namespace OpenCvHololens.Cuda
                 throw new ArgumentOutOfRangeException(nameof(cols));
             ptr = NativeMethods.cuda_GpuMat_new2(rows, cols, type);
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException();
+                throw new OpenCvSharpException();
         }
 
 #if LANG_JP
@@ -125,7 +125,7 @@ namespace OpenCvHololens.Cuda
                 throw new ArgumentOutOfRangeException(nameof(cols));
             ptr = NativeMethods.cuda_GpuMat_new3(rows, cols, type, data, (ulong)step);
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException();
+                throw new OpenCvSharpException();
         }
 
 #if LANG_JP
@@ -148,7 +148,7 @@ namespace OpenCvHololens.Cuda
             ThrowIfNotAvailable();
             ptr = NativeMethods.cuda_GpuMat_new6(size, type);
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException();
+                throw new OpenCvSharpException();
         }
 
 #if LANG_JP
@@ -186,7 +186,7 @@ namespace OpenCvHololens.Cuda
             ThrowIfNotAvailable();
             ptr = NativeMethods.cuda_GpuMat_new7(size, type, data, (ulong)step);
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException();
+                throw new OpenCvSharpException();
         }
 
 #if LANG_JP
@@ -208,7 +208,7 @@ namespace OpenCvHololens.Cuda
             ptr = NativeMethods.cuda_GpuMat_new4(m.CvPtr);
             GC.KeepAlive(m);
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException();
+                throw new OpenCvSharpException();
         }
 
 #if LANG_JP
@@ -230,7 +230,7 @@ namespace OpenCvHololens.Cuda
             ptr = NativeMethods.cuda_GpuMat_new5(m.CvPtr);
             GC.KeepAlive(m);
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException();
+                throw new OpenCvSharpException();
         }
 
 #if LANG_JP
@@ -263,7 +263,7 @@ namespace OpenCvHololens.Cuda
                 throw new ArgumentOutOfRangeException(nameof(cols));
             ptr = NativeMethods.cuda_GpuMat_new8(rows, cols, type, s);
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException();
+                throw new OpenCvSharpException();
         }
 
 #if LANG_JP
@@ -290,7 +290,7 @@ namespace OpenCvHololens.Cuda
             ThrowIfNotAvailable();
             ptr = NativeMethods.cuda_GpuMat_new11(size, type, s);
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException();
+                throw new OpenCvSharpException();
         }
 
 #if LANG_JP
@@ -317,7 +317,7 @@ namespace OpenCvHololens.Cuda
             ptr = NativeMethods.cuda_GpuMat_new9(m.CvPtr, rowRange, colRange);
             GC.KeepAlive(m);
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException();
+                throw new OpenCvSharpException();
         }
 
 #if LANG_JP
@@ -341,7 +341,7 @@ namespace OpenCvHololens.Cuda
             ptr = NativeMethods.cuda_GpuMat_new10(m.CvPtr, roi);
             GC.KeepAlive(m);
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException();
+                throw new OpenCvSharpException();
         }
 
 #if LANG_JP
@@ -1273,7 +1273,7 @@ namespace OpenCvHololens.Cuda
         {
             ThrowIfDisposed();
             if (Cv2.GetCudaEnabledDeviceCount() < 1)
-                throw new OpenCvHololensException("GPU module cannot be used.");
+                throw new OpenCvSharpException("GPU module cannot be used.");
         }
     }
 }

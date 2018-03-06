@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
 #if LANG_JP
     /// <summary>
@@ -47,10 +47,10 @@ namespace OpenCvHololens
             }
             catch (Exception e)
             {
-                throw new OpenCvHololensException("Failed to create VideoCapture", e);
+                throw new OpenCvSharpException("Failed to create VideoCapture", e);
             }
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Failed to create VideoCapture");
+                throw new OpenCvSharpException("Failed to create VideoCapture");
             
             captureType = CaptureType.NotSpecified;
         }
@@ -79,11 +79,11 @@ namespace OpenCvHololens
             }
             catch (Exception e)
             {
-                throw new OpenCvHololensException("Failed to create VideoCapture", e);
+                throw new OpenCvSharpException("Failed to create VideoCapture", e);
             }
             if (ptr == IntPtr.Zero)
             {
-                throw new OpenCvHololensException("Failed to create VideoCapture");
+                throw new OpenCvSharpException("Failed to create VideoCapture");
             }
             captureType = CaptureType.Camera;
         }
@@ -216,7 +216,7 @@ namespace OpenCvHololens
             ptr = NativeMethods.videoio_VideoCapture_new2(fileName);
 
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Failed to create VideoCapture");
+                throw new OpenCvSharpException("Failed to create VideoCapture");
             
             captureType = CaptureType.File;
         }
@@ -1689,7 +1689,7 @@ namespace OpenCvHololens
             }
             catch (Exception e)
             {
-                throw new OpenCvHololensException("Failed to create CvCapture", e);
+                throw new OpenCvSharpException("Failed to create CvCapture", e);
             }
             captureType = CaptureType.Camera;
         }

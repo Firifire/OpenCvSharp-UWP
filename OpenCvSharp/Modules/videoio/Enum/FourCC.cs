@@ -2,7 +2,7 @@
 
 #pragma warning disable 1591
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
 #if LANG_JP
     /// <summary>

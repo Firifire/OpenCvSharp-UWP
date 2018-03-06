@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace OpenCvHololens.Util
+namespace OpenCvSharp.Util
 {
     /// <summary>
     /// Class to get address of specified jagged array 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// The base class for camera response calibration algorithms.
@@ -44,7 +44,7 @@ namespace OpenCvHololens
             base.DisposeManaged();
         }
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

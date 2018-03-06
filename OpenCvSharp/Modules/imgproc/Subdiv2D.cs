@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
 #if LANG_JP
     /// <summary>
@@ -31,7 +31,7 @@ namespace OpenCvHololens
         {
             ptr = NativeMethods.imgproc_Subdiv2D_new1();
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException();
+                throw new OpenCvSharpException();
         }
 
 #if LANG_JP
@@ -49,7 +49,7 @@ namespace OpenCvHololens
         {
             ptr = NativeMethods.imgproc_Subdiv2D_new2(rect);
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException();
+                throw new OpenCvSharpException();
         }
 
 #if LANG_JP

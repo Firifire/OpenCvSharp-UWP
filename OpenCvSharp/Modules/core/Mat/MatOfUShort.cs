@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// A matrix whose element is 16UC1 (cv::Mat_&lt;ushort&gt;)

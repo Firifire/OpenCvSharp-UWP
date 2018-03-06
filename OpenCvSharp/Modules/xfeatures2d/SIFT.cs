@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OpenCvHololens.XFeatures2D
+namespace OpenCvSharp.XFeatures2D
 {
     // ReSharper disable InconsistentNaming
 
@@ -68,7 +68,7 @@ namespace OpenCvHololens.XFeatures2D
 
         #endregion
 
-        internal new class Ptr : OpenCvHololens.Ptr
+        internal new class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

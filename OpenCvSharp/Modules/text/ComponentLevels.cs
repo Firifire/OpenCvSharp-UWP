@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens.Text
+namespace OpenCvSharp.Text
 {
     /// <summary>
     /// 

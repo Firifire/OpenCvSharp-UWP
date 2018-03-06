@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OpenCvHololens.XImgProc
+namespace OpenCvSharp.XImgProc
 {
     // ReSharper disable InconsistentNaming
 
@@ -167,7 +167,7 @@ namespace OpenCvHololens.XImgProc
 
         #endregion
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

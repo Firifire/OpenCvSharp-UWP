@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
 // ReSharper disable InconsistentNaming
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// OpenCV Functions of C++ I/F (cv::xxx) 

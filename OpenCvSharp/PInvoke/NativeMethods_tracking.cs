@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using OpenCvHololens.Tracking;
+using OpenCvSharp.Tracking;
 
 #pragma warning disable 1591
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     static partial class NativeMethods
     {

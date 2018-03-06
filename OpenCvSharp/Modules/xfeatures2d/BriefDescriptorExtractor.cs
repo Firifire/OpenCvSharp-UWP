@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens.XFeatures2D
+namespace OpenCvSharp.XFeatures2D
 {
     using DescriptorExtractor = Feature2D;
 
@@ -60,7 +60,7 @@ namespace OpenCvHololens.XFeatures2D
             base.DisposeManaged();
         }
 
-        internal new class Ptr : OpenCvHololens.Ptr
+        internal new class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

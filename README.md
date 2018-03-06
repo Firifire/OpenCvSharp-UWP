@@ -1,4 +1,4 @@
-# OpenCvHololens
+# OpenCvSharp UWP
 C# Wrapper of OpenCV for UWP applications. This Wrapper is based off [OpenCvSharp](https://github.com/shimat/opencvsharp/) 3.3.1 by Shimat and I have similar changes implemented in [opencv-hololens](https://github.com/sylvain-prevost/opencv-hololens) by Sylvain Prevost on the 3.3.1 version of OpenCV
 
 I have made some changes to the wrapper to make it compatible with UWP builds.
@@ -18,8 +18,6 @@ For Unity, copy all the built dll to the plugins folder
 
 ## Usage
 Plese refer to [OpenCvSharp](https://github.com/shimat/opencvsharp/)
-
-I have replaced the namespace OpencvSharp with OpenCvHololens to prevent conflicts.
 
 UWP dll does not work in unity Editor, only works when building the UWP app.
 

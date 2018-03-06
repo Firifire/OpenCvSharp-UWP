@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// A matrix whose element is 16SC1 (cv::Mat_&lt;short&gt;)

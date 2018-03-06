@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// Abstract base class for 2D image feature detectors and descriptor extractors
@@ -33,7 +33,7 @@ namespace OpenCvHololens
         internal static Feature2D FromPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Invalid cv::Ptr<Feature2D> pointer");
+                throw new OpenCvSharpException("Invalid cv::Ptr<Feature2D> pointer");
             var ptrObj = new Ptr(ptr);
             var detector = new Feature2D
             {
@@ -311,7 +311,7 @@ namespace OpenCvHololens
 
         #endregion
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     static partial class Cv2
     {

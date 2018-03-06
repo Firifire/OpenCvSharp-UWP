@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens.ImgHash
+namespace OpenCvSharp.ImgHash
 {
     /// <inheritdoc />
     /// <summary>

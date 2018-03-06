@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     // ReSharper disable InconsistentNaming
 #pragma warning disable 1591
@@ -217,7 +217,7 @@ namespace OpenCvHololens
 
         #endregion
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

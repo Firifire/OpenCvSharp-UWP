@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     // ReSharper disable InconsistentNaming
 
@@ -33,7 +33,7 @@ namespace OpenCvHololens
         internal static DenseOpticalFlowExtImpl FromPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Invalid DenseOpticalFlowExt pointer");
+                throw new OpenCvSharpException("Invalid DenseOpticalFlowExt pointer");
 
             var ptrObj = new Ptr(ptr);
             var obj = new DenseOpticalFlowExtImpl
@@ -51,7 +51,7 @@ namespace OpenCvHololens
         internal static DenseOpticalFlowExtImpl FromRawPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Invalid DenseOpticalFlowExt pointer");
+                throw new OpenCvSharpException("Invalid DenseOpticalFlowExt pointer");
             var obj = new DenseOpticalFlowExtImpl
             {
                 detectorPtr = null,
@@ -119,7 +119,7 @@ namespace OpenCvHololens
 
         #endregion
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

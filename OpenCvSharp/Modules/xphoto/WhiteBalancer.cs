@@ -1,4 +1,4 @@
-﻿namespace OpenCvHololens.XPhoto
+﻿namespace OpenCvSharp.XPhoto
 {
 
     /// <summary>

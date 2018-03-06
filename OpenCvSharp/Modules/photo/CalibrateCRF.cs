@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// The base class for camera response calibration algorithms.
@@ -29,7 +29,7 @@ namespace OpenCvHololens
             IntPtr[] srcArray = EnumerableEx.SelectPtrs(src);
             float[] timesArray = EnumerableEx.ToArray(times);
             if (srcArray.Length != timesArray.Length)
-                throw new OpenCvHololensException("src.Count() != times.Count");
+                throw new OpenCvSharpException("src.Count() != times.Count");
 
             NativeMethods.photo_CalibrateCRF_process(ptr, srcArray, srcArray.Length, dst.CvPtr, timesArray);
 

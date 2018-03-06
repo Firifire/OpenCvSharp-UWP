@@ -1,6 +1,6 @@
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens.Cuda
+namespace OpenCvSharp.Cuda
 {
     /// <summary>
     /// Abstract definition of Mat indexer

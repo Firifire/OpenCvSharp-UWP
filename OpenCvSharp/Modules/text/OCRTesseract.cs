@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace OpenCvHololens.Text
+namespace OpenCvSharp.Text
 {
     // ReSharper disable InconsistentNaming
 
@@ -173,7 +173,7 @@ namespace OpenCvHololens.Text
 
         #endregion
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

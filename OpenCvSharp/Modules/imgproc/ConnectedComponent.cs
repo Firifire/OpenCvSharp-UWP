@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// connected components that is returned from Cv2.ConnectedComponentsEx
@@ -128,9 +128,9 @@ namespace OpenCvHololens
             if (img.Type() != MatType.CV_8UC3)
                 throw new ArgumentException("img must be CV_8UC3");*/
             if (Blobs == null || Blobs.Count == 0)
-                throw new OpenCvHololensException("Blobs is empty");
+                throw new OpenCvSharpException("Blobs is empty");
             if (Labels == null)
-                throw new OpenCvHololensException("Labels is empty");
+                throw new OpenCvSharpException("Labels is empty");
 
             int height = Labels.GetLength(0);
             int width = Labels.GetLength(1);
@@ -164,7 +164,7 @@ namespace OpenCvHololens
         public Blob GetLargestBlob()
         {
             if (Blobs == null || Blobs.Count <= 1)
-                throw new OpenCvHololensException("Blobs is empty");
+                throw new OpenCvSharpException("Blobs is empty");
 
             Blob max = Blobs[1];
             for (int i = 2; i < Blobs.Count; i++)

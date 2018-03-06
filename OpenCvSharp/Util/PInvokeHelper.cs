@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenCvHololens.Util
+namespace OpenCvSharp.Util
 {
     /// <summary>
     /// 
@@ -48,7 +48,7 @@ namespace OpenCvHololens.Util
         /// 
         /// </summary>
         /// <param name="ex"></param>
-        public static OpenCvHololensException CreateException(Exception ex)
+        public static OpenCvSharpException CreateException(Exception ex)
         {
             StringBuilder message = new StringBuilder();
             if (System.Globalization.CultureInfo.CurrentCulture.Name.Contains("ja"))
@@ -58,7 +58,7 @@ namespace OpenCvHololens.Util
                     .Append("以下の項目を確認して下さい。\n")
                     .Append("(1) OpenCVのDLLが実行ファイルと同じ場所に置かれていますか? またはパスが正しく通っていますか?\n")
                     .Append("(2) Visual C++ Redistributable Packageをインストールしましたか?\n")
-                    .Append("(3) OpenCVのDLLやOpenCvHololensの対象プラットフォーム(x86またはx64)と、プロジェクトのプラットフォーム設定が合っていますか?\n")
+                    .Append("(3) OpenCVのDLLやOpenCvSharpの対象プラットフォーム(x86またはx64)と、プロジェクトのプラットフォーム設定が合っていますか?\n")
                     .Append("\n")
                     .Append(ex.ToString());
             }
@@ -69,11 +69,11 @@ namespace OpenCvHololens.Util
                     .Append("Please check the following:\n")
                     .Append("(1) OpenCV's DLL files exist in the same directory as the executable file.\n")
                     .Append("(2) Visual C++ Redistributable Package has been installed.\n")
-                    .Append("(3) The target platform(x86/x64) of OpenCV's DLL files and OpenCvHololens is the same as your project's.\n")
+                    .Append("(3) The target platform(x86/x64) of OpenCV's DLL files and OpenCvSharp is the same as your project's.\n")
                     .Append("\n")
                     .Append(ex.ToString());
             }            
-            return new OpenCvHololensException(message.ToString(), ex);
+            return new OpenCvSharpException(message.ToString(), ex);
         }
     }
 }

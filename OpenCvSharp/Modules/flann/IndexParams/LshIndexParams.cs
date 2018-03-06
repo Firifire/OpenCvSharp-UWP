@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens.Flann
+namespace OpenCvSharp.Flann
 {
 #if LANG_JP
     /// <summary>
@@ -32,7 +32,7 @@ namespace OpenCvHololens.Flann
         {
             IntPtr p = NativeMethods.flann_Ptr_LshIndexParams_new(tableNumber, keySize, multiProbeLevel);
             if (p == IntPtr.Zero)
-                throw new OpenCvHololensException($"Failed to create {nameof(AutotunedIndexParams)}");
+                throw new OpenCvSharpException($"Failed to create {nameof(AutotunedIndexParams)}");
 
             PtrObj = new Ptr(p);
             ptr = PtrObj.Get();
@@ -41,12 +41,12 @@ namespace OpenCvHololens.Flann
         /// <summary>
         /// 
         /// </summary>
-        protected LshIndexParams(OpenCvHololens.Ptr ptrObj)
+        protected LshIndexParams(OpenCvSharp.Ptr ptrObj)
             : base(ptrObj)
         {
         }
 
-        internal new class Ptr : OpenCvHololens.Ptr
+        internal new class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

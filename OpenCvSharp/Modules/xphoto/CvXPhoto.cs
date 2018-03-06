@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens.XPhoto
+namespace OpenCvSharp.XPhoto
 {
     // ReSharper disable InconsistentNaming
 
@@ -17,7 +17,7 @@ namespace OpenCvHololens.XPhoto
         /// <param name="src">source image, it could be of any type and any number of channels from 1 to 4. In case of 3- and 4-channels images the function expect them in CIELab colorspace or similar one, where first color component shows intensity, while second and third shows colors. Nonetheless you can try any colorspaces.</param>
         /// <param name="mask">mask (CV_8UC1), where non-zero pixels indicate valid image area, while zero pixels indicate area to be inpainted</param>
         /// <param name="dst">destination image</param>
-        /// <param name="algorithm">see OpenCvHololens.XPhoto.InpaintTypes</param>
+        /// <param name="algorithm">see OpenCvSharp.XPhoto.InpaintTypes</param>
         public static void Inpaint(Mat src, Mat mask, Mat dst, InpaintTypes algorithm)
         {
             if (src == null)

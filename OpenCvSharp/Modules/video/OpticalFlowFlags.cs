@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// cv::calcOpticalFlowPyrLK flags

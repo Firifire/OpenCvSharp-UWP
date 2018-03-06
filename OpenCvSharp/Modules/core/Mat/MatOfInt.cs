@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// A matrix whose element is 32SC1 (cv::Mat_&lt;int&gt;)

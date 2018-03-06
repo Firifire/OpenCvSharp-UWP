@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace OpenCvHololens.Util
+namespace OpenCvSharp.Util
 {
 #if LANG_JP
     /// <summary>

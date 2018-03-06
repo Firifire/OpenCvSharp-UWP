@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace OpenCvHololens.Tracking
+namespace OpenCvSharp.Tracking
 {
     /// <inheritdoc />
     /// <summary>
@@ -73,7 +73,7 @@ namespace OpenCvHololens.Tracking
             base.DisposeManaged();
         }
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

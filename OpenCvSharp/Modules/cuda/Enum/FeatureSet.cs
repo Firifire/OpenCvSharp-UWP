@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenCvHololens.Cuda
+namespace OpenCvSharp.Cuda
 {
 #pragma warning disable 1591
 

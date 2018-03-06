@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 #pragma warning disable 1591
 
-namespace OpenCvHololens.Util
+namespace OpenCvSharp.Util
 {
     /// <summary>
     /// 

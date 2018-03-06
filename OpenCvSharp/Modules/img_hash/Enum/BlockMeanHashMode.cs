@@ -1,4 +1,4 @@
-namespace OpenCvHololens.ImgHash
+namespace OpenCvSharp.ImgHash
 {
     /// <summary>
     /// 

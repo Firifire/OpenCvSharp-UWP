@@ -1,4 +1,4 @@
-﻿namespace OpenCvHololens
+﻿namespace OpenCvSharp
 {
     /// <summary>
     /// distanceTransform algorithm flags

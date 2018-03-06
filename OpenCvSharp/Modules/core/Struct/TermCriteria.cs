@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// The class defining termination criteria for iterative algorithms.

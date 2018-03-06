@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
 #if LANG_JP
     /// <summary>
@@ -26,7 +26,7 @@ namespace OpenCvHololens
             IsColor = true;
             ptr = NativeMethods.videoio_VideoWriter_new1();
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Failed to create VideoWriter");
+                throw new OpenCvSharpException("Failed to create VideoWriter");
         }
 
 #if LANG_JP
@@ -124,7 +124,7 @@ namespace OpenCvHololens
             IsColor = isColor;
             ptr = NativeMethods.videoio_VideoWriter_new2(fileName, fourcc, fps, frameSize, isColor ? 1 : 0);
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Failed to create VideoWriter");
+                throw new OpenCvSharpException("Failed to create VideoWriter");
         }
 
         /// <summary>

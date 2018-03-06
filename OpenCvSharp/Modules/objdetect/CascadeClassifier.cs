@@ -4,7 +4,7 @@ using System.IO;
 
 // ReSharper disable InconsistentNaming
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// Cascade classifier class for object detection.

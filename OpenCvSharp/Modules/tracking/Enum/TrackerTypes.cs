@@ -1,4 +1,4 @@
-﻿namespace OpenCvHololens.Tracking
+﻿namespace OpenCvSharp.Tracking
 {
     // ReSharper disable InconsistentNaming
 #pragma warning disable 1591

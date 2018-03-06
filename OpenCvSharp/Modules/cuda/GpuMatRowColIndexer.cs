@@ -1,4 +1,4 @@
-namespace OpenCvHololens.Cuda
+namespace OpenCvSharp.Cuda
 {
     /// <summary>
     /// 

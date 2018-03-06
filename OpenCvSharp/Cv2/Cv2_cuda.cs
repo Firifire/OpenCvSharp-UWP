@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvHololens.Cuda;
+using OpenCvSharp.Cuda;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// Functions of OpenCV GPU module
@@ -226,7 +226,7 @@ namespace OpenCvHololens
         public static void ThrowIfGpuNotAvailable()
         {
             if (GetCudaEnabledDeviceCount() < 1)
-                throw new OpenCvHololensException("GPU module cannot be used.");
+                throw new OpenCvSharpException("GPU module cannot be used.");
         }
     }
 }

@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Permissions;
 #endif
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
 // ReSharper disable InconsistentNaming
 #pragma warning disable 1591
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// P/Invoke methods of OpenCV 2.x C++ interface
@@ -28,7 +28,7 @@ namespace OpenCvHololens
 
         //public const string DllVCRuntime = "vcruntime140";
         //public const string DllMsvcp = "msvcp140";
-        public const string DllExtern = "OpenCvHololens";
+        public const string DllExtern = "OpenCvSharp";
         public const string Version = "331";
 
         private static readonly string[] RuntimeDllNames =

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens.XPhoto
+namespace OpenCvSharp.XPhoto
 {
     /// <summary>
     /// Gray-world white balance algorithm.
@@ -81,7 +81,7 @@ namespace OpenCvHololens.XPhoto
 
         #endregion
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr)
                 : base(ptr)

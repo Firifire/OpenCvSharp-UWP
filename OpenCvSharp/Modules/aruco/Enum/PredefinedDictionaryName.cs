@@ -1,4 +1,4 @@
-﻿namespace OpenCvHololens.Aruco
+﻿namespace OpenCvSharp.Aruco
 {
     /// <summary>
     /// PredefinedDictionaryName

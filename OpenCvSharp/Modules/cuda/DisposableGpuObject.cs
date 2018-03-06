@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenCvHololens.Cuda
+namespace OpenCvSharp.Cuda
 {
     /// <summary>
     /// An abstract class in GPU module that implements DisposableCvObject
@@ -51,10 +51,10 @@ namespace OpenCvHololens.Cuda
             if (IsDisposed)
                 throw new ObjectDisposedException(GetType().Name);
             if (Cv2.GetCudaEnabledDeviceCount() < 1)
-                throw new OpenCvHololensException("Your OpenCV DLL does not support GPU module.");
+                throw new OpenCvSharpException("Your OpenCV DLL does not support GPU module.");
 
             if (!IsGpuCompatible)
-                throw new OpenCvHololensException("The selected GPU device is not compatible.");
+                throw new OpenCvSharpException("The selected GPU device is not compatible.");
         }
 
         /// <summary>

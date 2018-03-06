@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens.Dnn
+namespace OpenCvSharp.Dnn
 {
     /// <summary>
     /// cv::dnn functions

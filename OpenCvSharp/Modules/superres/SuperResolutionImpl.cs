@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     // ReSharper disable InconsistentNaming
 
@@ -35,7 +35,7 @@ namespace OpenCvHololens
         internal static SuperResolutionImpl FromPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Invalid FrameSource pointer");
+                throw new OpenCvSharpException("Invalid FrameSource pointer");
 
             var ptrObj = new Ptr(ptr);
             var obj = new SuperResolutionImpl
@@ -53,7 +53,7 @@ namespace OpenCvHololens
         internal static SuperResolutionImpl FromRawPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Invalid FrameSource pointer");
+                throw new OpenCvSharpException("Invalid FrameSource pointer");
             var obj = new SuperResolutionImpl
             {
                 detectorPtr = null,
@@ -147,7 +147,7 @@ namespace OpenCvHololens
 
         #endregion
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

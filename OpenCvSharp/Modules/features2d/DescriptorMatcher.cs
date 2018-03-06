@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using OpenCvHololens.Util;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     /// <summary>
     /// 
@@ -60,7 +60,7 @@ namespace OpenCvHololens
                     return new BFMatcher(NormTypes.Hamming2);
 
                 default:
-                    throw new OpenCvHololensException("Unknown matcher name '{0}'", descriptorMatcherType);
+                    throw new OpenCvSharpException("Unknown matcher name '{0}'", descriptorMatcherType);
             }
             /*
             IntPtr ptr;
@@ -68,9 +68,9 @@ namespace OpenCvHololens
             {
                 ptr = NativeMethods.features2d_FeatureDetector_create(descriptorMatcherType);
             }
-            catch (OpenCvHololensException)
+            catch (OpenCvSharpException)
             {
-                throw new OpenCvHololensException(
+                throw new OpenCvSharpException(
                     "matcher name '{0}' is not valid.", descriptorMatcherType);
             }
             return FromPtr(ptr);*/
@@ -84,7 +84,7 @@ namespace OpenCvHololens
         internal static DescriptorMatcher FromPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Invalid cv::Ptr<DescriptorMatcher> pointer");
+                throw new OpenCvSharpException("Invalid cv::Ptr<DescriptorMatcher> pointer");
             var ptrObj = new Ptr(ptr);
             var detector = new DescriptorMatcher
             {
@@ -101,7 +101,7 @@ namespace OpenCvHololens
         internal static DescriptorMatcher FromRawPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Invalid DescriptorMatcher pointer");
+                throw new OpenCvSharpException("Invalid DescriptorMatcher pointer");
             var detector = new DescriptorMatcher
             {
                 detectorPtr = null,
@@ -404,7 +404,7 @@ namespace OpenCvHololens
 
         #endregion
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

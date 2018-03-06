@@ -1,5 +1,5 @@
 ﻿
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
 #if LANG_JP
     /// <summary>

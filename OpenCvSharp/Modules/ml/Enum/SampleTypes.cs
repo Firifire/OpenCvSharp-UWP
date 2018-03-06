@@ -1,5 +1,5 @@
 ﻿
-namespace OpenCvHololens.ML
+namespace OpenCvSharp.ML
 {
     /// <summary>
     /// Sample types

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenCvHololens.Flann;
-using OpenCvHololens.Util;
+using OpenCvSharp.Flann;
+using OpenCvSharp.Util;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
     // ReSharper disable once InconsistentNaming
 
@@ -64,7 +64,7 @@ namespace OpenCvHololens
         internal new static FlannBasedMatcher FromPtr(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
-                throw new OpenCvHololensException("Invalid cv::Ptr<FlannBasedMatcher> pointer");
+                throw new OpenCvSharpException("Invalid cv::Ptr<FlannBasedMatcher> pointer");
             var ptrObj = new Ptr(ptr);
             return new FlannBasedMatcher(ptrObj);
         }
@@ -160,7 +160,7 @@ namespace OpenCvHololens
 
         #endregion
 
-        internal new class Ptr : OpenCvHololens.Ptr
+        internal new class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr) : base(ptr)
             {

@@ -1,6 +1,6 @@
 using System;
 
-namespace OpenCvHololens.XPhoto
+namespace OpenCvSharp.XPhoto
 {
     /// <summary>
     /// A simple white balance algorithm that works by independently stretching each of the input image channels to the specified range. For increased robustness it ignores the top and bottom p% of pixel values.
@@ -161,7 +161,7 @@ namespace OpenCvHololens.XPhoto
 
         #endregion
 
-        internal class Ptr : OpenCvHololens.Ptr
+        internal class Ptr : OpenCvSharp.Ptr
         {
             public Ptr(IntPtr ptr)
                 : base(ptr)

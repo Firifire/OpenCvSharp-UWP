@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace OpenCvHololens.Util
+namespace OpenCvSharp.Util
 {
 #if !uap10
 #if LANG_JP
@@ -98,7 +98,7 @@ namespace OpenCvHololens.Util
 #else
             if (!typeof(T).GetTypeInfo().IsSubclassOf(typeof(Delegate)))
 #endif
-                throw new OpenCvHololensException("The type argument must be Delegate.");
+                throw new OpenCvSharpException("The type argument must be Delegate.");
             if (string.IsNullOrEmpty(dllName))
                 throw new ArgumentNullException(nameof(dllName));
             if (string.IsNullOrEmpty(functionName))
@@ -106,10 +106,10 @@ namespace OpenCvHololens.Util
 
             PtrLib = Win32Api.LoadLibrary(dllName);
             if (PtrLib == IntPtr.Zero)
-                throw new OpenCvHololensException("Failed to load \"{0}\".", dllName);
+                throw new OpenCvSharpException("Failed to load \"{0}\".", dllName);
             PtrProc = Win32Api.GetProcAddress(PtrLib, functionName);
             if (PtrProc == IntPtr.Zero)
-                throw new OpenCvHololensException("Failed to get address of function \"{0}\".", functionName);
+                throw new OpenCvSharpException("Failed to get address of function \"{0}\".", functionName);
 
             DllName = dllName;
             FunctionName = functionName;

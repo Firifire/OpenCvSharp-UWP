@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace OpenCvHololens
+namespace OpenCvSharp
 {
 #if LANG_JP
     /// <summary>
@@ -117,7 +117,7 @@ namespace OpenCvHololens
             result = NativeMethods.highgui_createTrackbar(name, window, ref this.value, max, callbackPtr, IntPtr.Zero);
 
             if (result == 0)
-                throw new OpenCvHololensException("Failed to create CvTrackbar.");
+                throw new OpenCvSharpException("Failed to create CvTrackbar.");
         }
 
 #if LANG_JP
@@ -194,7 +194,7 @@ namespace OpenCvHololens
             result = NativeMethods.highgui_createTrackbar(name, window, ref this.value, max, callbackPtr, userdataPtr);
 
             if (result == 0)
-                throw new OpenCvHololensException("Failed to create CvTrackbar.");
+                throw new OpenCvSharpException("Failed to create CvTrackbar.");
         }
 
         /// <summary>
