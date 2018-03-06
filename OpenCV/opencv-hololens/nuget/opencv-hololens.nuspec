@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <!-- The identifier that must be unique within the hosting gallery -->
+    <id>OpenCV-Hololens</id>
+
+    <title>OpenCV for Hololens (UWP/C++)</title>
+
+    <!-- The package version number that is used when resolving dependencies -->
+    <version>3.3.1.0</version>
+
+    <!-- Authors contain text that appears directly on the gallery -->
+    <authors>Firifire</authors>
+
+    <!-- Owners are typically nuget.org identities that allow gallery
+         users to earily find other packages by the same owners.  -->
+    <owners>Firifire</owners>
+
+    <summary>OpenCV for Hololens (UWP/C++)</summary>
+
+    <!-- License and project URLs provide links for the gallery -->    
+    <projectUrl>https://github.com/sylvain-prevost/opencv-hololens</projectUrl>
+
+    <!-- The icon is used in Visual Studio's package manager UI -->
+    <iconUrl>https://github.com/sylvain-prevost/opencv-hololens/blob/master/nuget_icon.png?raw=true</iconUrl>
+
+    <!-- If true, this value prompts the user to accept the license when
+         installing the package. -->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+
+    <!-- Any details about this particular release -->
+    <releaseNotes>Initial - based on OpenCV 3.3.1</releaseNotes>
+
+    <!-- The description can be used in package manager UI. Note that the
+         nuget.org gallery uses information you add in the portal. -->
+    <description>OpenCV libraries packaged for Hololens (UWP/C++)</description>
+
+    <!-- Copyright information -->
+    <copyright></copyright>
+
+    <!-- Tags appear in the gallery and can be used for tag searches -->
+    <tags>hololens opencv 3.1 native uwp c++ win10</tags>
+
+  </metadata>
+
+  <!-- A readme.txt will be displayed when the package is installed -->
+  <files>
+
+    <!-- readme -->
+    <!--
+        <file src="nuget_readme.txt" target="readme.txt" />
+    -->
+
+    <!-- include files -->
+    <file src="..\bin\install\WS\10.0\x86\include\**\*.h" target="content\include" />
+    <file src="..\bin\install\WS\10.0\x86\include\**\*.hpp" target="content\include" />    
+
+    <!-- additional lib files -->
+    <file src="..\bin\WS\10.0\x86\lib\Release\*.lib" target="lib\native"/>
+
+    <!-- WinMd and IntelliSense files -->
+    <file src="..\bin\WS\10.0\x86\bin\Release\*.dll" target="lib\native"/>
+    <file src="..\bin\WS\10.0\x86\bin\Release\*.winmd" target="lib\native"/>
+    <file src="..\bin\WS\10.0\x86\bin\Release\*.pri" target="lib\native"/>
+    <file src="..\bin\WS\10.0\x86\bin\Release\*.pdb" target="lib\native"/>       
+    <!--
+    <file src="..\bin\WS\10.0\x86\bin\Release\*.xml" target="lib\native"/>    
+    <file src="..\bin\WS\10.0\x86\bin\Release\*.winmd.xml" target="lib\native"/>    
+    -->
+    <!--The above file is included so that IntelliSense summaries appear, there was a bug in VS causing them not to appear without this-->
+
+    <!-- .targets -->
+    <file src="OpenCV-Hololens.targets" target="build\native\OpenCV-Hololens.targets"/>
+    <file src="OpenCV-Hololens.props" target="build\native\OpenCV-Hololens.props"/>
+
+  </files>  
+  
+</package>

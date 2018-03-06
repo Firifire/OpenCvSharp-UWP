@@ -8,6 +8,8 @@ I have originally made this to use OpenCV with hololens applications built on Un
 
 I have not tried it, but it may be compatible with UWP in general.
 
+Currently the dll in the included Nuget is only for x86 Release Build.
+
 ## Dependencies
 Please use the included Nuget
 When installing the Nuget: **Dont Overwrite anything**
