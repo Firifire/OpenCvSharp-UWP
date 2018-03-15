@@ -51,7 +51,7 @@ namespace OpenCvSharp
         [DllImport(DllExtern)]
         public static extern void cuda_DeviceInfo_delete(IntPtr obj);
 
-        [DllImport(DllExtern,  CharSet = CharSet.Ansi, ExactSpelling = true)]
+        [DllImport(DllExtern,  CharSet = CharSet.Ansi)]
         public static extern void cuda_DeviceInfo_name(
             IntPtr obj, [MarshalAs(UnmanagedType.LPStr)] StringBuilder buf, int bufLength);
         [DllImport(DllExtern)]

@@ -178,7 +178,7 @@ namespace OpenCvSharp
         public static extern IntPtr core_Mat_zeros1(int rows, int cols, int type);
         [DllImport(DllExtern)]
         public static extern IntPtr core_Mat_zeros2(int ndims, [MarshalAs(UnmanagedType.LPArray)] int[] sz, int type);
-        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern unsafe sbyte* core_Mat_dump(IntPtr self, [MarshalAs(UnmanagedType.LPStr)] string format);
         [DllImport(DllExtern)]
         public static extern unsafe void core_Mat_dump_delete(sbyte* buf);

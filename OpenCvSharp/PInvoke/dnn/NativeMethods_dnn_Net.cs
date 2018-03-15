@@ -24,28 +24,28 @@ namespace OpenCvSharp
         [DllImport(DllExtern)]
         public static extern void dnn_Net_getLayerNames(IntPtr net, IntPtr outVec);
         
-        [DllImport(DllExtern,  ExactSpelling = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern void dnn_Net_connect1(
             IntPtr net, [MarshalAs(UnmanagedType.LPStr)] string outPin, [MarshalAs(UnmanagedType.LPStr)] string inpPin);
 
         [DllImport(DllExtern)]
         public static extern void dnn_Net_connect2(IntPtr net, int outLayerId, int outNum, int inpLayerId, int inpNum);
 
-        [DllImport(DllExtern,  ExactSpelling = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern void dnn_Net_setInputsNames(IntPtr net, string[] inputBlobNames, int inputBlobNamesLength);
 
-        [DllImport(DllExtern,  ExactSpelling = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern IntPtr dnn_Net_forward1(IntPtr net, [MarshalAs(UnmanagedType.LPStr)] string outputName);
 
-        [DllImport(DllExtern,  ExactSpelling = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern void dnn_Net_forward2(
             IntPtr net, IntPtr[] outputBlobs, int outputBlobsLength, [MarshalAs(UnmanagedType.LPStr)] string outputName);
 
-        [DllImport(DllExtern,  ExactSpelling = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern void dnn_Net_forward3(
             IntPtr net, IntPtr[] outputBlobs, int outputBlobsLength, string[] outBlobNames, int outBlobNamesLength);
 
-        [DllImport(DllExtern,  ExactSpelling = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(DllExtern, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern void dnn_Net_setInput(IntPtr net, IntPtr blob, [MarshalAs(UnmanagedType.LPStr)] string name);
     }
 }

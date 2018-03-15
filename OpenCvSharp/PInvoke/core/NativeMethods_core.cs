@@ -15,9 +15,9 @@ namespace OpenCvSharp
         public static extern int core_getNumThreads();
         [DllImport(DllExtern)]
         public static extern int core_getThreadNum();
-        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern void core_getBuildInformation([MarshalAs(UnmanagedType.LPStr)] StringBuilder buf, int maxLength);
-        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern int core_getBuildInformation_length();
 
         [DllImport(DllExtern)]

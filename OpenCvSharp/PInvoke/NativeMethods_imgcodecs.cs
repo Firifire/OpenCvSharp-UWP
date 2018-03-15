@@ -7,13 +7,13 @@ namespace OpenCvSharp
 {
     static partial class NativeMethods
     {
-        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern IntPtr imgcodecs_imread(string filename, int flags);
 
-        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern int imgcodecs_imreadmulti([MarshalAs(UnmanagedType.LPStr)] string filename, IntPtr mats, int flags);
 
-        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern int imgcodecs_imwrite([MarshalAs(UnmanagedType.LPStr)] string filename, IntPtr img, [In] int[] @params, int paramsLength);
         
         [DllImport(DllExtern)]
@@ -25,19 +25,19 @@ namespace OpenCvSharp
         [DllImport(DllExtern)]
         public static extern IntPtr imgcodecs_imdecode_InputArray(IntPtr buf, int flags);
         
-        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern int imgcodecs_imencode_vector([MarshalAs(UnmanagedType.LPStr)] string ext, IntPtr img, IntPtr buf, [In] int[] @params, int paramsLength);
 
-        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern void imgcodecs_cvConvertImage_CvArr(IntPtr src, IntPtr dst, int flags);
 
-        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern void imgcodecs_cvConvertImage_Mat(IntPtr src, IntPtr dst, int flags);
 
-        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern int imgcodecs_cvHaveImageReader([MarshalAs(UnmanagedType.LPStr)] string fileName);
         
-        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern int imgcodecs_cvHaveImageWriter([MarshalAs(UnmanagedType.LPStr)] string fileName);
 
     }

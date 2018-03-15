@@ -16,10 +16,10 @@ namespace OpenCvSharp
 
         [DllImport(DllExtern)]
         public static extern IntPtr superres_createFrameSource_Empty();
-        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern IntPtr superres_createFrameSource_Video(
             [MarshalAs(UnmanagedType.LPStr)] string fileName);
-        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern IntPtr superres_createFrameSource_Video_CUDA(
             [MarshalAs(UnmanagedType.LPStr)] string fileName);
         [DllImport(DllExtern)]

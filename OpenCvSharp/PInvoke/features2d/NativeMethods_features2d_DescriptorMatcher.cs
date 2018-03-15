@@ -48,7 +48,7 @@ namespace OpenCvSharp
             IntPtr obj, IntPtr queryDescriptors, IntPtr matches,
             float maxDistance, IntPtr[] masks, int masksSize, int compactResult);
 
-        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true, ExactSpelling = true)]
+        [DllImport(DllExtern,  BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern IntPtr features2d_DescriptorMatcher_create([MarshalAs(UnmanagedType.LPStr)] string descriptorMatcherType);
 
         [DllImport(DllExtern)]
