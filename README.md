@@ -21,6 +21,8 @@ For Unity, copy all the built dll to the plugins folder
 ## Usage
 Plese refer to [OpenCvSharp](https://github.com/shimat/opencvsharp/)
 
+Include the DLLs from the release section in to your project.
+
 UWP dll does not work in unity Editor, only works when building the UWP app.
 
 ## Issues
